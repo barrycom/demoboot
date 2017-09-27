@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xe.demo.common.datasource.DynamicDataSourceRegister;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * springboot启动器
@@ -20,6 +21,7 @@ import com.xe.demo.common.datasource.DynamicDataSourceRegister;
 // 开启缓存
 @EnableCaching
 @MapperScan(basePackages = "com.xe.*.mapper")
+@EnableSwagger2
 @Import(DynamicDataSourceRegister.class)
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
