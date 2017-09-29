@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/demo-boot.iml" filepath="$PROJECT_DIR$/demo-boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hywx.iml" filepath="$PROJECT_DIR$/hywx.iml" />
     </modules>
   </component>
 </project>
