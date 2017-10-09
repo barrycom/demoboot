@@ -28,6 +28,16 @@
 		            </li>
 		        </ul>
 		    </li>
+
+			<li class="mm-dropdown" opCode="01">
+				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">活动管理</span></a>
+				<ul>
+					<li opCode="0101">
+						<a tabindex="-1" href="javascript:goPage('admin/user/mainPage')"><span class="mm-text">发布活动</span></a>
+					</li>
+
+				</ul>
+			</li>
 		    <li class="mm-dropdown" opCode="02">
 		        <a href="#"><i class="menu-icon fa fa-barcode"></i><span class="mm-text">整合技术</span></a>
 		        <ul>

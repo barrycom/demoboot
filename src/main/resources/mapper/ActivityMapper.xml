@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.xe.demo.model.Activity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activityid" property="activityid" jdbcType="VARCHAR" />
+    <result column="activityname" property="activityname" jdbcType="VARCHAR" />
+    <result column="activitysdate" property="activitysdate" jdbcType="VARCHAR" />
+    <result column="activityedate" property="activityedate" jdbcType="VARCHAR" />
+    <result column="activityaddr" property="activityaddr" jdbcType="VARCHAR" />
+    <result column="Latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="activityimg" property="activityimg" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="activityprice" property="activityprice" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xe.demo.Activity" extends="BaseResultMap" >
+    <result column="activityidcontent" property="activityidcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activityid, activityname, activitysdate, activityedate, activityaddr, Latitude, 
+    longitude, activityimg, createtime, state, activityprice
+  </sql>
+  <sql id="Blob_Column_List" >
+    activityidcontent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from activity
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from activity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xe.demo.model.Activity" >
+    insert into activity (id, activityid, activityname, 
+      activitysdate, activityedate, activityaddr, 
+      Latitude, longitude, activityimg, 
+      createtime, state, activityprice, 
+      activityidcontent)
+    values (#{id,jdbcType=VARCHAR}, #{activityid,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR}, 
+      #{activitysdate,jdbcType=VARCHAR}, #{activityedate,jdbcType=VARCHAR}, #{activityaddr,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{activityimg,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{activityprice,jdbcType=DECIMAL}, 
+      #{activityidcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xe.demo.model.Activity" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityid != null" >
+        activityid,
+      </if>
+      <if test="activityname != null" >
+        activityname,
+      </if>
+      <if test="activitysdate != null" >
+        activitysdate,
+      </if>
+      <if test="activityedate != null" >
+        activityedate,
+      </if>
+      <if test="activityaddr != null" >
+        activityaddr,
+      </if>
+      <if test="latitude != null" >
+        Latitude,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="activityimg != null" >
+        activityimg,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="activityprice != null" >
+        activityprice,
+      </if>
+      <if test="activityidcontent != null" >
+        activityidcontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityid != null" >
+        #{activityid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityname != null" >
+        #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="activitysdate != null" >
+        #{activitysdate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityedate != null" >
+        #{activityedate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityaddr != null" >
+        #{activityaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="activityimg != null" >
+        #{activityimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="activityprice != null" >
+        #{activityprice,jdbcType=DECIMAL},
+      </if>
+      <if test="activityidcontent != null" >
+        #{activityidcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xe.demo.model.Activity" >
+    update activity
+    <set >
+      <if test="activityid != null" >
+        activityid = #{activityid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityname != null" >
+        activityname = #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="activitysdate != null" >
+        activitysdate = #{activitysdate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityedate != null" >
+        activityedate = #{activityedate,jdbcType=VARCHAR},
+      </if>
+      <if test="activityaddr != null" >
+        activityaddr = #{activityaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        Latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="activityimg != null" >
+        activityimg = #{activityimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="activityprice != null" >
+        activityprice = #{activityprice,jdbcType=DECIMAL},
+      </if>
+      <if test="activityidcontent != null" >
+        activityidcontent = #{activityidcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xe.demo.model.Activity" >
+    update activity
+    set activityid = #{activityid,jdbcType=VARCHAR},
+      activityname = #{activityname,jdbcType=VARCHAR},
+      activitysdate = #{activitysdate,jdbcType=VARCHAR},
+      activityedate = #{activityedate,jdbcType=VARCHAR},
+      activityaddr = #{activityaddr,jdbcType=VARCHAR},
+      Latitude = #{latitude,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      activityimg = #{activityimg,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      activityprice = #{activityprice,jdbcType=DECIMAL},
+      activityidcontent = #{activityidcontent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xe.demo.model.Activity" >
+    update activity
+    set activityid = #{activityid,jdbcType=VARCHAR},
+      activityname = #{activityname,jdbcType=VARCHAR},
+      activitysdate = #{activitysdate,jdbcType=VARCHAR},
+      activityedate = #{activityedate,jdbcType=VARCHAR},
+      activityaddr = #{activityaddr,jdbcType=VARCHAR},
+      Latitude = #{latitude,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      activityimg = #{activityimg,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      activityprice = #{activityprice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
