@@ -15,7 +15,7 @@
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="activityprice" property="activityprice" jdbcType="DECIMAL" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.xe.demo.Activity" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.xe.demo.model.Activity" extends="BaseResultMap" >
     <result column="activityidcontent" property="activityidcontent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -25,18 +25,18 @@
   <sql id="Blob_Column_List" >
     activityidcontent
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+<!--  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from activity
     where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  </select>-->
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from activity
     where id = #{id,jdbcType=VARCHAR}
-  </delete>
+  </delete>-->
   <insert id="insert" parameterType="com.xe.demo.model.Activity" >
     insert into activity (id, activityid, activityname, 
       activitysdate, activityedate, activityaddr, 
@@ -207,4 +207,14 @@
       activityprice = #{activityprice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select  * from activity
+    where 1=1
+    <if test="null != activity.activityname"> and activityname = #{activity.activityname}</if>
+    order by createtime desc
+  </select>
+
+
 </mapper>

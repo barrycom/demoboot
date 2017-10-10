@@ -187,12 +187,11 @@
                 type:"post",
                 dataType:'html',
                 success:function (req){
-                    try {
+
+
                          $("#html_content").html('<div style="margin: 0 auto;font-size: 15px;">' + req + '</div>');
-                    }
-                    catch (e){
-                        $("#html_content").html("加载出错");
-                    }
+
+
 
                 },
                 error:function(){

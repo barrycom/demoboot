@@ -33,7 +33,7 @@
 				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">活动管理</span></a>
 				<ul>
 					<li opCode="0101">
-						<a tabindex="-1" href="javascript:goPage('admin/user/mainPage')"><span class="mm-text">发布活动</span></a>
+						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPage')"><span class="mm-text">活动管理</span></a>
 					</li>
 
 				</ul>

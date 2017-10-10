@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <title>权限管理系统</title>
+    <title>微信小程序后端</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <!-- Pixel Admin's stylesheets -->
     <link href="${ctx}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -21,7 +21,9 @@
     <link href="${ctx}/assets/css/grid/openplat.css" rel="stylesheet">
     <link href="${ctx}/assets/css/jquery/jquery.webui-popover.min.css" rel="stylesheet">
     <link href="${ctx}/assets/css/morris/morris.css" rel="stylesheet">
+
 	<link href="${ctx}/assets/js/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<%--    <link href="${ctx}/assets/css/bootstrap/datetimepicker.css" rel="stylesheet" />--%>
 	<style>
 	.sgrid table tr {
 		height: 36px
@@ -89,9 +91,20 @@
     <script src="${ctx}/assets/js/util/md5.js"></script>
 	<script src="${ctx}/assets/js/bootstrap-fileinput/js/fileinput.min.js"></script>
 	<script src="${ctx}/assets/js/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
-	<script src="${ctx}/assets/js/ueditor/ueditor.config.js" type="text/javascript"></script>
+
+  <%--  <script src="${ctx}/assets/js/bootstrap/js/bootstrap-datetimepicker.min.js"></script>--%>
+
+<%--    <link rel="stylesheet" href="${ctx}/assets/css/common.css">--%>
+    <%--<script src="${ctx}/assets/js/jquery-1.12.4.min.js"></script>--%>
+<%--    <link rel="stylesheet" href="${ctx}/assets/css/jquery-ui.min.css">--%>
+    <script src="${ctx}/assets/js/jquery-ui-1.10.4.min.js"></script>
+
+    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+
+    <script src="${ctx}/assets/js/ueditor/ueditor.config.js" type="text/javascript"></script>
 	<script src="${ctx}/assets/js/ueditor/ueditor.all.min.js" type="text/javascript"> </script>
 	<script src="${ctx}/assets/js/ueditor/lang/zh-cn/zh-cn.js" type="text/javascript"></script>
+    bootstrap-datetimepicker.min
     <style type="text/css"> 
 		#iconview{display:none;}
 		#imgview{display:none;}
@@ -118,6 +131,10 @@
 <script src="${ctx}/assets/demo/demo.js"></script>
 <script src="${ctx}/assets/js/util/lunarUtil.js"></script>
 <script src="${ctx}/assets/js/util/Util.js"></script>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+<link href="${ctx}/assets/css/bootstrap/datetimepicker.css" rel="stylesheet" />
+<script src="${ctx}/assets/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
 <div id="main-wrapper" style="vertical-align: unset;">
 <%@include file="navigation.jsp" %>
 <%@include file="menu.jsp" %>
