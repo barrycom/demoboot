@@ -32,7 +32,7 @@ public class ActivityController extends BaseController {
     private ActivityService activityService;
 
 
-    @Authority(opCode = "0601", opName = "查询列表")
+    @Authority(opCode = "06", opName = "查询列表")
     @RequestMapping("mainPage")
     public String mainPage(Map<String, Object> map) {
         Activity activity=new Activity();
@@ -50,14 +50,14 @@ public class ActivityController extends BaseController {
         return activityService.queryPage(page, activity);
     }*/
 
-    @Authority(opCode = "0602", opName = "新增活动")
+    @Authority(opCode = "06", opName = "新增活动")
     @RequestMapping("addPage")
     public String addPage(Map<String, Object> map) {
 
         return "activity/add";
     }
 
-    @Authority(opCode = "0603", opName = "修改活动")
+    @Authority(opCode = "06", opName = "修改活动")
     @RequestMapping("updateActivitPage/{id}")
     public String updateActivitPage(@PathVariable("id") String id, Map<String, Object> map) {
         Activity activity = activityService.getActivityByid(id);
@@ -65,7 +65,7 @@ public class ActivityController extends BaseController {
         return "activity/edit";
     }
 
-    @Authority(opCode = "060101", opName = "选择地图")
+    @Authority(opCode = "06", opName = "选择地图")
     @RequestMapping("selectMap")
     public String selectMap(Map<String, Object> map) {
 
@@ -75,7 +75,7 @@ public class ActivityController extends BaseController {
     @ControllerLog("添加活动")
     @RequestMapping("add")
     @ResponseBody
-    @Authority(opCode = "0604", opName = "添加活动")
+    @Authority(opCode = "06", opName = "添加活动")
     public AjaxResult add(Activity activity) {
         activity.setId(UUID.randomUUID().toString());
         activity.setActivityid(activity.getId());
