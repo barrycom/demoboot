@@ -104,7 +104,10 @@
     <script src="${ctx}/assets/js/ueditor/ueditor.config.js" type="text/javascript"></script>
 	<script src="${ctx}/assets/js/ueditor/ueditor.all.min.js" type="text/javascript"> </script>
 	<script src="${ctx}/assets/js/ueditor/lang/zh-cn/zh-cn.js" type="text/javascript"></script>
-    bootstrap-datetimepicker.min
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/language/zh_CN.js"></script>
+
     <style type="text/css"> 
 		#iconview{display:none;}
 		#imgview{display:none;}

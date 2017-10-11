@@ -1112,9 +1112,12 @@
             return;
         }
         $("#activityaddr").val($("#addr_cur").val())
-        var
+        var ss=$("#poi_cur").val().split(",")
 
-        $("#latitude").val(p)
+
+        $("#latitude").val(ss[0])
+
+        $("#longitude").val(ss[1])
         $('.modal-dialog').attr('data-dismiss', 'modal');
 
 

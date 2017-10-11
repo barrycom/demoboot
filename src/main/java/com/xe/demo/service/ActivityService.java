@@ -27,4 +27,10 @@ public class ActivityService extends AbstratService<Activity> {
         List<Activity> list = activityMapper.queryList(activity);
         return AppUtil.returnPage(list);
     }
+
+    @ServiceLog("查询活动列表")
+    public Activity getActivityByid(String id) {
+        Activity activity = activityMapper.selectByPrimaryKey(id);
+        return activity;
+    }
 }

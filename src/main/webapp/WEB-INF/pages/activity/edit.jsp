@@ -4,7 +4,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动名称：</label>
         <div class="col-sm-8">
-            <input class="form-control" type="text" id="activityname" name="activityname" placeholder="请填写活动名称"/>
+            <input class="form-control" type="text" id="activityname" name="activityname" value="${activity.activityname}" placeholder="请填写活动名称"/>
 
         </div>
     </div>

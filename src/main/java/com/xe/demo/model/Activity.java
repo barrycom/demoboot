@@ -22,11 +22,13 @@ public class Activity {
 
     private String activityimg;
 
-    private Date createtime;
+    private String createtime;
 
     private String state;
 
     private BigDecimal activityprice;
+
+    private String activityidmemo;
 
     private String activityidcontent;
 
@@ -102,11 +104,11 @@ public class Activity {
         this.activityimg = activityimg == null ? null : activityimg.trim();
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
@@ -124,6 +126,14 @@ public class Activity {
 
     public void setActivityprice(BigDecimal activityprice) {
         this.activityprice = activityprice;
+    }
+
+    public String getActivityidmemo() {
+        return activityidmemo;
+    }
+
+    public void setActivityidmemo(String activityidmemo) {
+        this.activityidmemo = activityidmemo == null ? null : activityidmemo.trim();
     }
 
     public String getActivityidcontent() {
