@@ -57,6 +57,15 @@
 		            </li>
 		        </ul>
 		    </li>
+			<li class="mm-dropdown" opCode="04">
+				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">用戶管理</span></a>
+				<ul>
+					<li opCode="0401">
+						<a tabindex="-1" href="javascript:goPage('admin/member/mainPage')"><span class="mm-text">用户列表</span></a>
+					</li>
+
+				</ul>
+			</li>
 		</ul>
 	</div>
 </div>
