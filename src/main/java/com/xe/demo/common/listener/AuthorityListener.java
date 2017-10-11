@@ -21,9 +21,9 @@ public class AuthorityListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		//加载自动注入Autowired
-		WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext()).getAutowireCapableBeanFactory().autowireBean(this);
+	/*	WebApplicationContextUtils.getRequiredWebApplicationContext(event.getServletContext()).getAutowireCapableBeanFactory().autowireBean(this);
 		OperationService operationService = context.getBean(OperationService.class);
-		operationService.initAuthority();
+		operationService.initAuthority();*/
 	}
 
 	@Override

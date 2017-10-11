@@ -42,13 +42,13 @@ public class ActivityController extends BaseController {
     }
 
 
-  /*  @ControllerLog("查询列表")
+    @ControllerLog("查询列表")
     @RequestMapping("queryPage")
     @ResponseBody
-    @Authority(opCode = "0602", opName = "无需验证")
+    @Authority(opCode = "06", opName = "查询列表")
     public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity) {
         return activityService.queryPage(page, activity);
-    }*/
+    }
 
     @Authority(opCode = "06", opName = "新增活动")
     @RequestMapping("addPage")
@@ -58,8 +58,8 @@ public class ActivityController extends BaseController {
     }
 
     @Authority(opCode = "06", opName = "修改活动")
-    @RequestMapping("updateActivitPage/{id}")
-    public String updateActivitPage(@PathVariable("id") String id, Map<String, Object> map) {
+    @RequestMapping("updateActivitPage")
+    public String updateActivitPage(String id, Map<String, Object> map) {
         Activity activity = activityService.getActivityByid(id);
         map.put("activity", activity);
         return "activity/edit";
