@@ -4,12 +4,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +30,7 @@ public class UploadUtil {
      * @return
      * @throws Exception
      */
-    public String upload(HttpServletRequest request, String docBase, String path) {
+    public String upload(HttpServletRequest request, String docBase, String path) throws IOException {
 		String filepath = "";
 		 //创建一个通用的多部分解析器
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -37,19 +42,30 @@ public class UploadUtil {
             Iterator<String> iter = multiRequest.getFileNames();
             while (iter.hasNext()) {
             	//取得上传文件
-                MultipartFile file = multiRequest.getFile(iter.next());
-                if (file != null) {
-					// 重命名上传后的文件名
-                	String nowName = getNewName(".jpg");
-					final ByteArrayOutputStream srcImageData = new ByteArrayOutputStream();
-					try {
-						IOUtils.copy(file.getInputStream(), srcImageData);
-						// 上传图片
-						FileUtils.copyInputStreamToFile(new ByteArrayInputStream(srcImageData.toByteArray()), new File(getFilePath(docBase, nowName)));
-					} catch (IOException e) {
-						return filepath;
-					}
-					filepath = getFilePath(path, nowName);
+                MultipartFile myFile = multiRequest.getFile(iter.next());
+                if (myFile != null) {
+                    System.out.println(myFile.getOriginalFilename());
+                    DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                    //图片名称
+                    String name = df.format(new Date());
+
+                    Random r = new Random();
+                    for(int i = 0 ;i<3 ;i++){
+                        name += r.nextInt(10);
+                    }
+                    //
+                    String ext = FilenameUtils.getExtension(myFile.getOriginalFilename());
+                    //保存图片       File位置 （全路径）   /upload/fileName.jpg
+                    String url = request.getSession().getServletContext().getRealPath(path);
+                    //相对路径
+                    String xdpath = "/"+name + "." + ext;
+                    File file = new File(url+DateUtil.getCurDate("yyyyMMdd"));
+                    if(!file.exists()){
+                        file.mkdirs();
+                    }
+                    myFile.transferTo(new File(url+DateUtil.getCurDate("yyyyMMdd")+xdpath));
+                    filepath = path+DateUtil.getCurDate("yyyyMMdd")+xdpath;
+                    //json.put("success", "/static/img/upload/phono/"+path);
 				}
             }
         }

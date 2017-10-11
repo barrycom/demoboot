@@ -180,9 +180,10 @@ function onblurEvent(type){
 
 //初始化百度富文本编辑器
 function initUeditor(){
+
 	UE.delEditor("content");
 	UE.getEditor("content",{
-		serverUrl: _urlPath + "/upload/ueditoUpload",
+		serverUrl: "http://127.0.0.1:8180/upload/ueditoUpload",
 		autoClearinitialContent: false,
 		retainOnlyLabelPasted: true,
 	    toolbars:[[
@@ -269,4 +270,6 @@ function preImg(btnId, valueId, url, images){
 	}).on("change", function(event, key) {
 		return false;
 	});
+
+
 }

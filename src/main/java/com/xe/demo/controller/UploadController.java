@@ -1,12 +1,6 @@
 package com.xe.demo.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +43,7 @@ public class UploadController {
 	 */
 	@RequestMapping(value = "uploadImg.do")
 	@ResponseBody
-	public AjaxResult uploadImg(HttpServletRequest request) {
+	public AjaxResult uploadImg(HttpServletRequest request) throws IOException {
 		final Map<String, Object> result = new HashMap<String, Object>();
 		String filepath = uploadUtil.upload(request, docBase, path);
 		result.put("filepath", filepath);
