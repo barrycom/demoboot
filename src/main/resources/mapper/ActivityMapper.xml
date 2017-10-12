@@ -220,10 +220,34 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="queryList" resultMap="BaseResultMap">
-    select  * from activity
-    where 1=1
-    <if test="null != activity.activityname"> and activityname = #{activity.activityname}</if>
+  <select id="queryListOneMonth" resultMap="BaseResultMap">
+    <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= createtime ]]>
+
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+    and  state = #{activity.state}
+    </if>
     order by createtime desc
   </select>
+
+  <select id="queryListTwoMonth" resultMap="BaseResultMap">
+    <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 60 DAY) <= createtime ]]>
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+      and  state = #{activity.state}
+    </if>
+    order by createtime desc
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select * from activity where 1=1
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+      and  state = #{activity.state}
+    </if>
+    order by createtime desc
+  </select>
+
+
+
 </mapper>

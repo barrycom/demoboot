@@ -7,6 +7,7 @@ import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.model.Activity;
 import com.xe.demo.model.AuthRole;
 import com.xe.demo.model.AuthUser;
+import com.xe.demo.model.ILog;
 import com.xe.demo.service.ActivityService;
 import com.xe.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,77 @@ public class ActivityController extends BaseController {
         return "activity/main";
     }
 
+    @Authority(opCode = "06", opName = "活动待上架列表")
+    @RequestMapping("mainPagedsj")
+    public String mainPagedsj(Map<String, Object> map,PageAjax<Activity> page) {
+        Activity activity=new Activity();
+        PageAjax<Activity> list = activityService.queryPage(page,activity);
+        map.put("list", list);
+        return "activity/maindsj";
+    }
+
+    @Authority(opCode = "06", opName = "活动已上架列表")
+    @RequestMapping("mainPageysj")
+    public String mainPageysj(Map<String, Object> map,PageAjax<Activity> page) {
+        Activity activity=new Activity();
+        PageAjax<Activity> list = activityService.queryPage(page,activity);
+        map.put("list", list);
+        return "activity/mainysj";
+    }
+
+
+
+    @ControllerLog("查询待上架列表")
+    @RequestMapping("queryPagedsj")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "查询待上架列表")
+    public PageAjax<Activity> queryPagedsj(PageAjax<Activity> page, Activity activity,String daytime) {
+        activity.setState("0");
+        PageAjax<Activity> activityList=activityService.queryPage(page, activity);
+        if(daytime.equals("one"))
+        {
+            activityList=   activityService.queryListOneMonth(page, activity);
+        }
+        if(daytime.equals("two"))
+        {
+            activityList= activityService.queryListTwoMonth(page, activity);
+        }
+
+        if(daytime.equals("more"))
+        {
+            activityList=activityService.queryPage(page, activity);
+        }
+
+            return activityList;
+    }
+
+
+    @ControllerLog("查询已上架列表")
+    @RequestMapping("queryPageysj")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "查询已上架列表")
+    public PageAjax<Activity> queryPageysj(PageAjax<Activity> page, Activity activity,String daytime) {
+        activity.setState("1");
+        PageAjax<Activity> activityList=activityService.queryPage(page, activity);
+        if(daytime.equals("one"))
+        {
+            activityList=   activityService.queryListOneMonth(page, activity);
+        }
+        if(daytime.equals("two"))
+        {
+            activityList= activityService.queryListTwoMonth(page, activity);
+        }
+
+        if(daytime.equals("more"))
+        {
+            activityList=activityService.queryPage(page, activity);
+        }
+        return activityList;
+    }
+
+
+
+
 
     @ControllerLog("查询列表")
     @RequestMapping("queryPage")
@@ -59,8 +131,9 @@ public class ActivityController extends BaseController {
 
     @Authority(opCode = "06", opName = "修改活动")
     @RequestMapping("updateActivitPage")
-    public String updateActivitPage(String id, Map<String, Object> map) {
+    public String updateActivitPage(String id,String cz, Map<String, Object> map) {
         Activity activity = activityService.getActivityByid(id);
+        map.put("cz", cz);
         map.put("activity", activity);
         return "activity/edit";
     }
@@ -86,5 +159,23 @@ public class ActivityController extends BaseController {
         activity.setState("0");
         return activityService.save(activity);
     }
+
+
+    @ControllerLog("修改活动")
+    @RequestMapping("edit")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "修改活动")
+    public AjaxResult edit(Activity activity) {
+        return activityService.update(activity);
+    }
+
+/*
+    @ControllerLog("上架活动")
+    @RequestMapping("edit")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "上架活动")
+    public AjaxResult upActivity(Activity activity) {
+        return activityService.update(activity);
+    }*/
 }
 

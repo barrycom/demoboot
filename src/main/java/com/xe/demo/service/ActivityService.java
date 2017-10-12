@@ -28,9 +28,27 @@ public class ActivityService extends AbstratService<Activity> {
         return AppUtil.returnPage(list);
     }
 
+
+    @ServiceLog("查询活动列表2月前")
+    public PageAjax<Activity> queryListTwoMonth(PageAjax<Activity> page, Activity activity) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Activity> list = activityMapper.queryList(activity);
+        return AppUtil.returnPage(list);
+    }
+
+
+    @ServiceLog("查询活动列表1月前")
+    public PageAjax<Activity> queryListOneMonth(PageAjax<Activity> page, Activity activity) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Activity> list = activityMapper.queryList(activity);
+        return AppUtil.returnPage(list);
+    }
+
     @ServiceLog("查询活动列表")
     public Activity getActivityByid(String id) {
-        Activity activity = activityMapper.selectByPrimaryKey(id);
+        Activity activitytmp=new Activity();
+        activitytmp.setId(id);
+        Activity activity = activityMapper.selectOne(activitytmp);
         return activity;
     }
 }

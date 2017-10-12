@@ -201,7 +201,7 @@ $("#activityprice").keyup(function () {
 
         }
     }).on("success.form.bv",function(e){
-alert($("activityimg").val());
+
         var data = $("#submitForm").serialize();
         alert(data)
         $.ajax({
@@ -225,4 +225,9 @@ alert($("activityimg").val());
 
 
     });
+
+function reback() {
+    goPage('admin/activity/mainPage');
+
+}
 </script>
