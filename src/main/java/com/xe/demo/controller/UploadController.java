@@ -34,7 +34,10 @@ public class UploadController {
 	private String docBase;
 	@Autowired
 	private UploadUtil uploadUtil;
-
+	String ACCESS_KEY = "wjwYxf8h5jQOC8QrWhnoBBXNdczuSiMzKycJB5WN";
+	String SECRET_KEY = "lOei7RqoxaGGUBdO48G2f20EdCRa0SZWMYOO8xM2";
+	//要上传的空间--
+	String bucketname = "zall-haihy";
 	/**
 	 * 上传图片
 	 * @param file
