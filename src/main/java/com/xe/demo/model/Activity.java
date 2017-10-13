@@ -1,5 +1,6 @@
 package com.xe.demo.model;
 
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -31,6 +32,27 @@ public class Activity {
     private String activityidmemo;
 
     private String activityidcontent;
+
+    private String activitytype;
+
+    @Transient
+    private String activitytypename;
+
+    public String getActivitytypename() {
+        return activitytypename;
+    }
+
+    public void setActivitytypename(String activitytypename) {
+        this.activitytypename = activitytypename;
+    }
+
+    public String getActivitytype() {
+        return activitytype;
+    }
+
+    public void setActivitytype(String activitytype) {
+        this.activitytype = activitytype;
+    }
 
     public String getId() {
         return id;

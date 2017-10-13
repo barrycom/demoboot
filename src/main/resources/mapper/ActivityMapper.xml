@@ -38,7 +38,7 @@
     delete from activity
     where id = #{id,jdbcType=VARCHAR}
   </delete>-->
-  <insert id="insert" parameterType="com.xe.demo.model.Activity" >
+ <!-- <insert id="insert" parameterType="com.xe.demo.model.Activity" >
     insert into activity (id, activityid, activityname,
     activitysdate, activityedate, activityaddr,
     latitude, longitude, activityimg,
@@ -218,7 +218,7 @@
     activityprice = #{activityprice,jdbcType=DECIMAL},
     activityidmemo = #{activityidmemo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
-  </update>
+  </update>-->
 
   <select id="queryListOneMonth" resultMap="BaseResultMap">
     <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= createtime ]]>

@@ -16,7 +16,9 @@
     $(function (){
         $("#openAppGrid").sgrid({
             columns:[
-                {field:"activityid",text:"活动编号", sortColumn:"activityid",width: 80},
+                {field:"activityid",text:"活动编号", sortColumn:"activityid",width:0},
+                {field:"activitytypename",text:"活动类型", sortColumn:"activitytypename",width:80},
+
                 {field:"activityimg",text:"主图",style:"text-align:center",width: 200,formatter:function(index, content, data){
                     return "<img src='" + content + "' height='20px'/>";
                 }},

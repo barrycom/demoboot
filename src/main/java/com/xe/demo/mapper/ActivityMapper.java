@@ -18,16 +18,16 @@ public interface ActivityMapper extends MyMapper<Activity> {
 
     List<Activity> queryListOneMonth(@Param("activity")Activity activity);
 
+/*
+    int insert(Activity record);*/
 
-    int insert(Activity record);
+/*    int insertSelective(Activity record);
 
-    int insertSelective(Activity record);
-
-/*    Activity selectByPrimaryKey(String id);*/
+*//*    Activity selectByPrimaryKey(String id);*//*
 
     int updateByPrimaryKeySelective(Activity record);
 
     int updateByPrimaryKeyWithBLOBs(Activity record);
 
-    int updateByPrimaryKey(Activity record);
+    int updateByPrimaryKey(Activity record);*/
 }

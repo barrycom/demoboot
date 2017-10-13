@@ -4,11 +4,9 @@ import com.xe.demo.common.annotation.Authority;
 import com.xe.demo.common.annotation.ControllerLog;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
-import com.xe.demo.model.Activity;
-import com.xe.demo.model.AuthRole;
-import com.xe.demo.model.AuthUser;
-import com.xe.demo.model.ILog;
+import com.xe.demo.model.*;
 import com.xe.demo.service.ActivityService;
+import com.xe.demo.service.ActivityTypeService;
 import com.xe.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +29,9 @@ import java.util.UUID;
 public class ActivityController extends BaseController {
     @Autowired
     private ActivityService activityService;
+
+    @Autowired
+    private ActivityTypeService activityTypeService;
 
 
     @Authority(opCode = "06", opName = "查询列表")
@@ -126,6 +127,9 @@ public class ActivityController extends BaseController {
     @RequestMapping("addPage")
     public String addPage(Map<String, Object> map) {
 
+        List<ActivityType> activityTypeList=activityTypeService.queryAll();
+
+        map.put("list", activityTypeList);
         return "activity/add";
     }
 

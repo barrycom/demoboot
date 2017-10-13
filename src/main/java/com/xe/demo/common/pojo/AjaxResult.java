@@ -2,8 +2,6 @@ package com.xe.demo.common.pojo;
 
 /**
  * 封装返回数据
- * @author czh
- * @2015年5月20日
  */
 public class AjaxResult {
 
