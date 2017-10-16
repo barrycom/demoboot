@@ -37,7 +37,7 @@ public class RedisServiceImpl implements IRedisService{
         TokenModel model = new TokenModel(userId, userId+"_"+token);
 
         String tokens=userId+"_"+token.trim();
-        redisTemplate.boundValueOps(userId).set(userId+"_"+token.trim(),Constants.TOKEN_EXPIRES_HOUR);
+        redisTemplate.boundValueOps(userId).set(userId+"_"+token.trim(),Constants.TOKEN_EXPIRES_HOUR,TimeUnit.HOURS);
         //存储到redis并设置过期时间
    //    redisTemplate.boundValueOps(userId).set(token, Constants.TOKEN_EXPIRES_HOUR, TimeUnit.HOURS);
         return model;
@@ -68,8 +68,12 @@ public class RedisServiceImpl implements IRedisService{
         else {
 
                 String token=redisTemplate.boundValueOps(model.getUserId()).get();
+                if(token==null)
+                {
+                    return false;
+                }
         //    String token = redisTemplate.boundValueOps(model.getUserId()).get().toString();
-            token=token.toString().trim();
+               token=token.toString().trim();
             if (token == null || !token.equals(model.getUserId()+"_"+model.getToken())) {
                 return false;
             }

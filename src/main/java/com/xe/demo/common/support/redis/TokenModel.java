@@ -1,10 +1,12 @@
 package com.xe.demo.common.support.redis;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017-10-16.
  */
-public class TokenModel {
-
+public class TokenModel  implements Serializable {
+    private static final long serialVersionUID = -8366929034564774130L;
     //用户id
     private String userId;
 
