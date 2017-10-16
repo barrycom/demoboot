@@ -1,31 +1,37 @@
 package com.xe.demo.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 @Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
     private String name;
     private String mobile;
     private String introduce;
     private String email;
     private String wxno;
     private String headimg;
-    private Date regtime;
+    private String regtime;
     private String state;
     private String ishy;
+    private String isblock;
 
-    public int getId() {
+    public String getIsblock() {
+        return isblock;
+    }
+
+    public void setIsblock(String isblock) {
+        this.isblock = isblock;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,11 +83,11 @@ public class Member {
         this.headimg = headimg;
     }
 
-    public Date getRegtime() {
+    public String getRegtime() {
         return regtime;
     }
 
-    public void setRegtime(Date regtime) {
+    public void setRegtime(String regtime) {
         this.regtime = regtime;
     }
 

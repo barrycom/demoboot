@@ -57,11 +57,14 @@
 		            </li>
 		        </ul>
 		    </li>
-			<li class="mm-dropdown" opCode="04">
+			<li class="mm-dropdown" opCode="06">
 				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">用戶管理</span></a>
 				<ul>
-					<li opCode="0401">
+					<li opCode="06">
 						<a tabindex="-1" href="javascript:goPage('admin/member/mainPage')"><span class="mm-text">用户列表</span></a>
+					</li>
+					<li opCode="06">
+						<a tabindex="-1" href="javascript:goPage('admin/member/mainMemberInfoPage')"><span class="mm-text">实名审核</span></a>
 					</li>
 
 				</ul>
