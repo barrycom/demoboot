@@ -1,9 +1,12 @@
 package com.xe.demo.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Table(name = "auth_operation")
-public class AuthOperation {
+public class AuthOperation implements Serializable {
+
+    private static final long serialVersionUID = -8366929034564774130L;
     /**
      * 主键
      */

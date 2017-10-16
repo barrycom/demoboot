@@ -13,6 +13,13 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.Gson;
+import com.qiniu.common.Zone;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.util.Auth;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -23,7 +30,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Component
 public class UploadUtil {
-
+    String ACCESS_KEY = "wjwYxf8h5jQOC8QrWhnoBBXNdczuSiMzKycJB5WN";
+    String SECRET_KEY = "lOei7RqoxaGGUBdO48G2f20EdCRa0SZWMYOO8xM2";
+    //要上传的空间--
+    String bucketname = "zall-haihy";
+    private String host = "https://image.zallhy.com/";
     /**
      * 上传
      * @param request
@@ -44,7 +55,7 @@ public class UploadUtil {
             	//取得上传文件
                 MultipartFile myFile = multiRequest.getFile(iter.next());
                 if (myFile != null) {
-                    System.out.println(myFile.getOriginalFilename());
+                /*    System.out.println(myFile.getOriginalFilename());
                     DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
                     //图片名称
                     String name = df.format(new Date());
@@ -64,9 +75,36 @@ public class UploadUtil {
                         file.mkdirs();
                     }
                     myFile.transferTo(new File(url+DateUtil.getCurDate("yyyyMMdd")+xdpath));
-                    filepath = path+DateUtil.getCurDate("yyyyMMdd")+xdpath;
+                    filepath = path+DateUtil.getCurDate("yyyyMMdd")+xdpath;*/
                     //json.put("success", "/static/img/upload/phono/"+path);
-				}
+
+                    Configuration cfg = new Configuration(Zone.autoZone());
+                    UploadManager uploadManager = new UploadManager(cfg);
+                    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+                    String upToken = auth.uploadToken(bucketname);
+                    String key = null;
+                    Response qresponse;
+                    try {
+                        qresponse = uploadManager.put(myFile.getInputStream(),key,upToken,null, null);
+                        //解析上传成功的结果
+                        DefaultPutRet putRet = new Gson().fromJson(qresponse.bodyString(), DefaultPutRet.class);
+                        System.out.println(putRet.key);
+                        System.out.println(putRet.hash);
+                        System.out.print(host+putRet.key);
+                      /*  result.setUrl(host+putRet.key);
+                        String gsonString = new Gson().toJson(result);
+                        user.setAvtar("http://ooprvk5m6.bkt.clouddn.com/"+putRet.key);
+                        userService.update(user);
+                        request.getSession().setAttribute("currentUser",userService.findUser(user));
+                        ResponseUtil.write(gsonString,response);*/
+                        filepath = host+putRet.key;
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+
+                }
             }
         }
 		return filepath;

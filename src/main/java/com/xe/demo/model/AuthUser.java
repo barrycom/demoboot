@@ -5,9 +5,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.io.Serializable;
 
 @Table(name = "auth_user")
-public class AuthUser {
+public class AuthUser implements Serializable {
+    private static final long serialVersionUID = -8366929034564774130L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

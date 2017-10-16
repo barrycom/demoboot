@@ -38,7 +38,7 @@
     delete from activity
     where id = #{id,jdbcType=VARCHAR}
   </delete>-->
-  <insert id="insert" parameterType="com.xe.demo.model.Activity" >
+ <!-- <insert id="insert" parameterType="com.xe.demo.model.Activity" >
     insert into activity (id, activityid, activityname,
     activitysdate, activityedate, activityaddr,
     latitude, longitude, activityimg,
@@ -218,12 +218,36 @@
     activityprice = #{activityprice,jdbcType=DECIMAL},
     activityidmemo = #{activityidmemo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
-  </update>
+  </update>-->
 
-  <select id="queryList" resultMap="BaseResultMap">
-    select  * from activity
-    where 1=1
-    <if test="null != activity.activityname"> and activityname = #{activity.activityname}</if>
+  <select id="queryListOneMonth" resultMap="BaseResultMap">
+    <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= createtime ]]>
+
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+    and  state = #{activity.state}
+    </if>
     order by createtime desc
   </select>
+
+  <select id="queryListTwoMonth" resultMap="BaseResultMap">
+    <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 60 DAY) <= createtime ]]>
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+      and  state = #{activity.state}
+    </if>
+    order by createtime desc
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select * from activity where 1=1
+    <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+    <if test="activity.state != null" >
+      and  state = #{activity.state}
+    </if>
+    order by createtime desc
+  </select>
+
+
+
 </mapper>

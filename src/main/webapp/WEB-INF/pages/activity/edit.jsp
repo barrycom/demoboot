@@ -2,6 +2,8 @@
 
 <form id="submitForm" class="form-horizontal">
     <div class="form-group">
+        <input name="id" value="${activity.id}" type="text" hidden="hidden">
+        <input name="cz" id="cz" value="${cz}" type="text" hidden="hidden">
         <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动名称：</label>
         <div class="col-sm-8">
             <input class="form-control" type="text" id="activityname" name="activityname" value="${activity.activityname}" placeholder="请填写活动名称"/>
@@ -13,20 +15,20 @@
         <label class="col-sm-3 control-label" for="activitysdate"><font color="red">*</font>活动开始时间：</label>
         <div class="col-sm-8">
 
-            <input size="16" type="text" id="activitysdate" name="activitysdate" readonly class="form_datetime" placeholder="请填写活动开始时间">
+            <input size="16" type="text" id="activitysdate" name="activitysdate"  value="${activity.activitysdate}" readonly class="form_datetime" placeholder="请填写活动开始时间">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityedate"><font color="red">*</font>活动结束时间：</label>
         <div class="col-sm-8">
 
-            <input size="16" type="text" id="activityedate" name="activityedate" readonly class="form_datetime" placeholder="请填写活动结束时间">
+            <input size="16" type="text" id="activityedate" name="activityedate" readonly class="form_datetime" value="${activity.activityedate}" placeholder="请填写活动结束时间">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityaddr"><font color="red">*</font>活动地点：</label>
         <div class="col-sm-8">
-            <input class="form-control" type="text" onclick="javascript:showModal('地图','admin/activity/selectMap',1200,700);" id="activityaddr" name="activityaddr" placeholder="请选择活动地点"/>
+            <input class="form-control" value="${activity.activityaddr}" type="text" onclick="javascript:showModal('地图','admin/activity/selectMap',1200,700);" id="activityaddr" name="activityaddr" placeholder="请选择活动地点"/>
             <div id="validation-activityaddr" class="validate-error help-block"></div>
         </div>
     </div>
@@ -34,10 +36,10 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" ><font color="red">*</font>经纬度：</label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" id="latitude" name="latitude"  placeholder="经度自动生成" />
+            <input class="form-control" type="text" id="latitude" name="latitude" value="${activity.latitude}" placeholder="经度自动生成" />
         </div>
         <div class="col-sm-4">
-            <input class="form-control" type="text" id="longitude" name="longitude"  placeholder="纬度自动生成" />
+            <input class="form-control" type="text" id="longitude" name="longitude"  value="${activity.longitude}" placeholder="纬度自动生成" />
         </div>
         <div id="validation-color" class="validate-error help-block"></div>
     </div>
@@ -48,7 +50,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityimg">活动主图：</label>
         <div class="col-sm-8">
-            <input type="text" id="activityimg" name="activityimg" class="form-control" readOnly style="margin-bottom: 5px;"/>
+            <input type="text" id="activityimg" name="activityimg" value="${activity.activityimg}" class="form-control" readOnly style="margin-bottom: 5px;"/>
             <input id="uploadCover" type="file" class="file">
         </div>
     </div>
@@ -56,14 +58,14 @@
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red">*</font>活动内容：</label>
         <div class="col-sm-8">
-            <script id="content" name="activityidcontent" type="text/plain"></script>
+            <script id="content" name="activityidcontent" type="text/plain">${activity.activityidcontent}</script>
         </div>
     </div>
 
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red"></font>温馨提示：</label>
         <div class="col-sm-8">
-            <textarea class="form-control" rows="3"  name=activityidmemo></textarea>
+            <textarea class="form-control" rows="3"  name=activityidmemo>${activity.activityidmemo}</textarea>
 
         </div>
     </div>
@@ -71,7 +73,7 @@
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red">*</font>活动单价：</label>
         <div class="col-sm-8">
-            <input type="text" id="activityprice" name="activityprice" placeholder="输入金额">
+            <input type="text" value="${activity.activityprice}" id="activityprice" name="activityprice" placeholder="输入金额">
         </div>
     </div>
     <div class="form-group">
@@ -108,7 +110,7 @@ $("#activityedate").datetimepicker({
     $("#activityedate").datetimepicker("setStartDate",$("#datetimeStart".val()))
 });
 
-uploadImg("uploadCover", "activityimg", "upload/uploadImg.do", "");
+uploadImg("uploadCover", "activityimg", "upload/uploadImg.do","${activity.activityimg}");
 $("#activityprice").keyup(function () {
     var reg = $(this).val().match(/\d+\.?\d{0,2}/);
     var txt = '';
@@ -158,14 +160,14 @@ $("#activityprice").keyup(function () {
                 }
             },
 
-            activityaddr: {
+          /*  activityaddr: {
                 message: '活动地址不能为空',
                 validators: {
                     notEmpty: {
                         message: '活动地址不能为空'
                     }
                 }
-            },
+            },*/
            /* activityimg: {
                     message: '活动主图必须上传',
                     validators: {
@@ -201,17 +203,25 @@ $("#activityprice").keyup(function () {
 
         }
     }).on("success.form.bv",function(e){
-alert($("activityimg").val());
+/*alert($("activityimg").val());*/
         var data = $("#submitForm").serialize();
-        alert(data)
+       // alert(data)
         $.ajax({
-            url: _urlPath + "admin/activity/add",
+            url: _urlPath + "admin/activity/edit",
             dataType: "json",
             type: "post",
             data: data,
             success: function (req){
                if (req.retcode == 1) {
-                    goPage("admin/activity/mainPage")
+                   if($("#cz").val()=="all") {
+                       goPage("admin/activity/mainPage")
+                   }
+                   if($("#cz").val()=="dsj") {
+                       goPage("admin/activity/mainPagedsj")
+                   }
+                   if($("#cz").val()=="ysj") {
+                       goPage("admin/activity/mainPageysj")
+                   }
                 } else {
                    alert(req.retmsg);
                 }
@@ -225,4 +235,18 @@ alert($("activityimg").val());
 
 
     });
+
+
+    function reback() {
+        if($("#cz").val()=="all") {
+            goPage("admin/activity/mainPage")
+        }
+        if($("#cz").val()=="dsj") {
+            goPage("admin/activity/mainPagedsj")
+        }
+        if($("#cz").val()=="ysj") {
+            goPage("admin/activity/mainPageysj")
+        }
+
+    }
 </script>

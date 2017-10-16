@@ -1,5 +1,6 @@
 package com.xe.demo.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Table(name = "auth_role")
-public class AuthRole {
+public class AuthRole implements Serializable {
+
+	private static final long serialVersionUID = -8366929034564774130L;
 	/**
 	 * 主键
 	 */

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <form id="submitForm" class="form-horizontal">
@@ -5,6 +6,21 @@
         <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动名称：</label>
         <div class="col-sm-8">
             <input class="form-control" type="text" id="activityname" name="activityname" placeholder="请填写活动名称"/>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动类型：</label>
+        <div class="col-sm-8">
+            <div class="btn-group">
+                <select class="form-control" name="activitytype" <%--onchange="javascript:formSubmit();"--%>>
+                    <option value="">==活动类型==</option>
+                    <c:forEach items="${list}" var="types">
+                        <option value="${types.id}">${types.typename}</option>
+                    </c:forEach>
+                </select>
+            </div>
 
         </div>
     </div>
@@ -201,7 +217,7 @@ $("#activityprice").keyup(function () {
 
         }
     }).on("success.form.bv",function(e){
-alert($("activityimg").val());
+
         var data = $("#submitForm").serialize();
         alert(data)
         $.ajax({
@@ -225,4 +241,9 @@ alert($("activityimg").val());
 
 
     });
+
+function reback() {
+    goPage('admin/activity/mainPage');
+
+}
 </script>

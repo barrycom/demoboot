@@ -1,5 +1,6 @@
 package com.xe.demo.common.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.xe.demo.model.AuthOperation;
@@ -9,7 +10,8 @@ import com.xe.demo.model.AuthUser;
  * 封装Session
  * @author CZH
  */
-public class Identity {
+public class Identity  implements Serializable {
+	private static final long serialVersionUID = -8366929034564774130L;
 	private String sessionId;
 	private String loginIp;
 	private AuthUser loginUser;

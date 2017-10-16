@@ -29,11 +29,17 @@
 		        </ul>
 		    </li>
 
-			<li class="mm-dropdown" opCode="01">
+			<li class="mm-dropdown" opCode="06">
 				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">活动管理</span></a>
 				<ul>
-					<li opCode="0101">
+					<li opCode="060001">
 						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPage')"><span class="mm-text">活动管理</span></a>
+					</li>
+					<li opCode="060002">
+						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPagedsj')"><span class="mm-text">待上架活动</span></a>
+					</li>
+					<li opCode="060003">
+						<a tabindex="1" href="javascript:goPage('admin/activity/mainPageysj')"><span class="mm-text">已上架活动</span></a>
 					</li>
 
 				</ul>
