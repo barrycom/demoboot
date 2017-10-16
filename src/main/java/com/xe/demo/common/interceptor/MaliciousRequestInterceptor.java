@@ -3,16 +3,21 @@ package com.xe.demo.common.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xe.demo.common.conf.Constants;
+import com.xe.demo.common.support.redis.IRedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.xe.demo.common.Constant;
 import com.xe.demo.common.exception.MalciousException;
 import com.xe.demo.common.support.DataCache;
 import com.xe.demo.common.utils.IPUtil;
+
+import java.lang.reflect.Method;
 
 /**
  * 恶意请求拦截器
@@ -21,6 +26,8 @@ import com.xe.demo.common.utils.IPUtil;
 public class MaliciousRequestInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	private DataCache dataCache;
+
+
 	private static final Logger logger = LoggerFactory.getLogger(MaliciousRequestInterceptor.class);
 	
 	private final static boolean allRequest = false; // 拦截所有请求,否则拦截相同请求
@@ -31,7 +38,7 @@ public class MaliciousRequestInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		//启动支持@Autowired注解
 		WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()).getAutowireCapableBeanFactory().autowireBean(this);
-		
+
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Access-Control-Allow-Origin,EX-SysAuthToken,EX-JSESSIONID");
@@ -65,6 +72,10 @@ public class MaliciousRequestInterceptor extends HandlerInterceptorAdapter {
 		}
 		dataCache.setValue(requestIp + Constant.PRE_REQUEST_PATH, url);
 		dataCache.setValue(requestIp + Constant.PRE_REQUEST_TIME, nowtime);
+
+
+
+
 		return super.preHandle(request, response, handler);
 	}
 }

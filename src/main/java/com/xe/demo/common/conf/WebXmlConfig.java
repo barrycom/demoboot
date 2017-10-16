@@ -2,6 +2,7 @@ package com.xe.demo.common.conf;
 
 import java.util.EventListener;
 
+import com.xe.demo.common.interceptor.ApiRequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -43,6 +44,8 @@ public class WebXmlConfig extends WebMvcConfigurerAdapter {
 		registry.addInterceptor(new LoginRequestInterceptor()).addPathPatterns("/admin/**").excludePathPatterns("/admin/login")
 				.excludePathPatterns("/admin/logout");
 		registry.addInterceptor(new MaliciousRequestInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(new ApiRequestInterceptor()).addPathPatterns("/api/**");
+
 		super.addInterceptors(registry);
 	}
 

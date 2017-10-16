@@ -36,6 +36,7 @@ public class LoginService extends AbstratService<AuthUser> {
 	@Autowired
 	private DataCache dataCache;
 
+
 	@ServiceLog("登录")
 	public AjaxResult login(HttpServletRequest request, HttpServletResponse response) {
 		String verifyCode = (String) request.getSession().getAttribute(Constant.VERIFY_CODE);
@@ -74,6 +75,7 @@ public class LoginService extends AbstratService<AuthUser> {
 				dataCache.setValue(username + loginIp, identity);
 				dataCache.setValue(sessionId, username);
 				dataCache.remove(key);
+/*				tokenManager.createToken(11111);*/
 				CookieUtil.set(Constant.SESSION_IDENTITY_KEY, sessionId, response);
 			}
 		}

@@ -10,6 +10,7 @@ import com.xe.demo.service.ActivityService;
 import com.xe.demo.service.ActivityTypeService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import java.util.List;
  * Created by Administrator on 2017-10-13.
  */
 @RestController
+@RequestMapping("/api")
 public class ApiActivtiy {
 
     @Autowired
@@ -35,9 +37,9 @@ public class ApiActivtiy {
 
     @Autowired
     private ActivityMapper activityMapper;
-
+    @Authorization("需token")
     @ApiOperation(value="获取所有的活动类型", notes="获取所有的活动类型")
-    @RequestMapping(value = "getActivtiyallType", method = RequestMethod.GET)
+    @RequestMapping(value = "getActivtiyallType", method = RequestMethod.POST)
     public AjaxResult getActivtiyallType (){
         JsonResult r = new JsonResult();
         List<ActivityType> list=activityTypeService.queryAll();
@@ -47,8 +49,9 @@ public class ApiActivtiy {
         return aa;
     }
 
-    @ApiOperation(value="根据活动类型获取对应的活动", notes="根据活动类型获取对应的活动")
-    @RequestMapping(value = "getActivtiyByType", method = RequestMethod.GET)
+     @Authorization("需token")
+     @ApiOperation(value="根据活动类型获取对应的活动", notes="根据活动类型获取对应的活动")
+    @RequestMapping(value = "getActivtiyByType", method = RequestMethod.POST)
     public AjaxResult getActivtiyByType (String typeid){
         JsonResult r = new JsonResult();
         Condition condition=new Condition(Activity.class);
