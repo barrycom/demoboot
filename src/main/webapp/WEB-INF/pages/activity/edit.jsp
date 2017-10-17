@@ -84,6 +84,11 @@
                 <i class="ace-icon fa fa-reply bigger-110"></i>确定
             </button>
 
+            <button class="btn btn-success" type="reset"  onclick="javascript:showModal('预览', 'admin/activity/view');">
+                <i class="ace-icon fa fa-reply bigger-110"></i>预览
+            </button>
+
+
             <button class="btn btn-warning" type="reset" onclick="javascript:reback();">
                 <i class="ace-icon fa fa-reply bigger-110"></i>返回
             </button>
@@ -249,4 +254,6 @@ $("#activityprice").keyup(function () {
         }
 
     }
+
+
 </script>

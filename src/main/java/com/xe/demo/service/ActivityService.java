@@ -13,7 +13,10 @@ import com.xe.demo.model.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.example.SelectByExampleMapper;
+import tk.mybatis.mapper.entity.Condition;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,10 +30,26 @@ public class ActivityService extends AbstratService<Activity> {
     private ActivityTypeMapper activityTypeMapper;
 
     @ServiceLog("查询活动列表")
-    public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity) {
+    public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity,String status) {
         PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<Activity> list = activityMapper.queryList(activity);
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+      String day=df.format(new Date());// new Date()为获取当前系统时间
+        List<Activity> list=activityMapper.queryList(activity);
+       /* if(status.equals("all")) {
+             list = activityMapper.queryList(activity);
+        }*/
+        if(status.equals("starting")) {
+            Condition condition = new Condition(Activity.class);
+            condition.createCriteria().andCondition("activitysdate <= '" +  day + "'").andCondition("activityedate >= '" + day + "'");
+            condition.setOrderByClause("createtime desc");
+            list = activityMapper.selectByExample(condition);
+        }
+        if(status.equals("ending")) {
+            Condition condition = new Condition(Activity.class);
+            condition.createCriteria().andCondition("activityedate <= '" + day + "'");
+            condition.setOrderByClause("createtime desc");
+            list = activityMapper.selectByExample(condition);
+        }
     /*    Example example=new Example(User.class);
         List<Object> values=new Arraylist<Object>();
         values.add(1L);
@@ -83,7 +102,7 @@ public class ActivityService extends AbstratService<Activity> {
         return AppUtil.returnPage(list);
     }
 
-    @ServiceLog("查询活动列表")
+    @ServiceLog("查询活动")
     public Activity getActivityByid(String id) {
         Activity activitytmp=new Activity();
         activitytmp.setId(id);

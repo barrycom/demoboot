@@ -50,6 +50,7 @@
     <script type="text/javascript"> window.jQuery || document.write("<script src='${ctx}/assets/js/jquery-1.12.4.min.js'>"+"<"+"/script>"); </script>
     <link href="${ctx}/assets/js/colorpicker/jquery.bigcolorpicker.css" rel="stylesheet">
     <script src="${ctx}/assets/js/colorpicker/jquery.bigcolorpicker.js"></script>
+
     <script>
         // 影藏popover
         function hideJwpopover(){
