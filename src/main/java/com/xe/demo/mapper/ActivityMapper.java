@@ -13,6 +13,8 @@ public interface ActivityMapper extends MyMapper<Activity> {
 
     List<Activity> queryList(@Param("activity")Activity activity);
 
+    List<Activity> queryListStringing(@Param("activity")Activity activity);
+
     List<Activity> queryListTwoMonth(@Param("activity")Activity activity);
 
 

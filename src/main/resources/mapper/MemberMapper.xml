@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.MemberMapper" >
+  <resultMap id="ResultMap" type="com.xe.demo.model.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="wxno" property="wxno" jdbcType="VARCHAR" />
+    <result column="headimg" property="headimg" jdbcType="VARCHAR" />
+    <result column="regtime" property="regtime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="ishy" property="ishy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, mobile, introduce, email, wxno, headimg,
+    regtime, state, ishy
+  </sql>
+
+  <select id="queryList" resultMap="ResultMap">
+    select  * from Member
+    where 1=1
+    <!--<if test="null != member.name"> and name like CONCAT('%',#{member.name},'%')</if>-->
+    order by regtime desc
+  </select>
+
+
+</mapper>

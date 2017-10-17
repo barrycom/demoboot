@@ -119,8 +119,10 @@ public class ActivityController extends BaseController {
     @RequestMapping("queryPage")
     @ResponseBody
     @Authority(opCode = "06", opName = "查询列表")
-    public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity) {
-        return activityService.queryPage(page, activity);
+    public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity,String status) {
+
+
+        return activityService.queryPage(page, activity,status);
     }
 
     @Authority(opCode = "06", opName = "新增活动")
@@ -132,6 +134,18 @@ public class ActivityController extends BaseController {
         map.put("list", activityTypeList);
         return "activity/add";
     }
+
+
+    @Authority(opCode = "06", opName = "预览")
+    @RequestMapping("view")
+    public String view(Map<String, Object> map) {
+        List<ActivityType> activityTypeList=activityTypeService.queryAll();
+        map.put("list", activityTypeList);
+        return "activity/pview";
+    }
+
+
+
 
     @Authority(opCode = "06", opName = "修改活动")
     @RequestMapping("updateActivitPage")
