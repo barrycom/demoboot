@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.ITagMapper" >
+  <resultMap id="BaseResultMap" type="com.xe.demo.model.ITag" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+ <!-- <sql id="Base_Column_List" >
+    id, userid, dynamicwz, createtime, state, industryid,name,headimg
+  </sql>
+-->
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.ITag">
+    select * from i_tag tag
+    order by id desc
+  </select>
+
+
+  <select id="queryOne" resultMap="BaseResultMap" >
+    select  *  from i_tag tag
+    where  tag.id=#{id}
+    order by id desc
+  </select>
+
+  <update id="update" parameterType="com.xe.demo.model.ITag" >
+    update i_tag
+    <set >
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

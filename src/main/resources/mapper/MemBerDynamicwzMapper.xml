@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.MemBerDynamicwzMapper" >
+  <resultMap id="BaseResultMap" type="com.xe.demo.model.MemBerDynamicwz" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="dynamicwz" property="dynamicwz" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="industryid" property="industryid" jdbcType="VARCHAR" />
+    <result column="name" property="uname" jdbcType="VARCHAR" />
+    <result column="headimg" property="headimg" jdbcType="VARCHAR" />
+  </resultMap>
+ <!-- <sql id="Base_Column_List" >
+    id, userid, dynamicwz, createtime, state, industryid,name,headimg
+  </sql>
+-->
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.MemBerDynamicwz">
+    select  mz.id, mz.userid, mz.dynamicwz, mz.createtime, mz.state, mz.industryid,mb.id as userid,mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl  from member mb ,MemBerDynamicwz mz,dynamicwzimg dg
+    where 1=1
+    <if test="uname !=null"> and mb.name = #{uname}</if>
+    and mb.id=mz.userid AND mz.id=dg.dynamicwzid
+    order by createtime desc
+  </select>
+
+
+  <select id="queryOne" resultMap="BaseResultMap" >
+    select  mz.id, mz.userid, mz.dynamicwz, mz.createtime, mz.state, mz.industryid,mb.id as userid,mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl  from member mb ,MemBerDynamicwz mz,dynamicwzimg dg
+    where 1=1
+    and mb.id=mz.userid AND mz.id=dg.dynamicwzid
+    and mz.id=#{id}
+    order by createtime desc
+  </select>
+
+  <update id="update" parameterType="com.xe.demo.model.MemBerDynamicwz" >
+    update MemBerDynamicwz
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="dynamicwz != null" >
+        dynamicwz = #{dynamicwz,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="industryid != null" >
+        industryid = #{industryid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

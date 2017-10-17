@@ -5,7 +5,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for="roleid">所属角色：</label>
 		<div class="col-sm-8">
-			<select class="form-control span2" id="roleid" name="roleid"">
+			<select class="form-control span2" id="roleid" name="roleid">
 				<c:forEach items="${list}" var="role">
 					<option <c:if test="${user.roleid == role.roleid}">selected</c:if> value="${role.roleid}">${role.cname}</option>
 				</c:forEach>

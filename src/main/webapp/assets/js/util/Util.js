@@ -43,6 +43,8 @@ function showCfm(title, url){
             type:"post",
             dataType:"json",
             success: function (req){
+            	debugger
+				var aa=req;
                 if (req.retcode == 1) {
                     $("#openAppGrid").sgrid("refresh");
                     $.Suc(req.retmsg);

@@ -150,7 +150,7 @@ public class ActivityController extends BaseController {
     }
 
     @ControllerLog("添加活动")
-    @RequestMapping("add")
+    @RequestMapping("")
     @ResponseBody
     @Authority(opCode = "06", opName = "添加活动")
     public AjaxResult add(Activity activity) {
