@@ -10,5 +10,5 @@ import java.util.List;
 public interface MemberMapper extends MyMapper<Member> {
  /*   int deleteByPrimaryKey(String id);*/
 
-    List<Member> queryList(@Param("Member") Member member);
+    List<Member> queryList(@Param("member") Member member);
 }

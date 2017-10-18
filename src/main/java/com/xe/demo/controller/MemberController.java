@@ -1,10 +1,14 @@
 package com.xe.demo.controller;
 
+import com.qiniu.util.StringUtils;
 import com.xe.demo.common.annotation.Authority;
 import com.xe.demo.common.annotation.ControllerLog;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
+import com.xe.demo.common.utils.AppUtil;
+import com.xe.demo.mapper.MemberInfoMapper;
 import com.xe.demo.mapper.MemberMapper;
+import com.xe.demo.model.Activity;
 import com.xe.demo.model.Member;
 import com.xe.demo.model.MemberInfo;
 import com.xe.demo.service.MemberInfoService;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Condition;
 
 import java.util.Map;
 
@@ -28,6 +33,8 @@ public class MemberController extends BaseController {
     private MemberService memberService;
     @Autowired
     private MemberInfoService memberInfoService;
+    @Autowired
+    private MemberInfoMapper memberInfoMapper;
 
 
     @Authority(opCode = "06", opName = "用户列表")
@@ -43,7 +50,13 @@ public class MemberController extends BaseController {
     @ResponseBody
     @Authority(opCode = "06", opName = "用户列表数据")
     public PageAjax<Member> queryPage(PageAjax<Member> page, Member member) {
-        return memberService.queryPage(page, member);
+        PageAjax<Member> memberList= null;
+        if(!StringUtils.isNullOrEmpty(member.getName()) || !StringUtils.isNullOrEmpty(member.getMobile())){
+            memberList=memberService.queryPage(page, member);
+        }else{
+            memberList=memberService.querySearchPage(page, member);
+        }
+        return memberList;
     }
 
     @ControllerLog("屏蔽用户")
@@ -73,7 +86,18 @@ public class MemberController extends BaseController {
     @ResponseBody
     @Authority(opCode = "06", opName = "审核列表数据")
     public PageAjax<MemberInfo> memberInfoQueryPage(PageAjax<MemberInfo> page, MemberInfo memberInfo) {
-        return memberInfoService.queryPage(page,memberInfo);
+
+        Condition condition=new Condition(MemberInfo.class);
+        if(!StringUtils.isNullOrEmpty(memberInfo.getRealname())){
+            memberInfo.setRealname("%"+memberInfo.getRealname()+"%");
+            condition.createCriteria().andLike("realname",memberInfo.getRealname());
+        }
+        if(!StringUtils.isNullOrEmpty(memberInfo.getIspass())){
+            memberInfo.setIspass("ispass="+memberInfo.getIspass()+"");
+            condition.createCriteria().andCondition(memberInfo.getIspass());
+        }
+        condition.setOrderByClause("createtime");
+        return AppUtil.returnPage(memberInfoMapper.selectByExample(condition));
     }
 
 

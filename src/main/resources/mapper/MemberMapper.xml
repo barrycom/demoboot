@@ -21,7 +21,8 @@
   <select id="queryList" resultMap="ResultMap">
     select  * from Member
     where 1=1
-    <!--<if test="null != member.name"> and name like CONCAT('%',#{member.name},'%')</if>-->
+    <if test="null != member.name"> and name like CONCAT('%',#{member.name},'%')</if>
+    <if test="null != member.mobile"> and mobile like CONCAT('%',#{member.mobile},'%')</if>
     order by regtime desc
   </select>
 

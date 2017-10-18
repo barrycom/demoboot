@@ -18,13 +18,13 @@ import java.util.List;
  */
 @Service
 public class MemberService extends AbstratService<Member> {
-    /*@Autowired
+    @Autowired
     private MemberMapper memberMapper;
 
     @ServiceLog("查询普通用户列表")
-    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member) {
+    public PageAjax<Member> querySearchPage(PageAjax<Member> page, Member member) {
         PageMethod.startPage(page.getPageNo(), page.getPageSize());
         List<Member> list = memberMapper.queryList(member);
         return AppUtil.returnPage(list);
-    }*/
+    }
 }
