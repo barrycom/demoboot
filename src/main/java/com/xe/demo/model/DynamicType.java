@@ -3,16 +3,17 @@ package com.xe.demo.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.Table;
 
-public class ITag {
+@Table(name = "dynamic_type")
+public class DynamicType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String tname;
+    private String dynamicname;
 
-    private String state;
 
     private String creat_time;
 
@@ -24,20 +25,12 @@ public class ITag {
         this.id = id;
     }
 
-    public String getTname() {
-        return tname;
+    public String getDynamicname() {
+        return dynamicname;
     }
 
-    public void setTname(String tname) {
-        this.tname = tname;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setDynamicname(String dynamicname) {
+        this.dynamicname = dynamicname;
     }
 
     public String getCreat_time() {

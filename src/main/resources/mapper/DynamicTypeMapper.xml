@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.DynamicTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.xe.demo.model.DynamicType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dynamicname" property="dynamicname" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creat_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.DynamicType">
+    select id, dynamicname, DATE_FORMAT(ind.creat_time, '%Y-%m-%d %H:%i:%s') creat_time  from dynamic_type ind
+    WHERE  1=1
+    <if test="null != dynamicname"> and dynamicname like CONCAT('%',#{dynamicname},'%')</if>
+    order by creat_time desc
+  </select>
+
+
+  <select id="queryOne" resultMap="BaseResultMap" >
+    select  *  from dynamic_type ind
+    where  ind.id=#{id}
+  </select>
+
+  <update id="update" parameterType="com.xe.demo.model.DynamicType" >
+    update dynamic_type
+    <set >
+      <if test="dynamicname != null" >
+        dynamicname = #{dynamicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

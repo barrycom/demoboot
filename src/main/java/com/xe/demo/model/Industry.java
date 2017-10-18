@@ -3,16 +3,15 @@ package com.xe.demo.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
-public class ITag {
+public class Industry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String tname;
+    private String industryname;
 
-    private String state;
 
     private String creat_time;
 
@@ -24,20 +23,12 @@ public class ITag {
         this.id = id;
     }
 
-    public String getTname() {
-        return tname;
+    public String getIndustryname() {
+        return industryname;
     }
 
-    public void setTname(String tname) {
-        this.tname = tname;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setIndustryname(String industryname) {
+        this.industryname = industryname;
     }
 
     public String getCreat_time() {

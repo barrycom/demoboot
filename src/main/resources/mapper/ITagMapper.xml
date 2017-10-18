@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="tname" property="tname" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creat_time" jdbcType="TIMESTAMP" />
   </resultMap>
  <!-- <sql id="Base_Column_List" >
     id, userid, dynamicwz, createtime, state, industryid,name,headimg
@@ -12,8 +13,9 @@
 -->
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.ITag">
-    select * from i_tag tag
-    order by id desc
+    select id, tname,state,  DATE_FORMAT(tag.creat_time, '%Y-%m-%d %H:%i:%s') creat_time  from i_tag tag
+    <if test="null != tname"> and tname like CONCAT('%',#{tname},'%')</if>
+    order by creat_time desc
   </select>
 
 

@@ -34,11 +34,14 @@
 					<li opCode="0505">
 						<a tabindex="-1" href="javascript:goPage('admin/content/dynamicsList')"><span class="mm-text">动态列表</span></a>
 					</li>
-					<%--<li opCode="0102">
-						<a tabindex="-1" href="javascript:goPage('/admin/content/')"> <span class="mm-text">新增标签</span></a>
-					</li>--%>
+					<li opCode="0102">
+						<a tabindex="-1" href="javascript:goPage('admin/content/dynamicpage')"> <span class="mm-text">动态分类</span></a>
+					</li>
+					<li opCode="0102">
+						<a tabindex="-1" href="javascript:goPage('admin/content/industrypage')"> <span class="mm-text">行业分类</span></a>
+					</li>
 					<li opCode="0506">
-						<a tabindex="-1" href="javascript:goPage('admin/content/tagpage')"><span class="mm-text">标签列表</span></a>
+						<a tabindex="-1" href="javascript:goPage('admin/content/tagpage')"><span class="mm-text">兴趣标签</span></a>
 					</li>
 				</ul>
 			</li>
