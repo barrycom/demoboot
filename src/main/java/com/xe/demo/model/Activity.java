@@ -1,10 +1,16 @@
 package com.xe.demo.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Activity {
+
     private String id;
 
     private String activityid;
@@ -37,6 +43,30 @@ public class Activity {
 
     @Transient
     private String activitytypename;
+
+    @Transient
+    private List<Member> membersList = new ArrayList<Member>();
+
+//浏览过改活动的
+    @Transient
+    private List<Member> viewmembersList = new ArrayList<Member>();
+
+
+    public List<Member> getViewmembersList() {
+        return viewmembersList;
+    }
+
+    public void setViewmembersList(List<Member> viewmembersList) {
+        this.viewmembersList = viewmembersList;
+    }
+
+    public List<Member> getMembersList() {
+        return membersList;
+    }
+
+    public void setMembersList(List<Member> membersList) {
+        this.membersList = membersList;
+    }
 
     public String getActivitytypename() {
         return activitytypename;

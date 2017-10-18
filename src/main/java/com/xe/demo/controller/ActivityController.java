@@ -136,11 +136,11 @@ public class ActivityController extends BaseController {
     }
 
 
-    @Authority(opCode = "06", opName = "预览")
+    @Authority(opCode = "06", opName = "查看详情")
     @RequestMapping("view")
-    public String view(Map<String, Object> map) {
-        List<ActivityType> activityTypeList=activityTypeService.queryAll();
-        map.put("list", activityTypeList);
+    public String view(Map<String, Object> map,String id) {
+        Activity activity = activityService.getActivityByid(id);
+        map.put("activity", activity);
         return "activity/pview";
     }
 

@@ -4,18 +4,15 @@ import com.github.pagehelper.page.PageMethod;
 import com.xe.demo.common.annotation.ServiceLog;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.utils.AppUtil;
-import com.xe.demo.mapper.ActivityMapper;
-import com.xe.demo.mapper.ActivityTypeMapper;
-import com.xe.demo.mapper.AuthUserMapper;
-import com.xe.demo.model.Activity;
-import com.xe.demo.model.ActivityType;
-import com.xe.demo.model.AuthUser;
+import com.xe.demo.mapper.*;
+import com.xe.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.example.SelectByExampleMapper;
 import tk.mybatis.mapper.entity.Condition;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +25,16 @@ public class ActivityService extends AbstratService<Activity> {
     private ActivityMapper activityMapper;
     @Autowired
     private ActivityTypeMapper activityTypeMapper;
+
+    @Autowired
+    private UserJoinActivityMapper userJoinActivityMapper;
+
+
+    @Autowired
+    private MemberViewActivityMapper memberViewActivityMapper;
+
+    @Autowired
+    private MemberMapper memberMapper;
 
     @ServiceLog("查询活动列表")
     public PageAjax<Activity> queryPage(PageAjax<Activity> page, Activity activity,String status) {
@@ -50,14 +57,35 @@ public class ActivityService extends AbstratService<Activity> {
             condition.setOrderByClause("createtime desc");
             list = activityMapper.selectByExample(condition);
         }
-    /*    Example example=new Example(User.class);
-        List<Object> values=new Arraylist<Object>();
-        values.add(1L);
-        values.add(2L);
-        values.add(3L);
-        example.creatCriteria().addIn("id",values);*/
         for(int i=0;i<list.size();i++)
         {
+            Condition condition = new Condition(UserJoinActivity.class);
+            condition.createCriteria().andCondition("activityid = '" + list.get(i).getId() + "'");
+            List<UserJoinActivity> userJoinActivityList=userJoinActivityMapper.selectByExample(condition);
+
+            List<Member> mlisst=new ArrayList<>();
+            for(int j=0;j<userJoinActivityList.size();j++)
+            {
+                Member mb=new Member();
+                mb.setId(userJoinActivityList.get(j).getUserid());
+                mb=memberMapper.selectOne(mb);
+                mlisst.add(mb);
+            }
+            list.get(i).setMembersList(mlisst);
+
+            Condition conditionview = new Condition(UserJoinActivity.class);
+            conditionview.createCriteria().andCondition("activityid = '" + list.get(i).getId() + "'");
+            List<MemberViewActivity> memberViewActivityList=memberViewActivityMapper.selectByExample(conditionview);
+            List<Member> vlisst=new ArrayList<>();
+            for(int k=0;k<memberViewActivityList.size();k++)
+            {
+                Member mb=new Member();
+                mb.setId(memberViewActivityList.get(k).getUserid());
+                mb=memberMapper.selectOne(mb);
+                vlisst.add(mb);
+            }
+            list.get(i).setViewmembersList(vlisst);
+          //  list.get(i).se list.get(i).setMembersList(mlisst);t
             String typeName="未知";
             ActivityType at=activityTypeMapper.selectByPrimaryKey(list.get(i).getActivitytype());
             if(at!=null) {
@@ -107,6 +135,36 @@ public class ActivityService extends AbstratService<Activity> {
         Activity activitytmp=new Activity();
         activitytmp.setId(id);
         Activity activity = activityMapper.selectOne(activitytmp);
+
+        Condition condition = new Condition(UserJoinActivity.class);
+        condition.createCriteria().andCondition("activityid = '" + activity.getId() + "'");
+        List<UserJoinActivity> userJoinActivityList=userJoinActivityMapper.selectByExample(condition);
+
+        List<Member> mlisst=new ArrayList<>();
+        for(int j=0;j<userJoinActivityList.size();j++)
+        {
+            Member mb=new Member();
+            mb.setId(userJoinActivityList.get(j).getUserid());
+            mb=memberMapper.selectOne(mb);
+            mlisst.add(mb);
+        }
+        activity.setMembersList(mlisst);
+
+        Condition conditionview = new Condition(UserJoinActivity.class);
+        conditionview.createCriteria().andCondition("activityid = '" +activity.getId() + "'");
+        List<MemberViewActivity> memberViewActivityList=memberViewActivityMapper.selectByExample(conditionview);
+        List<Member> vlisst=new ArrayList<>();
+        for(int k=0;k<memberViewActivityList.size();k++)
+        {
+            Member mb=new Member();
+            mb.setId(memberViewActivityList.get(k).getUserid());
+            mb=memberMapper.selectOne(mb);
+            vlisst.add(mb);
+        }
+        activity.setViewmembersList(vlisst);
+
+
+
         return activity;
     }
 }

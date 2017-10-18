@@ -1,6 +1,90 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<link href="${ctx}/assets/css/view.css" type="text/css" rel="stylesheet"/>
+<div class="modal fade" id="myModal" tabindex="-1" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="phone">
+        <div class="phone-content">
+            <div class='activity-bg'>
+                <div class='activity-content-bg'>
 
+                    <image id="viewlogo" src="http://p2.wmpic.me/article/2017/09/15/1505443129_lZfdpYvH_215x185.jpg" class="slide-image" />
+
+                    </swiper>
+
+                    <!--活动名称价格。。  -->
+                    <div class='details-head'>
+                        <div class='activity-name'>
+
+                        </div>
+                        <div class='activity-price'>
+                            <text id="pricetext">¥950</text> /人
+                        </div>
+                        <div class='activity-addresss'>
+                            <image src='${ctx}/assets/images/activity/act_det_icon_time.png'  width="13" height="13"></image><span id="hddate">10月1日-10月8日</span></div>
+                        <div class='activity-addresss'>
+                            <image src='${ctx}/assets/images/activity/act_det_icon_add.png'  width="15" height="17"></image> <span id="hdaddress">武汉江岸区武汉剧院</span>
+                            <image src='${ctx}/assets/images/activity/list_btn_path.png' class='arrow-right'  width="13" height="13"></image>
+                        </div>
+                    </div>
+
+                    <!--感兴趣的人  -->
+                    <div class='watch-people-bg'>
+                        新增此处无数据
+                        <%--      <text class='watch-text'>他们也感兴趣</text>
+                              <div>
+                                  <image src='http://p2.wmpic.me/article/2017/09/15/1505443129_lZfdpYvH_215x185.jpg' class='watch-head'></image>
+                                  <image src='http://p3.wmpic.me/article/2017/09/19/1505800793_ifRRQepR_215x185.jpg' class='watch-head'></image>
+                                  <image src='http://p2.wmpic.me/article/2017/09/15/1505443129_lZfdpYvH_215x185.jpg' class='watch-head'></image>
+                                  <image src='http://p3.wmpic.me/article/2017/09/19/1505800793_ifRRQepR_215x185.jpg' class='watch-head'></image>
+                                  <text class='watch-head'>216</text>
+                              </div>--%>
+                    </div>
+
+                    <!--活动详情  -->
+                    <div class='activity-info-bg'>
+                        <div class='activity-info-title'>活动详情</div>
+                        <div id="hdxq">sdasds</div>
+                    </div>
+
+                    <!--温馨提示  -->
+                    <div class='activity-info-bg'>
+
+                        <div class='activity-info-title'>
+                            温馨提示
+                        </div>
+                        <div class='activity-addresss' id="wxts">
+                            1.2米以上儿童需持票入场。每张成人票可协同1名1.2米以下儿童入场。</div>
+
+                    </div>
+
+
+                </div>
+                <!--我要参加  -->
+
+
+
+
+            </div>
+
+
+            <!--弹出  -->
+            <div class='model-bg' hidden='{{model}}' >
+                <div class='model-content'>
+                    <div class='model-title'>选择数量
+                        <div class='model-close' bindtap="modelHide">X</div>
+                    </div>
+                    <div class='num-bg'>
+                        <div class='add'>-</div><div class='num' >2</div><div class='add add-light'>+</div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
 <form id="submitForm" class="form-horizontal">
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动名称：</label>
@@ -97,7 +181,9 @@
             <button class="btn btn-primary" type="submit"name="submit">
                 <i class="ace-icon fa fa-reply bigger-110"></i>确定
             </button>
-
+            <button class="btn btn-success" type="button"   onclick="showview()">
+                <i class="ace-icon fa fa-reply bigger-110"></i>预览
+            </button>
             <button class="btn btn-warning" type="reset" onclick="javascript:reback();">
                 <i class="ace-icon fa fa-reply bigger-110"></i>返回
             </button>
@@ -245,5 +331,20 @@ $("#activityprice").keyup(function () {
 function reback() {
     goPage('admin/activity/mainPage');
 
+}
+function showview() {
+
+    $("#viewlogo").attr("src",$("#activityimg").val())
+    $(".activity-name").html($("#activityname").val())
+    $("#pricetext").html("¥"+$("#activityprice").val())
+    $("#hddate").html($("#activitysdate").val()+"-"+$("#activityedate").val())
+    $("#hdaddress").html($("#activityaddr").val())
+    $("#hdxq").html(UE.getEditor('content').getContent());
+    $("#wxts").html($("#activityidmemo").html())
+    $('#myModal').modal({
+        keyboard: true
+    })
+
+    $("#base").show();
 }
 </script>

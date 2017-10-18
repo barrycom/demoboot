@@ -49,7 +49,7 @@ public class ApiActivtiy {
 
      @Authorization("需token")
      @ApiOperation(value="根据活动类型获取对应的活动", notes="根据活动类型获取对应的活动")
-    @RequestMapping(value = "getActivtiyByType", method = RequestMethod.POST)
+     @RequestMapping(value = "getActivtiyByType", method = RequestMethod.POST)
      @ApiImplicitParam(paramType="query", name = "typeid", value = "活动类型编号", required = true, dataType = "String")
     public AjaxResult getActivtiyByType(@RequestParam String  typeid)
      {

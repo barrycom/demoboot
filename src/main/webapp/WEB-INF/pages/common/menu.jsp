@@ -57,6 +57,16 @@
 
 				</ul>
 			</li>
+
+			<li class="mm-dropdown" opCode="06">
+				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">订单管理</span></a>
+				<ul>
+					<li opCode="060001">
+						<a tabindex="-1" href="javascript:goPage('admin/activityOrder/mainPage')"><span class="mm-text">活动订单</span></a>
+					</li>
+
+				</ul>
+			</li>
 		    <li class="mm-dropdown" opCode="02">
 		        <a href="#"><i class="menu-icon fa fa-barcode"></i><span class="mm-text">整合技术</span></a>
 		        <ul>
