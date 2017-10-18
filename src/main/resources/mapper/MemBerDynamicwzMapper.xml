@@ -30,7 +30,6 @@
     where 1=1
     and mb.id=mz.userid AND mz.id=dg.dynamicwzid
     and mz.id=#{id}
-    order by createtime desc
   </select>
 
   <update id="update" parameterType="com.xe.demo.model.MemBerDynamicwz" >
