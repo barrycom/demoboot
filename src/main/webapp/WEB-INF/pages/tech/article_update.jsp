@@ -116,15 +116,15 @@
             data: data,
             success: function (req){
                 if (req.retcode == 1) {
-                	goPage("admin/tech/articlePage")
+                    goPage("admin/tech/articlePage")
                 } else {
-                	$("#errDiv").show();
-    				$("#err").html(req.retmsg);
+                    $("#errDiv").show();
+                    $("#err").html(req.retmsg);
                 }
             },
             error: function(req){
-            	$("#errDiv").show();
-				$("#err").html(req.statusText);
+                $("#errDiv").show();
+                $("#err").html(req.statusText);
             }
         });
 	}
