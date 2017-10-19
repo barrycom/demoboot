@@ -19,6 +19,16 @@ public class MemBerDynamicwz {
 
     private String imgurl;
 
+    private String realname;
+
+    private String mobile;
+
+    private String dynamicname;
+
+    private String corporatename;
+
+    private String profession;
+
     public String getId() {
         return id;
     }
@@ -89,5 +99,45 @@ public class MemBerDynamicwz {
 
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDynamicname() {
+        return dynamicname;
+    }
+
+    public void setDynamicname(String dynamicname) {
+        this.dynamicname = dynamicname;
+    }
+
+    public String getCorporatename() {
+        return corporatename;
+    }
+
+    public void setCorporatename(String corporatename) {
+        this.corporatename = corporatename;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 }

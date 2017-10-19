@@ -1,19 +1,88 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <form id="submitForm" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-sm-3 control-label">标签名称：</label><%--for="username"--%>
-        <div class="col-sm-8">
-            <input class="form-control" type="text" id="tname" name="tname" />
-            <div id="validation-username" class="validate-error help-block"></div>
+    <div id="cloum">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">标签名称：</label><%--for="username"--%>
+            <div class="col-sm-2">
+                <input class="form-control" type="text" id="tname_1" name="tname_1"/>
+                <div id="validation-username" class="validate-error help-block"></div>
+            </div>
         </div>
     </div>
 
+    <div class="form-group" style="margin: 50px 59px;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" id="addcloum" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                继续添加
+            </button>
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group" style="margin: 50px 49px;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" style="width: 344px;" id="save" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                新增标签
+            </button>
+
+        </div>
+    </div>
+
+
 </form>
 <script type="text/javascript">
-	submit = function(){
-		//frmValidate();
-		var data = $("#submitForm").serialize();
-		ajaxRequest("admin/content/instrtag", data);
-	}
+    var count=2;
+    var nameStr="";
+    $(function () {
+        //添加输入框
+        $("#addcloum").click(function(){
+            if(count<11){
+                var html="<div class=\"form-group\">"
+                    +"<label class=\"col-sm-1 control-label\">标签名称：</label><div class=\"col-sm-2\"><input class=\"form-control\" type=\"text\" id=\"tname_"+count+"\" name=\"tname_"+count+"\"/>"
+                    +"<div id=\"validation-username\" class=\"validate-error help-block\"></div></div></div>";
+                $("#cloum").append(html)
+                count++;
+            }else{
+                $.Err("一次最多添加10个标签!");
+            }
+        })
+
+        //保存标签
+        $("#save").click(function(){
+            debugger;
+            for(var i=1;i<=count-1;i++){
+
+                if($("#tname_"+i).length>0){
+                    if($("#tname_"+i).val()!="") {
+                        nameStr +=$("#tname_"+i).val()+",";
+                    }
+                }
+
+            }
+
+            if(nameStr!=""){
+                $.ajax({
+                    url: _urlPath + "admin/content/instrtag",
+                    data: {"tname":nameStr},
+                    type: "post",
+                    dataType:"json",
+                    success: function (req){
+                        if (req.retcode == 1) {
+                            goPage("admin/content/tagpage")
+                        } else {
+                            modalErr(req.retmsg);
+                        }
+                    }
+                });
+            }
+
+        })
+
+
+
+    })
+
 </script>

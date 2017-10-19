@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-md-3" style="text-align: left;padding-bottom: unset">
-        <button id="addBtn" class="btn btn-labeled btn-primary" onclick="javascript:showModal('添加标签', 'admin/content/taginstrpage');"><span class="btn-label icon fa fa-plus"></span>添加标签</button>
+        <button id="addBtn" class="btn btn-labeled btn-primary" onclick="javascript:goPage('admin/content/taginstrpage');"><span class="btn-label icon fa fa-plus"></span>添加标签</button>
     </div>
 </div>
 <div class="openAppGrid">

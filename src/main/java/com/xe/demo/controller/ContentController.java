@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -68,75 +69,48 @@ public class ContentController extends BaseController {
         MemBerDynamicwz mebdy=memBerDynamicwzService.queryOne(id);
 
         if(mebdy!=null){
+            String compname="";
+            if(mebdy.getCorporatename().length()>5){
+                compname=mebdy.getCorporatename().substring(0,4);
+            }else{
+                compname=mebdy.getCorporatename();
+            }
                 //手机头部样式
-               String heand="<div id=\"u0\" class=\"ax_default\">" +
-                       "                                    <div id=\"u0_state0\" class=\"panel_state\" data-label=\"State1\">" +
-                       "                                        <div id=\"u0_state0_content\" class=\"panel_state_content\">" +
-                       "                                            <div id=\"u1\" class=\"ax_default flow_shape\">" +
-                       "                                                <div id=\"u1_div\" class=\"\"></div>" +
-                       "                                                <div id=\"u2\" class=\"text\" style=\"display: none; visibility: hidden\">" +
-                       "                                                    <p><span></span></p>" +
-                       "                                                </div>" +
-                       "                                            </div>" +
-                       "                                        </div>" +
+               String heand="<div class='activity-bg'><div>" +
+                       "                                <div class=\"app_head_div\">" +
+                       "                                    <div class=\"glyphicon glyphicon-chevron-left\"></div>" +
+                       "                                    <div class=\"glyphicon glyphicon-remove\"></div>" +
+                       "                                    <div class=\"app_head_title\">" +
+                       "                                        <h4>TA的动态</h4>" +
                        "                                    </div>" +
-                       "                                </div>" +
-                       "                                <div id=\"u3\" class=\"ax_default _图片\">" +
-                       "                                    <img id=\"u3_img\" class=\"img \" src=\"/assets/images/index/u3.png\"/>" +
-                       "                                    <div id=\"u4\" class=\"text\" style=\"display: none; visibility: hidden\">" +
-                       "                                        <p><span></span></p>" +
-                       "                                    </div>" +
-                       "                                </div>" +
-                       "                                <div id=\"u5\" class=\"ax_default ellipse\">" +
-                       "                                    <img id=\"u5_img\" class=\"img \" src=\""+mebdy.getHeadimg()+"\"/>" +
-                       "                                    <div id=\"u6\" class=\"text\" style=\"display: none; visibility: hidden;color: #4ab6d5;\">" +
-                       "                                        <p><span></span></p>" +
-                       "                                    </div>" +
-                       "                                </div>";
-                //用户信息部分
-               String user="<div id=\"u7\" class=\"ax_default label\" style=\"background: #EFEFEF;\">" +
-                       "                                    <div id=\"u7_div\" class=\"\"></div>" +
-                       "                                    <div id=\"u8\" class=\"text\" style=\"visibility: visible;\">" +
-                       "                                        <p><span>"+mebdy.getUname()+"</span></p>" +
-                       "                                    </div>" +
-                       "                                </div>" +
-                       "                                <div id=\"u9\" class=\"ax_default button\">" +
-                       "                                    <div id=\"u9_div\" class=\"\"></div>" +
-                       "                                    <div id=\"u10\" class=\"text\" style=\"visibility: visible;\">" +
-                       "                                        <p><span style=\"color: #4ab6d5;\">聊聊TA</span></p>" +
-                       "                                    </div>" +
-                       "                                </div>" +
-                       "                                <div id=\"u11\" class=\"ax_default label\" style=\"background: #EFEFEF;\">" +
-                       "                                    <div id=\"u11_div\" class=\"\"></div>" +
-                       "                                    <div id=\"u12\" class=\"text\" style=\"visibility: visible;\">" +
-                       "                                        <p><span>市场部门 | 拓展部</span></p>" +
-                       "                                    </div>" +
-                       "                                </div>";
-                //动态文字
-                String content="<div id=\"u13\" class=\"ax_default _文本段落\">" +
-                        "                                    <div id=\"u13_div\" class=\"\"></div>" +
-                        "                                    <div id=\"u14\" class=\"text\" style=\"visibility: visible;\">" +
-                        "                                        <p><span>"+mebdy.getDynamicwz()+"</span></p></div></div>";
+                       "                                </div>"  +
+                       "                            <div class=\"app_head\">" +
+                       "                                <img src=\""+mebdy.getHeadimg()+"\" height='70px' class='u_img'/>" +
+                       "                            </div>" +
+                       "                            <div class=\"app_name\">"+mebdy.getUname()+"</div>" +
+                       "                            <div class=\"app_job\">"+mebdy.getProfession()+" |  "+compname+"</div>" +
+                       "                            <div class=\"takle\">" +
+                       "                                <span>聊聊TA</span>" +
+                       "                            </div>" +
+                       "                        </div>" +
+                       "                        <div class=\"app_text\">" +
+                       "                            <span>"+mebdy.getDynamicwz()+"</span>" +
+                       "                        </div>" +
+                       "                    </div>";
 
             //展示图片
-            String img="";
-            Integer ucount=15;
+
                String [] imglist=mebdy.getImgurl().split(",");
+               String img="";
                      for(int i=0;i<imglist.length;i++) {
                          if (imglist[i] != null && !imglist[i].equals("")) {
-                               if (ucount > 15) {
-                                   ucount++;
-                               }
-                               img += "<div id=\"u" + ucount + "\" class=\"ax_default image\">" +
-                                       "<img id=\"u" + ucount + "_img\" class=\"img \" src=\"" + imglist[i] + "\"/>" +
-                                       "<div id=\"u" + (ucount + 1) + "\" class=\"text\" style=\"display: none; visibility: hidden\">" +
-                                       "<p><span></span></p>" +
-                                       "</div></div>";
-                                ucount++;
+                             img+="<li><img src=\""+imglist[i]+"\"/></li>";
                            }
+                     }
+                String imgtotal="<div><div><ul class=\"imglist\">"+img+"</ul></div></div>";
 
-                       }
-            html=heand+user+content+img;
+
+            html="<div class=\"phone\"><div class=\"phone-content\">"+heand+imgtotal+"</div></div>";
         }
         ajaxResult.setData(html);
         return ajaxResult;
@@ -212,10 +186,25 @@ public class ContentController extends BaseController {
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
         String daynow = dateFormat.format(now);
-        iTag.setCreat_time(daynow);
-        iTag.setState("0");
-        return tagService.save(iTag);
+        String [] name=iTag.getTname().split(",");
+        //AjaxResult result=industryService.save("22",name);
+        AjaxResult result=new AjaxResult();
+        for (int i=0;i<name.length;i++){
+            ITag tag=new ITag();
+            if (name[i]!=null && !name[i].equals("")){
+                tag.setCreat_time(daynow);
+                tag.setTname(name[i]);
+                tag.setState("0");
+                result=tagService.save(tag);
+                if(result.getRetcode()!=1){
+                    break;
+                }
+            }
+
+        }
+        return result;
     }
+
 
     /*
     * 行业分类管理
