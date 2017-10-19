@@ -193,12 +193,10 @@
        var ishy=$("#ishy").val();
        var state=$("#state").val();
 
-        if(type == 1){ // 查看 不可编辑
-            $("form input").attr("disabled","disabled");
-            $("#tijiao").remove();
-            if(ishy == 1 && state ==1){
-               $("#vipAllottedTime").css("display","block");  //购买和通过审核 才能给时间
-           }
+        if(type == 3){ // 查看 不可编辑
+            if(ishy == 1 && state ==1){   //编辑
+                $("#vipAllottedTime").css("display","block");
+            }
        }else if(type == 2){   //给购买时间  不可编辑信息
            $("#memberInfo input").attr("disabled","disabled");
             if(state ==1){
@@ -207,8 +205,10 @@
                 $("#tijiao").remove();
             }
        }else {
-            if(ishy == 1 && state ==1){   //编辑
-                $("#vipAllottedTime").css("display","block");
+            $("form input").attr("disabled","disabled");
+            $("#tijiao").remove();
+            if(ishy == 1 && state ==1){
+                $("#vipAllottedTime").css("display","block");  //购买和通过审核 才能给时间
             }
        }
     }
@@ -313,7 +313,13 @@
     });
 
     function reback() {
+        debugger;
+        var type = $("#type").val();
+        if(type == 4){
+            goPage("admin/member/mainMemberInfoPage")
+        }else{
             goPage("admin/member/mainPage")
+        }
 
     }
 </script>

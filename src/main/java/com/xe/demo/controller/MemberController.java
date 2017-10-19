@@ -6,6 +6,7 @@ import com.xe.demo.common.annotation.ControllerLog;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.utils.AppUtil;
+import com.xe.demo.common.utils.DateUtil;
 import com.xe.demo.mapper.IndustryMapper;
 import com.xe.demo.mapper.MemberInfoMapper;
 import com.xe.demo.mapper.MemberMapper;
@@ -172,6 +173,35 @@ public class MemberController extends BaseController {
         return AppUtil.returnPage(memberInfoMapper.selectByExample(condition));
     }
 
+    @ControllerLog("审核通过")
+    @RequestMapping("memberInfoPass/{id}")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public AjaxResult memberInfoPass(@PathVariable("id") String id) {
+       MemberInfo memberInfo=new MemberInfo();
+       memberInfo.setId(id);
+       memberInfo.setIspass("1");
+       memberInfo.setRegtime(DateUtil.getCurDate());
+        return memberInfoService.update(memberInfo);
+    }
 
+    @ControllerLog("拒绝审核页面")
+    @RequestMapping("memberInfoRefusePage/{id}")
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public String memberInfoRefusePage(Map<String, Object> map,@PathVariable("id") String id){
+        map.put("id",id);
+        return "member/refusePage";
+    }
+
+    @ControllerLog("拒绝通过")
+    @RequestMapping("memberInfoRefuse")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public AjaxResult memberInfoPass(MemberInfo memberInfo) {
+        MemberInfo memberInfo1=new MemberInfo();
+        memberInfo.setIspass("2");
+        memberInfo.setRegtime(DateUtil.getCurDate());
+        return memberInfoService.update(memberInfo);
+    }
 }
 

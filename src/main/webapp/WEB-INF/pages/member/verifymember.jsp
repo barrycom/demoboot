@@ -74,20 +74,20 @@
                     }else{
                         return "<font color='red'>已拒绝</font>";
                     }
-
                 }},
                 {field:"createtime",width:135, text:"申请时间"},
                 {field:"id", text:"操作",width:135, style:"text-align:center", formatter:function(index, content, data){
-                    var editUrl = "admin/user/updatePage/" + content;
-                    var resetPwd = "admin/user/updatePwdPage?id=" + content;
-                    var delUrl = "admin/member/blockMember/" + content;
+                    var ck = "admin/member/updateMemberPage?type=4&memberid=" + data.memberid;
+                    var tg = "admin/member/memberInfoPass/"+content;
+                    var jj = "admin/member/memberInfoRefusePage/" + content;
+
                     var url="";
                     if(data.ispass ==0){
-                        url="<a href='javascript:showModal(\"更新用户\", \""+editUrl+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>"
-                            + "&nbsp;<a href='javascript:showModal(\"重置密码\", \""+resetPwd+"\");' data-original-title='通过' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>通过</i></a>"
-                            + "&nbsp;<a href='javascript:showCfm(\"确定屏蔽/取消屏蔽 吗\", \""+delUrl+"\");'  data-original-title='拒绝' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times'>拒绝</i></a>";
+                        url="<a href='javascript:goPage(\""+ck+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>"
+                        + "&nbsp;<a href='javascript:showCfm(\"确定通过吗\", \""+tg+"\");' data-original-title='通过' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>通过</i></a>"
+                        + "&nbsp;<a href='javascript:showModal(\"拒绝\", \""+jj+"\");' data-original-title='拒绝' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-repeat'>拒绝</i></a>"
                     }else{
-                        url="<a href='javascript:showModal(\"更新用户\", \""+editUrl+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>";
+                        url="<a href='javascript:goPage(\""+ck+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>";
                     }
                     return url;
                 }},
