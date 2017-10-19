@@ -1,12 +1,14 @@
 package com.xe.demo.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017-10-18.
  */
+@Table(name = "activityorder")
 public class ActivityOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +18,7 @@ public class ActivityOrder {
 
     private String userid;
 
-    private double paymoney;
+    private BigDecimal paymoney;
 
     private String paymemo;
 
@@ -30,15 +32,26 @@ public class ActivityOrder {
 
     private String realname;
 
-    private double ordermoney;
+    private BigDecimal ordermoney;
 
     private String wxno;
 
     private String status;
 
 
-    public ActivityOrder(String wxno) {
-        this.wxno = wxno;
+    private String createtime;
+
+
+    @Transient
+    private Activity activity;
+
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     public String getId() {
@@ -65,11 +78,11 @@ public class ActivityOrder {
         this.userid = userid;
     }
 
-    public double getPaymoney() {
+    public BigDecimal getPaymoney() {
         return paymoney;
     }
 
-    public void setPaymoney(double paymoney) {
+    public void setPaymoney(BigDecimal paymoney) {
         this.paymoney = paymoney;
     }
 
@@ -121,12 +134,20 @@ public class ActivityOrder {
         this.realname = realname;
     }
 
-    public double getOrdermoney() {
+    public BigDecimal getOrdermoney() {
         return ordermoney;
     }
 
-    public void setOrdermoney(double ordermoney) {
+    public void setOrdermoney(BigDecimal ordermoney) {
         this.ordermoney = ordermoney;
+    }
+
+    public String getWxno() {
+        return wxno;
+    }
+
+    public void setWxno(String wxno) {
+        this.wxno = wxno;
     }
 
     public String getStatus() {
@@ -135,5 +156,13 @@ public class ActivityOrder {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 }

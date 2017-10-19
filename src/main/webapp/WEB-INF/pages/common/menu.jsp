@@ -51,12 +51,6 @@
 					<li opCode="060001">
 						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPage')"><span class="mm-text">活动管理</span></a>
 					</li>
-					<li opCode="060002">
-						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPagedsj')"><span class="mm-text">待上架活动</span></a>
-					</li>
-					<li opCode="060003">
-						<a tabindex="1" href="javascript:goPage('admin/activity/mainPageysj')"><span class="mm-text">已上架活动</span></a>
-					</li>
 
 				</ul>
 			</li>

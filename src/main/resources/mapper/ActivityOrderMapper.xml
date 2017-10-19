@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.ActivityOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xe.demo.model.ActivityOrder">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="activityid" jdbcType="VARCHAR" property="activityid" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="paymoney" jdbcType="DECIMAL" property="paymoney" />
+    <result column="paymemo" jdbcType="VARCHAR" property="paymemo" />
+    <result column="buynum" jdbcType="INTEGER" property="buynum" />
+    <result column="buytime" jdbcType="VARCHAR" property="buytime" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="ordermoney" jdbcType="DECIMAL" property="ordermoney" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="wxno" jdbcType="VARCHAR" property="wxno" />
+    <association property="activity" column="activityid" javaType="com.xe.demo.model.Activity">
+      <id property="id" column="id" />
+      <result property="activityname" column="activityname" />
+      <result property="activitysdate" column="activitysdate" />
+      <result property="activityedate" column="activityedate" />
+      <result property="activityaddr" column="activityaddr" />
+    </association>
+  </resultMap>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+    u.*,r.activityname,r.activitysdate,r.activityedate,r.activityaddr from activityorder u, activity r
+    where u.activityid = r.id
+    <if test="null != aorder.nickname"> and (nickname like CONCAT('%',#{aorder.nickname},'%') or u.realname like CONCAT('%',#{aorder.nickname},'%'))  </if>
+    <if test="null != aorder.mobile"> and u.mobile like CONCAT('%',#{aorder.mobile},'%') </if>
+    <if test="null != aorder.status"> and u.status = #{aorder.status}</if>
+    order by u.createtime desc
+  </select>
+
+  <select id="selectOneById" resultMap="BaseResultMap">
+    select
+    u.*,r.activityname,r.activitysdate,r.activityedate,r.activityaddr from activityorder u, activity r
+    where u.activityid = r.id and u.id=#{id}
+    order by u.createtime desc
+  </select>
+</mapper>

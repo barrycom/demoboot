@@ -10,6 +10,9 @@
     <result column="industryid" property="industryid" jdbcType="VARCHAR" />
     <result column="name" property="uname" jdbcType="VARCHAR" />
     <result column="headimg" property="headimg" jdbcType="VARCHAR" />
+    <result column="corporatename" property="corporatename" jdbcType="VARCHAR" />
+    <result column="profession" property="profession" jdbcType="VARCHAR" />
+
   </resultMap>
  <!-- <sql id="Base_Column_List" >
     id, userid, dynamicwz, createtime, state, industryid,name,headimg
@@ -17,18 +20,67 @@
 -->
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.MemBerDynamicwz">
-    select  mz.id, mz.userid, mz.dynamicwz, mz.createtime, mz.state, mz.industryid,mb.id as userid,mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl  from member mb ,MemBerDynamicwz mz,dynamicwzimg dg
+    <!--select  mz.id,mbi.realname ,mb.mobile, mz.userid, mz.dynamicwz, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,mz.dynamicid, mz.state,mb.id as userid,
+    mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl,dyt.dynamicname
+    from member mb ,memberinfo mbi,MemBerDynamicwz mz,dynamicwzimg dg,dynamic_type dyt
     where 1=1
     <if test="uname !=null"> and mb.name = #{uname}</if>
-    and mb.id=mz.userid AND mz.id=dg.dynamicwzid
-    order by createtime desc
+    and mb.id=mz.userid AND mz.id=dg.dynamicwzid AND mbi.memberid=mb.id and mz.dynamicid=dyt.id
+    order by createtime desc-->
+    select
+
+    mz.id,mbi.realname ,
+    mz.userid, mz.dynamicwz, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,mz.dynamicid, mz.state,
+
+    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
+
+    dg.dynamicwzid,dg.imgurl,
+
+    dyt.dynamicname from
+
+    member mb
+
+    left join memberinfo mbi on mbi.memberid=mb.id
+
+    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+
+    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
+
+    left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    where
+    1=1
+    <if test="uname !=null"> and mb.name = #{uname}</if>
+
+    order by mz.createtime desc
+
   </select>
 
 
   <select id="queryOne" resultMap="BaseResultMap" >
-    select  mz.id, mz.userid, mz.dynamicwz, mz.createtime, mz.state, mz.industryid,mb.id as userid,mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl  from member mb ,MemBerDynamicwz mz,dynamicwzimg dg
-    where 1=1
-    and mb.id=mz.userid AND mz.id=dg.dynamicwzid
+    select
+
+    mz.id,mbi.realname ,
+    mz.userid, mz.dynamicwz, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,mz.dynamicid, mz.state,
+
+    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
+
+    dg.dynamicwzid,dg.imgurl,
+
+    dyt.dynamicname from
+
+    member mb
+
+    left join memberinfo mbi on mbi.memberid=mb.id
+
+    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+
+    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
+
+    left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    where
+    mb.id=mz.userid AND mz.id=dg.dynamicwzid
     and mz.id=#{id}
   </select>
 
