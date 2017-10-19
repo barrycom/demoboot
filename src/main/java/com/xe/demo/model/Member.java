@@ -18,6 +18,44 @@ public class Member {
     private String state;
     private String ishy;
     private String isblock;
+    private String regionname;
+    private String region;
+    private String corporatename;
+    private String profession;
+    private String trade;
+
+
+    @Transient
+    private String startTime;
+    @Transient
+    private String endTime;
+    @Transient
+    private MemberInfo memberInfo;
+
+
+    public MemberInfo getMemberInfo() {
+        return memberInfo;
+    }
+
+    public void setMemberInfo(MemberInfo memberInfo) {
+        this.memberInfo = memberInfo;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
     public String getIsblock() {
         return isblock;
@@ -105,5 +143,45 @@ public class Member {
 
     public void setIshy(String ishy) {
         this.ishy = ishy;
+    }
+
+    public String getRegionname() {
+        return regionname;
+    }
+
+    public void setRegionname(String regionname) {
+        this.regionname = regionname;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCorporatename() {
+        return corporatename;
+    }
+
+    public void setCorporatename(String corporatename) {
+        this.corporatename = corporatename;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getTrade() {
+        return trade;
+    }
+
+    public void setTrade(String trade) {
+        this.trade = trade;
     }
 }

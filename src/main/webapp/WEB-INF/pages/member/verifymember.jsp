@@ -4,17 +4,26 @@
         <div class="col-md-2" style="width: 200px">
             <input type="text" class="form-control search-query" name="realname" placeholder="实名搜索">
         </div>
-        <div class="col-md-2" style="padding-bottom: 0px;width: 200px;">
+        <%--<div class="col-md-2" style="padding-bottom: 0px;width: 200px;">
             <select class="form-control" name="state" onchange="javascript:formSubmit();">
                 <option value="">==状态==</option>
                 <option value="0">未审核</option>
                 <option value="1">已通过</option>
                 <option value="2">已拒绝</option>
             </select>
-        </div>
+        </div>--%>
         <div class="col-md-1" style="width: 105px;">
             <button id="searchBtn" class="btn btn-labeled btn-info" onclick="javascript:formSubmit();"><span class="btn-label icon fa fa-search"></span>搜索</button>
         </div>
+        <div class="col-md-9" style="text-align: right;padding-bottom: unset">
+            <button id="reging" class="btn btn-labeled btn-primary" onclick="gorelod('0')"><span class="btn-label icon fa fa-plus"></span>未审核
+            </button>
+            <button id="pass" class="btn btn-labeled btn-primary" onclick="gorelod('1')"><span class="btn-label icon fa fa-plus"></span>已通过
+            </button>
+            <button id="nopass" class="btn btn-labeled btn-primary" onclick="gorelod('2')"><span class="btn-label icon fa fa-plus"></span>已拒绝
+            </button>
+        </div>
+        <input name="ispass" id="state" type="hidden">
     </div>
 </div>
 <div class="openAppGrid">
@@ -50,6 +59,7 @@
         $("#openAppGrid").sgrid({
             columns:[
                 {field:"realname",width:80, text:"用户名称"},
+                {field:"cardno",width:100, text:"身份证号"},
                 {field:"cardfront",width:80, text:"身份证正面照",formatter:function(index, content, data){
                     return "<img src="+data.cardfront+" height='30px' width='80px' onclick='bigPhoto(\""+content+"\")' />";
                 }},
@@ -66,11 +76,22 @@
                     }
 
                 }},
-                {field:"createtime",width:135, text:"注册时间"},
+                {field:"createtime",width:135, text:"申请时间"},
                 {field:"id", text:"操作",width:135, style:"text-align:center", formatter:function(index, content, data){
-                        var delUrl = "admin/member/blockMember/" + content;
-                        return "<a href='javascript:showCfm(\"确定屏蔽/取消屏蔽 吗\", \""+delUrl+"\");'  data-original-title='屏蔽/取消' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times'>屏蔽/取消</i></a>";
-                }}
+                    var editUrl = "admin/user/updatePage/" + content;
+                    var resetPwd = "admin/user/updatePwdPage?id=" + content;
+                    var delUrl = "admin/member/blockMember/" + content;
+                    var url="";
+                    if(data.ispass ==0){
+                        url="<a href='javascript:showModal(\"更新用户\", \""+editUrl+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>"
+                            + "&nbsp;<a href='javascript:showModal(\"重置密码\", \""+resetPwd+"\");' data-original-title='通过' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>通过</i></a>"
+                            + "&nbsp;<a href='javascript:showCfm(\"确定屏蔽/取消屏蔽 吗\", \""+delUrl+"\");'  data-original-title='拒绝' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times'>拒绝</i></a>";
+                    }else{
+                        url="<a href='javascript:showModal(\"更新用户\", \""+editUrl+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>";
+                    }
+                    return url;
+                }},
+                {field:"remark",width:135, text:"备注信息"}
 
             ],
             cls: "",
@@ -89,6 +110,15 @@
         $('#myModal').modal({
             keyboard: true
         });
+    }
+
+    function gorelod(obj) {
+
+        $("#state").val(obj);
+
+        $("#openAppGrid").sgrid("reload");
+
+
     }
 
 
