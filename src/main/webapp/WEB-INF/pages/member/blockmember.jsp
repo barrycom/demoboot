@@ -56,17 +56,21 @@
                 }},
                 {field:"regtime",width:135, text:"注册时间"},
                 {field:"id", text:"操作",width:135, style:"text-align:center", formatter:function(index, content, data){
-                        var editUrl = "admin/user/updatePage/" + content;
-                        var resetPwd = "admin/user/updatePwdPage?id=" + content;
-                        var delUrl = "admin/member/blockMember/" + content;
-                        return "<a href='javascript:showModal(\"更新用户\", \""+editUrl+"\");' data-original-title='修改' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>修改</i></a>"
-                            + "&nbsp;<a href='javascript:showModal(\"重置密码\", \""+resetPwd+"\");' data-original-title='重置密码' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>重置密码</i></a>"
-                            + "&nbsp;<a href='javascript:showCfm(\"确定屏蔽/取消屏蔽 吗\", \""+delUrl+"\");'  data-original-title='屏蔽/取消' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times'>屏蔽/取消</i></a>";
+                    var ck = "admin/member/updateMemberPage?type=1&memberid=" + content;
+                    var sj = "admin/member/updateMemberPage?type=2&memberid=" + content;
+                    var bj = "admin/member/updateMemberPage?type=3&memberid=" + content;
+
+                    var delUrl = "admin/member/blockMember/" + content;
+                    return "<a href='javascript:goPage(\""+ck+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>"
+                        + "&nbsp;<a href='javascript:goPage(\""+sj+"\");' data-original-title='升级' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>升级</i></a>"
+                        + "&nbsp;<a href='javascript:goPage(\""+bj+"\");' data-original-title='编辑' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>编辑</i></a>"
+                        + "&nbsp;<a href='javascript:showCfm(\"确定屏蔽/取消屏蔽 吗\", \""+delUrl+"\");'  data-original-title='屏蔽/取消' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times'>屏蔽/取消</i></a>";
                 }}
 
             ],
             cls: "",
             url: _urlPath + "admin/member/queryPage",
+            data:{"state":"1"},
             sort:"id",
             order:"desc",
             pagination:true,
@@ -76,7 +80,7 @@
         });
     });
 
- /*   function  goadd() {
-        location.href=_urlPath+"admin/activity/addPage"
-    }*/
+    /*   function  goadd() {
+     location.href=_urlPath+"admin/activity/addPage"
+     }*/
 </script>

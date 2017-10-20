@@ -26,6 +26,7 @@ public class Member {
     private String tradename;
     private String viptimestart;
     private String viptimeend;
+    private String openid;
 
 
     @Transient
@@ -36,6 +37,15 @@ public class Member {
     private MemberInfo memberInfo;
     @Transient
     private String type;
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
     public String getType() {
         return type;
     }

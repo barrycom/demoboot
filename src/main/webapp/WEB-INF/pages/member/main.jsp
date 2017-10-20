@@ -69,7 +69,7 @@
 
             ],
             cls: "",
-            url: _urlPath + "admin/member/queryPage",
+            url: _urlPath + "admin/member/queryPage/1",
             sort:"id",
             order:"desc",
             pagination:true,

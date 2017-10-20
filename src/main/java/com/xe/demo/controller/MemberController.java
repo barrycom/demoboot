@@ -47,16 +47,31 @@ public class MemberController extends BaseController {
     @Authority(opCode = "06", opName = "用户列表")
     @RequestMapping("mainPage")
     public String mainPage(Map<String, Object> map,Member member) {
-      /*  List<Member> list = memberService.queryList(member);
-        map.put("list", list);*/
         return "member/main";
     }
 
+    @Authority(opCode = "06", opName = "会员列变")
+    @RequestMapping("vipMainPage")
+    public String vipMainPage(Map<String, Object> map,Member member) {
+        return "member/vipmember";
+    }
+
+    @Authority(opCode = "06", opName = "冻结列表")
+    @RequestMapping("blockMainPage")
+    public String blockMainPage(Map<String, Object> map,Member member) {
+        return "member/blockmember";
+    }
+
     @ControllerLog("用户列表数据")
-    @RequestMapping("queryPage")
+    @RequestMapping("queryPage/{state}")
     @ResponseBody
     @Authority(opCode = "06", opName = "用户列表数据")
-    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member) {
+    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member,@PathVariable("state") String state) {
+        if("2".equals(state)){
+            member.setIshy("1");
+        }else if("3".equals(state)){
+            member.setIsblock("1");
+        }
         PageAjax<Member> memberList= null;
         if(!StringUtils.isNullOrEmpty(member.getName()) || !StringUtils.isNullOrEmpty(member.getMobile())){
             memberList=memberService.queryPage(page, member);
