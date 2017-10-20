@@ -51,15 +51,6 @@ public class PageAjax<T> implements Serializable {
     private int navigatePages;
     /**所有导航页号*/
     private int[] navigatepageNums;
-    private String state;
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
 
     public PageAjax() {
     }
