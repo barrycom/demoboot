@@ -6,11 +6,12 @@ import com.xe.demo.common.annotation.ControllerLog;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.utils.AppUtil;
+import com.xe.demo.common.utils.DateUtil;
+import com.xe.demo.mapper.IndustryMapper;
 import com.xe.demo.mapper.MemberInfoMapper;
 import com.xe.demo.mapper.MemberMapper;
-import com.xe.demo.model.Activity;
-import com.xe.demo.model.Member;
-import com.xe.demo.model.MemberInfo;
+import com.xe.demo.mapper.RegionsMapper;
+import com.xe.demo.model.*;
 import com.xe.demo.service.MemberInfoService;
 import com.xe.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,23 +38,42 @@ public class MemberController extends BaseController {
     private MemberInfoService memberInfoService;
     @Autowired
     private MemberInfoMapper memberInfoMapper;
+    @Autowired
+    private RegionsMapper regionsMapper;
+    @Autowired
+    private IndustryMapper industryMapper;
 
 
     @Authority(opCode = "06", opName = "用户列表")
     @RequestMapping("mainPage")
     public String mainPage(Map<String, Object> map,Member member) {
-      /*  List<Member> list = memberService.queryList(member);
-        map.put("list", list);*/
         return "member/main";
     }
 
+    @Authority(opCode = "06", opName = "会员列表")
+    @RequestMapping("vipMainPage")
+    public String vipMainPage(Map<String, Object> map,Member member) {
+        return "member/vipmember";
+    }
+
+    @Authority(opCode = "06", opName = "冻结列表")
+    @RequestMapping("blockMainPage")
+    public String blockMainPage(Map<String, Object> map,Member member) {
+        return "member/blockmember";
+    }
+
     @ControllerLog("用户列表数据")
-    @RequestMapping("queryPage")
+    @RequestMapping("queryPage/{type}")
     @ResponseBody
     @Authority(opCode = "06", opName = "用户列表数据")
-    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member) {
+    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member,@PathVariable("type") String type) {
+        if("2".equals(type)){
+            member.setIshy("1");
+        }else if("3".equals(type)){
+            member.setIsblock("1");
+        }
         PageAjax<Member> memberList= null;
-        if(!StringUtils.isNullOrEmpty(member.getName()) || !StringUtils.isNullOrEmpty(member.getMobile())){
+        if(StringUtils.isNullOrEmpty(member.getName()) && StringUtils.isNullOrEmpty(member.getMobile())){
             memberList=memberService.queryPage(page, member);
         }else{
             memberList=memberService.querySearchPage(page, member);
@@ -59,10 +81,52 @@ public class MemberController extends BaseController {
         return memberList;
     }
 
-    @ControllerLog("屏蔽用户")
+    @Authority(opCode = "06", opName = "查看/升级/修改用户")
+    @RequestMapping("updateMemberPage")
+    public String updateMemberPage(String memberid,String type, Map<String, Object> map) {
+        Member member = memberService.queryByID(memberid);
+        member.setType(type);
+        List<Industry> industry = industryMapper.selectAll();
+        map.put("trade",industry);
+        map.put("member", member);
+        return "member/edit";
+    }
+
+    @Authority(opCode = "06", opName = "选择行业")
+    @RequestMapping("selectIndustryNamePage")
+    public String selectIndustryNamePage(Map<String, Object> map) {
+        List<Industry> industry = industryMapper.selectAll();
+        map.put("list",industry);
+        return "member/selectIndustryNamePage";
+    }
+
+    @Authority(opCode = "06", opName = "选择地区")
+    @ResponseBody
+    @RequestMapping("getCity")
+    public AjaxResult getCity(Map<String, Object> map,String name) {
+        AjaxResult ajaxResult=new AjaxResult();
+        Regions region = new Regions();
+        Condition condition=new Condition(Regions.class);
+        condition.createCriteria().andCondition("regiontype !=1");
+        regionsMapper.selectByExample(condition);
+        regionsMapper.select(region).stream().forEach(i->{
+            if(name.contains(i.getRegionname())) {
+                ajaxResult.setData(i);   ;
+            }
+        });
+        return ajaxResult;
+    }
+   /* public static void main(String [] args){
+        String s = "安微芜湖";
+        String v = "芜湖";
+        s.contains(v);
+    }*/
+
+
+    @ControllerLog("屏蔽/解除屏蔽 用户操作")
     @RequestMapping("blockMember/{id}")
     @ResponseBody
-    @Authority(opCode = "06", opName = "屏蔽用户")
+    @Authority(opCode = "06", opName = "屏蔽/解除屏蔽 用户操作")
     public AjaxResult blockMember(@PathVariable("id") String id) {
         Member member=new Member();
         member.setId(id);
@@ -73,6 +137,31 @@ public class MemberController extends BaseController {
             member.setIsblock("1");
         }
         return memberService.update(member);
+    }
+
+    @ControllerLog("修改用户")
+    @RequestMapping("edit")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "修改用户")
+    public AjaxResult edit(Member member) {
+        Member m=memberService.queryByID(member.getId());
+        if("2".equals(member.getType())){
+            m.setIshy("1");
+            m.setViptimestart(member.getViptimestart());
+            m.setViptimeend(member.getViptimeend());
+        }else {
+            m.setName(member.getName());
+            m.setTrade(member.getTrade());
+            m.setTradename(member.getTradename());
+            m.setCorporatename(member.getCorporatename());
+            m.setProfession(member.getProfession());
+            m.setRegion(member.getRegion());
+            m.setRegionname(member.getRegionname());
+            m.setWxno(member.getWxno());
+            m.setMobile(member.getMobile());
+            m.setEmail(member.getEmail());
+        }
+        return memberService.update(m);
     }
 
     @Authority(opCode = "06", opName = "审核列表")
@@ -100,6 +189,35 @@ public class MemberController extends BaseController {
         return AppUtil.returnPage(memberInfoMapper.selectByExample(condition));
     }
 
+    @ControllerLog("审核通过")
+    @RequestMapping("memberInfoPass/{id}")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public AjaxResult memberInfoPass(@PathVariable("id") String id) {
+       MemberInfo memberInfo=new MemberInfo();
+       memberInfo.setId(id);
+       memberInfo.setIspass("1");
+       memberInfo.setRegtime(DateUtil.getCurDate());
+        return memberInfoService.update(memberInfo);
+    }
 
+    @ControllerLog("拒绝审核页面")
+    @RequestMapping("memberInfoRefusePage/{id}")
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public String memberInfoRefusePage(Map<String, Object> map,@PathVariable("id") String id){
+        map.put("id",id);
+        return "member/refusePage";
+    }
+
+    @ControllerLog("拒绝通过")
+    @RequestMapping("memberInfoRefuse")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "屏蔽用户")
+    public AjaxResult memberInfoPass(MemberInfo memberInfo) {
+        MemberInfo memberInfo1=new MemberInfo();
+        memberInfo.setIspass("2");
+        memberInfo.setRegtime(DateUtil.getCurDate());
+        return memberInfoService.update(memberInfo);
+    }
 }
 

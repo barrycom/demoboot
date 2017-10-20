@@ -23,6 +23,15 @@ public class Member {
     private String corporatename;
     private String profession;
     private String trade;
+    private String tradename;
+    private String viptimestart;
+    private String viptimeend;
+    private String openid;
+    private String resources;
+    private String personalinfo;
+
+
+
 
 
     @Transient
@@ -31,7 +40,64 @@ public class Member {
     private String endTime;
     @Transient
     private MemberInfo memberInfo;
+    @Transient
+    private String type;
 
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getViptimestart() {
+        return viptimestart;
+    }
+
+    public void setViptimestart(String viptimestart) {
+        this.viptimestart = viptimestart;
+    }
+
+    public String getViptimeend() {
+        return viptimeend;
+    }
+
+    public void setViptimeend(String viptimeend) {
+        this.viptimeend = viptimeend;
+    }
+
+    public String getTradename() {
+        return tradename;
+    }
+
+    public void setTradename(String tradename) {
+        this.tradename = tradename;
+    }
+
+    public String getResources() {
+        return resources;
+    }
+
+    public void setResources(String resources) {
+        this.resources = resources;
+    }
+
+    public String getPersonalinfo() {
+        return personalinfo;
+    }
+
+    public void setPersonalinfo(String personalinfo) {
+        this.personalinfo = personalinfo;
+    }
 
     public MemberInfo getMemberInfo() {
         return memberInfo;

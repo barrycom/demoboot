@@ -90,7 +90,13 @@
 						<a tabindex="-1" href="javascript:goPage('admin/member/mainPage')"><span class="mm-text">用户列表</span></a>
 					</li>
 					<li opCode="06">
+						<a tabindex="-1" href="javascript:goPage('admin/member/vipMainPage')"><span class="mm-text">会员列表</span></a>
+					</li>
+					<li opCode="06">
 						<a tabindex="-1" href="javascript:goPage('admin/member/mainMemberInfoPage')"><span class="mm-text">实名审核</span></a>
+					</li>
+					<li opCode="06">
+						<a tabindex="-1" href="javascript:goPage('admin/member/blockMainPage')"><span class="mm-text">屏蔽列表</span></a>
 					</li>
 
 				</ul>
