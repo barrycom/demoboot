@@ -50,7 +50,7 @@ public class MemberController extends BaseController {
         return "member/main";
     }
 
-    @Authority(opCode = "06", opName = "会员列变")
+    @Authority(opCode = "06", opName = "会员列表")
     @RequestMapping("vipMainPage")
     public String vipMainPage(Map<String, Object> map,Member member) {
         return "member/vipmember";
@@ -63,17 +63,17 @@ public class MemberController extends BaseController {
     }
 
     @ControllerLog("用户列表数据")
-    @RequestMapping("queryPage/{state}")
+    @RequestMapping("queryPage/{type}")
     @ResponseBody
     @Authority(opCode = "06", opName = "用户列表数据")
-    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member,@PathVariable("state") String state) {
-        if("2".equals(state)){
+    public PageAjax<Member> queryPage(PageAjax<Member> page, Member member,@PathVariable("type") String type) {
+        if("2".equals(type)){
             member.setIshy("1");
-        }else if("3".equals(state)){
+        }else if("3".equals(type)){
             member.setIsblock("1");
         }
         PageAjax<Member> memberList= null;
-        if(!StringUtils.isNullOrEmpty(member.getName()) || !StringUtils.isNullOrEmpty(member.getMobile())){
+        if(StringUtils.isNullOrEmpty(member.getName()) && StringUtils.isNullOrEmpty(member.getMobile())){
             memberList=memberService.queryPage(page, member);
         }else{
             memberList=memberService.querySearchPage(page, member);
@@ -122,10 +122,11 @@ public class MemberController extends BaseController {
         s.contains(v);
     }*/
 
-    @ControllerLog("屏蔽用户")
+
+    @ControllerLog("屏蔽/解除屏蔽 用户操作")
     @RequestMapping("blockMember/{id}")
     @ResponseBody
-    @Authority(opCode = "06", opName = "屏蔽用户")
+    @Authority(opCode = "06", opName = "屏蔽/解除屏蔽 用户操作")
     public AjaxResult blockMember(@PathVariable("id") String id) {
         Member member=new Member();
         member.setId(id);

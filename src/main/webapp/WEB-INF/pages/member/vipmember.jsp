@@ -53,7 +53,7 @@
                 }},
                 {field:"regtime",width:135, text:"注册时间"},
                 {field:"id", text:"操作",width:135, style:"text-align:center", formatter:function(index, content, data){
-                    var ck = "admin/member/updateMemberPage?type=1&memberid=" + content;
+                    var ck = "admin/member/updateMemberPage?type=5&memberid=" + content;
                     var sj = "admin/member/updateMemberPage?type=2&memberid=" + content;
                     var bj = "admin/member/updateMemberPage?type=3&memberid=" + content;
 
@@ -65,7 +65,7 @@
 
             ],
             cls: "",
-            url: _urlPath + "admin/member/queryPage",
+            url: _urlPath + "admin/member/queryPage/2",
             sort:"id",
             order:"desc",
             pagination:true,

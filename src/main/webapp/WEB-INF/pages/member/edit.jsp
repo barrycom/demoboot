@@ -317,6 +317,10 @@
         var type = $("#type").val();
         if(type == 4){
             goPage("admin/member/mainMemberInfoPage")
+        }else if(type == 5){
+            goPage("admin/member/vipMainPage")
+        }else if(type == 6){
+            goPage("admin/member/blockMainPage")
         }else{
             goPage("admin/member/mainPage")
         }
