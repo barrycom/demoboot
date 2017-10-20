@@ -27,6 +27,11 @@ public class Member {
     private String viptimestart;
     private String viptimeend;
     private String openid;
+    private String resources;
+    private String personalinfo;
+
+
+
 
 
     @Transient
@@ -78,7 +83,21 @@ public class Member {
         this.tradename = tradename;
     }
 
+    public String getResources() {
+        return resources;
+    }
 
+    public void setResources(String resources) {
+        this.resources = resources;
+    }
+
+    public String getPersonalinfo() {
+        return personalinfo;
+    }
+
+    public void setPersonalinfo(String personalinfo) {
+        this.personalinfo = personalinfo;
+    }
 
     public MemberInfo getMemberInfo() {
         return memberInfo;

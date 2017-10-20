@@ -288,6 +288,8 @@
         var name2 = $("#prov").find("option:selected").text();
         var id = $("#city ").val();
         var name = $("#city").find("option:selected").text();
+        $("#regionname").val(name);
+
         $.ajax({
             url: _urlPath + "admin/member/getCity",
             data: {"name":name},
@@ -295,7 +297,6 @@
             dataType:"json",
             success: function (req){
                 $("#region").val(req.data.id);
-                $("#regionname").val(req.data.regionname);
 
             },
             error: function(req){
