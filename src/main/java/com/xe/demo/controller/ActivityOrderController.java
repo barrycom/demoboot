@@ -57,7 +57,13 @@ public class ActivityOrderController extends BaseController {
     @RequestMapping("edit")
     @ResponseBody
     @Authority(opCode = "06", opName = "修改活动")
-    public AjaxResult edit(ActivityOrder activityOrder) {
+    public AjaxResult edit(ActivityOrder activityOrder,String iszs) {
+        if(iszs!="")
+        {
+            activityOrder.setIszs("1");
+            activityOrder.setStatus("1");
+            activityOrder.setPaymemo(iszs);
+        }
         return activityOrderService.update(activityOrder);
     }
 

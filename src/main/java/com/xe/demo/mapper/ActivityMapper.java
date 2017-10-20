@@ -4,6 +4,7 @@ package com.xe.demo.mapper;
 import com.xe.demo.common.dao.MyMapper;
 import com.xe.demo.model.Activity;
 import com.xe.demo.model.AuthUser;
+import com.xe.demo.model.Member;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,6 +20,11 @@ public interface ActivityMapper extends MyMapper<Activity> {
 
 
     List<Activity> queryListOneMonth(@Param("activity")Activity activity);
+
+    List<Member> getUserByActivtiyId(@Param("id")String id);
+
+
+
 
 /*
     int insert(Activity record);*/

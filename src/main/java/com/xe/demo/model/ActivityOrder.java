@@ -37,7 +37,7 @@ public class ActivityOrder {
     private String wxno;
 
     private String status;
-
+    private String iszs;
 
     private String createtime;
 
@@ -164,5 +164,13 @@ public class ActivityOrder {
 
     public void setCreatetime(String createtime) {
         this.createtime = createtime;
+    }
+
+    public String getIszs() {
+        return iszs;
+    }
+
+    public void setIszs(String iszs) {
+        this.iszs = iszs;
     }
 }
