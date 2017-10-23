@@ -1,3 +1,4 @@
+/*
 package com.xe.demo.api.wxpay;
 
 import com.google.gson.Gson;
@@ -18,9 +19,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+*/
 /**
  * Created by Administrator on 2017-10-20.
- */
+ *//*
+
 @RestController
 @RequestMapping("/api/wxpay")
 public class WxPayApi {
@@ -105,3 +108,4 @@ public class WxPayApi {
 
     }
 }
+*/

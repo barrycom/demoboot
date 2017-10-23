@@ -41,9 +41,12 @@ public class ApiMember {
     private MemberInfoService memberInfoService;
     @Autowired
     private MemberInfoMapper memberInfoMapper;
+    @Autowired
+    private DynamicTypeMapper dynamicTypeMapper;
 
 
-     @Authorization("需token")
+
+    //@Authorization("需token")
      @ApiOperation(value="根据ID获取用户信息", notes="根据ID获取用户信息")
      @RequestMapping(value = "getMember", method = RequestMethod.POST)
      @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
@@ -58,7 +61,7 @@ public class ApiMember {
          return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     @JsonView(Member.class)
@@ -81,10 +84,10 @@ public class ApiMember {
         member.setEmail(email);
 
         member.setTrade(trade);
-        Condition condition=new Condition(Industry.class);
+        Condition condition=new Condition(DynamicType.class);
         condition.createCriteria().andCondition("id",trade);
-        Industry industry=industryMapper.selectByPrimaryKey(condition);
-        member.setTradename(industry.getIndustryname());
+        DynamicType industry=dynamicTypeMapper.selectByPrimaryKey(condition);
+        member.setTradename(industry.getDynamicname());
 
         member.setRegion(region);
         Condition condition2=new Condition(Regions.class);
@@ -109,7 +112,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
     @JsonView(Member.class)

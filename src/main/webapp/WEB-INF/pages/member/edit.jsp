@@ -130,7 +130,7 @@
                 <div class="col-sm-8">
                     <select class="form-control span2" id="industryId" name="industryId">
                         <c:forEach items="${trade}" var="industry">
-                            <option value="${industry.id}">${industry.industryname}</option>
+                            <option value="${industry.id}">${industry.dynamicname}</option>
                         </c:forEach>
                     </select>
                 </div>
