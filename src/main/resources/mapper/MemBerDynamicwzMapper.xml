@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xe.demo.mapper.MemBerDynamicwzMapper" >
   <resultMap id="BaseResultMap" type="com.xe.demo.model.MemBerDynamicwz" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="dynamicwz" property="dynamicwz" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="VARCHAR" />
@@ -20,14 +20,7 @@
 -->
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.MemBerDynamicwz">
-    <!--select  mz.id,mbi.realname ,mb.mobile, mz.userid, mz.dynamicwz, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,mz.dynamicid, mz.state,mb.id as userid,
-    mb.name as uname,mb.headimg,dg.dynamicwzid,dg.imgurl,dyt.dynamicname
-    from member mb ,memberinfo mbi,MemBerDynamicwz mz,dynamicwzimg dg,dynamic_type dyt
-    where 1=1
-    <if test="uname !=null"> and mb.name = #{uname}</if>
-    and mb.id=mz.userid AND mz.id=dg.dynamicwzid AND mbi.memberid=mb.id and mz.dynamicid=dyt.id
-    order by createtime desc-->
-    select
+   select
 
     mz.id,mbi.realname ,
     mz.userid, mz.dynamicwz, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,mz.dynamicid, mz.state,
@@ -105,4 +98,124 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <insert id="savecontent" useGeneratedKeys="true"  parameterType="com.xe.demo.model.MemBerDynamicwz" keyProperty="id" >
+    INSERT into  MemBerDynamicwz
+    ( userid,dynamicwz,createtime,state,dynamicid)
+    VALUES
+    ( #{userid,jdbcType=VARCHAR},#{dynamicwz,jdbcType=VARCHAR},now(),#{state,jdbcType=VARCHAR},#{dynamicid,jdbcType=VARCHAR})
+  </insert>
+
+<!--需求广场-->
+  <select id="queryneed" resultType="hashmap">
+    select
+
+    mz.id,
+    mz.userid, mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
+
+    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
+
+    dg.dynamicwzid,dg.imgurl,
+
+    dyt.dynamicname from
+
+    member mb
+
+    left join memberinfo mbi on mbi.memberid=mb.id
+
+    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+
+    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
+
+    left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    where
+     mz.state="0"
+    <if test="dynamictype_id != null" >
+     AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
+    </if>
+    <!--<if test="begintime != null" >
+      AND  createtime &gt;= #{begintime,jdbcType=VARCHAR}
+    </if>
+    <if test="endtime != null" >
+      AND  createtime &lt;= #{endtime,jdbcType=VARCHAR}
+    </if>-->
+    order by RAND() desc
+
+  </select>
+
+<!--我的动态-->
+  <select id="querymycontent" resultType="hashmap">
+    select
+
+    mz.id,
+    mz.userid, mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
+
+    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
+
+    dg.dynamicwzid,dg.imgurl,
+
+    dyt.dynamicname from
+
+    member mb
+
+    left join memberinfo mbi on mbi.memberid=mb.id
+
+    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+
+    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
+
+    left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    where
+    mz.state="0"
+    AND
+    mz.userid=#{userid}
+    order by createtime desc
+
+  </select>
+
+  <!--我感兴趣-->
+  <select id="myinstrcontent" resultType="hashmap">
+    select
+    mz.id,
+    mz.userid, mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
+
+    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
+
+    dg.dynamicwzid,dg.imgurl,
+
+    dyt.dynamicname
+
+    from
+
+    member mb
+
+    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+
+    left join memberinfo mbi on mbi.memberid=mb.id
+
+    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
+
+    left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    where
+
+    mz.id in(select uy.dynamicwzid from usercollectiondy uy where uy.userid=1) and
+    mz.state="0"
+
+    <if test="dynamictype_id != null" >
+      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
+    </if>
+    <if test="begintime != null" >
+      AND  mz.createtime &gt;= #{begintime,jdbcType=VARCHAR}
+    </if>
+    <if test="endtime != null" >
+      AND  mz.createtime &lt;= #{endtime,jdbcType=VARCHAR}
+    </if>
+    order by RAND() desc
+
+  </select>
+
+
 </mapper>

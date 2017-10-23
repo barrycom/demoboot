@@ -12,8 +12,9 @@ public class Industry {
 
     private String industryname;
 
-
     private String creat_time;
+
+    private String state;
 
     public Integer getId() {
         return id;
@@ -37,5 +38,13 @@ public class Industry {
 
     public void setCreat_time(String creat_time) {
         this.creat_time = creat_time;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

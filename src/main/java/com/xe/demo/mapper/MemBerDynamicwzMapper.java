@@ -6,6 +6,7 @@ import com.xe.demo.model.MemBerDynamicwz;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemBerDynamicwzMapper extends MyMapper<MemBerDynamicwz> {
  /*   int deleteByPrimaryKey(String id);*/
@@ -17,9 +18,16 @@ public interface MemBerDynamicwzMapper extends MyMapper<MemBerDynamicwz> {
 
     int update(MemBerDynamicwz record);
 
-    /*int insert(MemBerDynamicwz record);
+    List<Map<String, String>>  queryneed(Map map);
 
-    int insertSelective(MemBerDynamicwz record);
+    List<Map<String, String>>  myinstrcontent(Map map);
+
+    List<Map<String, String>>  querymycontent(Integer userid);
+
+
+    int savecontent(MemBerDynamicwz record);
+
+    /*int insertSelective(MemBerDynamicwz record);
 
 
 

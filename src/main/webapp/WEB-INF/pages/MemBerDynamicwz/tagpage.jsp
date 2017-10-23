@@ -34,6 +34,20 @@
                     style:"text-align:left"
                 },
                 {
+
+                    field:"state",
+                    text:"操作",
+                    style:"text-align:center",
+                    formatter:function(index, content, data) {
+                        if(data.state=="0"){
+                            return "<span class=\"label label-success\">正常</span>" ;
+                        }else{
+                            return "<span class=\"label label-danger\">屏蔽</span>" ;
+                        }
+
+                    }
+                },
+                {
                     field:"creat_time",
                     text:"创建时间",
                     style:"text-align:center"
@@ -46,7 +60,7 @@
                      formatter:function(index, content, data){
                          var delUrl = "admin/content/tagupdatepage?id="+data.id;
                          var html="<a href='javascript:showModal(\"修改标签\" ,\"" + delUrl + "\")' class='btn btn-primary'>编辑</a>" +
-                                    "<a href='javascript:delect(\"" + data.id + "\",\"3\")' class='btn btn-success'>删除</a>" ;
+                                    "<a href='javascript:delect(\"" + data.id + "\",\"1\")' class='btn btn-success'>停用</a>" ;
 
                          return html;
                         }
@@ -66,13 +80,13 @@
 
     function delect(id,state){
         var delUrl ="";
-        if(state==2){
+        if(state==1){
             delUrl = "admin/content/tagupdate?id="+id+"&state="+ state;
         }else{
             delUrl = "admin/content/tagdelect/"+id;
         }
 
-        showCfm("是否决定删除?", delUrl);
+        showCfm("是否决定停用?", delUrl);
     }
 
     function gorelod(s) {
