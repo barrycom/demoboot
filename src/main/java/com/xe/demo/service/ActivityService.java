@@ -167,4 +167,13 @@ public class ActivityService extends AbstratService<Activity> {
 
         return activity;
     }
+
+
+    @ServiceLog("查询活动列表2月前")
+    public PageAjax<Member> getUserByActivtiyId(PageAjax<Activity> page, String  id) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Member> list = activityMapper.getUserByActivtiyId(id);
+        return AppUtil.returnPage(list);
+    }
+
 }

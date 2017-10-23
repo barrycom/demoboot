@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <form id="submitForm" class="form-horizontal">
@@ -76,7 +77,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading">
-          支付信息
+            支付信息
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -91,7 +92,7 @@
                 <label class="col-sm-3 control-label" for="activitysdate"><font color="red">*</font>支付方式</label>
                 <div class="col-sm-8">
 
-                    <input size="16" type="text"  class="form-control" id="paymemo" name="paymemo"  value="${activityOrder.paymemo}"  placeholder="支付方式">
+                    <input size="16" type="text"  class="form-control"  disabled id="paymemo" name="paymemo"  value="${activityOrder.paymemo}"  placeholder="支付方式">
                 </div>
             </div>
 
@@ -99,8 +100,38 @@
 
         </div>
 
+        <c:if test="${activityOrder.status =='0'}">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+             赠送订单
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="activitysdate"><font color="red">*</font>支付方式</label>
+                    <div class="col-sm-8">
+
+                        <select class="form-control span2" name="iszs">
+                            <option value="">不增送</option>
+                            <option value="微信">微信</option>
+                            <option value="支付宝">支付宝</option>
+                            <option value="线下">线下</option>
+                            <option value="赠送">赠送</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
 
     </div>
+        </c:if>
     <div class="form-group">
         <label class="col-sm-2 control-label"></label>
         <div class="col-sm-8" style="text-align: center;">

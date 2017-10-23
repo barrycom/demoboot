@@ -3,7 +3,7 @@
 
 <div class="page-header" style="padding:10px 20px;margin:-18px 0px 0px">
     <div id="searchForm">
-        <input name="status" id="status" type="text" value="0" hidden="hidden">
+        <input name="status" id="status" type="text" value="" hidden="hidden">
         <div class="col-md-2" style="width: 200px">
             <input type="text" class="form-control search-query" name="nickname" placeholder="用户名">
         </div>
