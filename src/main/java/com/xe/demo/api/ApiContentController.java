@@ -4,18 +4,13 @@ import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.support.redis.IRedisService;
 import com.xe.demo.mapper.UserCollecTiondyMapper;
-import com.xe.demo.model.DynamicType;
-import com.xe.demo.model.DynamicwzImg;
-import com.xe.demo.model.MemBerDynamicwz;
-import com.xe.demo.model.UserCollecTiondy;
-import com.xe.demo.service.DynamicTypeService;
-import com.xe.demo.service.DynamicwzImgService;
-import com.xe.demo.service.MemBerDynamicwzService;
-import com.xe.demo.service.UserCollecTiondyService;
+import com.xe.demo.model.*;
+import com.xe.demo.service.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
+import io.swagger.models.auth.In;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +26,7 @@ import java.util.Map;
  * Created by Administrator on 2017-9-27.
  */
 @RestController
-@RequestMapping("/content/")
+@RequestMapping("/api/content/")
 public class ApiContentController {
 
     @Autowired
@@ -42,6 +37,8 @@ public class ApiContentController {
     private DynamicwzImgService dynamicwzImgService;
     @Autowired
     private DynamicTypeService dynamicTypeService;
+    @Autowired
+    private UserCollecTindustryService userCollecTindustryService;
 
     @Authorization("需token")
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
@@ -181,6 +178,30 @@ public class ApiContentController {
         return ajaxResult;
     }
 
+    @Authorization("需token")
+    @ApiOperation(value="关注行业", notes="关注行业")
+    @ResponseBody
+    @RequestMapping(value = "choosedyn", method = RequestMethod.POST)
+    public AjaxResult choosedyn (Integer userid, Integer dynamictype_id){
+        UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
+        userCollecTindustry.setUserid(userid);
+        userCollecTindustry.setDynamicwzid(dynamictype_id);
+        AjaxResult ajaxResult=userCollecTindustryService.save(userCollecTindustry);
+        return ajaxResult;
+    }
 
+    @Authorization("需token")
+    @ApiOperation(value="用户关组的行业", notes="用户关组的行业")
+    @ResponseBody
+    @RequestMapping(value = "notedyn", method = RequestMethod.POST)
+    public AjaxResult notedyn (Integer userid){
+        UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
+        userCollecTindustry.setUserid(userid);
+        AjaxResult ajaxResult=new AjaxResult();
+        List<Map<String,String>>  li=userCollecTindustryService.querydyn(userCollecTindustry);
+        ajaxResult.setData(li);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
 
 }

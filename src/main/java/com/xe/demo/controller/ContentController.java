@@ -365,9 +365,5 @@ public class ContentController extends BaseController {
         }
         return result;
     }
-
-
-
-
 }
 
