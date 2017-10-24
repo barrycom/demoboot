@@ -5,10 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="industryname" property="industryname" jdbcType="VARCHAR" />
     <result column="creat_time" property="creat_time" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.Industry">
-    select id, industryname, DATE_FORMAT(ind.creat_time, '%Y-%m-%d %H:%i:%s') creat_time  from industry ind
+    select id, industryname, DATE_FORMAT(ind.creat_time, '%Y-%m-%d %H:%i:%s') creat_time,state  from industry ind
     WHERE  1=1
     <if test="null != industryname"> and industryname like CONCAT('%',#{industryname},'%')</if>
     order by creat_time desc
@@ -25,6 +26,9 @@
     <set >
       <if test="industryname != null" >
         industryname = #{industryname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

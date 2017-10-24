@@ -19,10 +19,10 @@ public class Member {
     private String ishy;
     private String isblock;
     private String regionname;
-    private String region;
+    private String region;  //地区
     private String corporatename;
     private String profession;
-    private String trade;
+    private String trade;  //行业
     private String tradename;
     private String viptimestart;
     private String viptimeend;
@@ -42,6 +42,16 @@ public class Member {
     private MemberInfo memberInfo;
     @Transient
     private String type;
+    @Transient
+    private String realname;
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
 
     public String getOpenid() {
         return openid;

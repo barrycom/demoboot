@@ -7,10 +7,7 @@ import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.utils.AppUtil;
 import com.xe.demo.common.utils.DateUtil;
-import com.xe.demo.mapper.IndustryMapper;
-import com.xe.demo.mapper.MemberInfoMapper;
-import com.xe.demo.mapper.MemberMapper;
-import com.xe.demo.mapper.RegionsMapper;
+import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.MemberInfoService;
 import com.xe.demo.service.MemberService;
@@ -42,6 +39,8 @@ public class MemberController extends BaseController {
     private RegionsMapper regionsMapper;
     @Autowired
     private IndustryMapper industryMapper;
+    @Autowired
+    private DynamicTypeMapper dynamicTypeMapper;
 
 
     @Authority(opCode = "06", opName = "用户列表")
@@ -86,7 +85,7 @@ public class MemberController extends BaseController {
     public String updateMemberPage(String memberid,String type, Map<String, Object> map) {
         Member member = memberService.queryByID(memberid);
         member.setType(type);
-        List<Industry> industry = industryMapper.selectAll();
+        List<DynamicType> industry = dynamicTypeMapper.selectAll();
         map.put("trade",industry);
         map.put("member", member);
         return "member/edit";
@@ -95,7 +94,7 @@ public class MemberController extends BaseController {
     @Authority(opCode = "06", opName = "选择行业")
     @RequestMapping("selectIndustryNamePage")
     public String selectIndustryNamePage(Map<String, Object> map) {
-        List<Industry> industry = industryMapper.selectAll();
+        List<DynamicType> industry = dynamicTypeMapper.selectAll();
         map.put("list",industry);
         return "member/selectIndustryNamePage";
     }

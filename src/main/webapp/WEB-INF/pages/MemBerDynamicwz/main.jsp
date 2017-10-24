@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<link href="${ctx}/assets/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-<link href="${ctx}/assets/data/styles.css" type="text/css" rel="stylesheet"/>
+<%--<link href="${ctx}/assets/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+<link href="${ctx}/assets/data/styles.css" type="text/css" rel="stylesheet"/>--%>
 <link href="${ctx}/assets/files/index/styles.css" type="text/css" rel="stylesheet"/>
 <link href="${ctx}/assets/css/view.css" type="text/css" rel="stylesheet"/>
 <div class="page-header" style="padding:10px 20px;margin:-18px 0px 0px">

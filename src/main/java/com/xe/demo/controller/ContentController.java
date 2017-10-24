@@ -121,7 +121,7 @@ public class ContentController extends BaseController {
     @RequestMapping("screening")
     public AjaxResult screening(String id) {
         MemBerDynamicwz meb=new MemBerDynamicwz();
-        meb.setId(id);
+        meb.setId(Integer.parseInt(id));
         meb.setState("1");
         return memBerDynamicwzService.update(meb);
     }
@@ -237,8 +237,10 @@ public class ContentController extends BaseController {
     @ResponseBody
     @RequestMapping("industrydelect/{id}")
     public AjaxResult industrydelect(@PathVariable("id") int id) {
-        AjaxResult aa=industryService.deleteByID(id);
-        return aa;
+        Industry industry=new Industry();
+        industry.setId(id);
+        industry.setState("1");
+        return  industryService.update(industry);
     }
 
     @Authority(opCode = "06", opName = "修改行业分类页面")
@@ -272,6 +274,7 @@ public class ContentController extends BaseController {
             if (name[i]!=null && !name[i].equals("")){
                 ind.setCreat_time(daynow);
                 ind.setIndustryname(name[i]);
+                ind.setState("0");
                 result=industryService.save(ind);
                 if(result.getRetcode()!=1){
                     break;
@@ -314,7 +317,10 @@ public class ContentController extends BaseController {
     @ResponseBody
     @RequestMapping("dynamicdelect/{id}")
     public AjaxResult dynamicdelect(@PathVariable("id") int id) {
-        AjaxResult aa=dynamicTypeService.deleteByID(id);
+        DynamicType dynamicType=new DynamicType();
+        dynamicType.setId(id);
+        dynamicType.setState("1");
+        AjaxResult aa=dynamicTypeService.update(dynamicType);
         return aa;
     }
 
@@ -349,6 +355,7 @@ public class ContentController extends BaseController {
             if (name[i]!=null && !name[i].equals("")){
                 dyn.setCreat_time(daynow);
                 dyn.setDynamicname(name[i]);
+                dyn.setState("0");
                 result=dynamicTypeService.save(dyn);
                 if(result.getRetcode()!=1){
                     break;
@@ -358,5 +365,9 @@ public class ContentController extends BaseController {
         }
         return result;
     }
+
+
+
+
 }
 

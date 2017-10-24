@@ -1,7 +1,15 @@
 package com.xe.demo.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "MemBerDynamicwz")
 public class MemBerDynamicwz {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String userid;
 
@@ -29,11 +37,13 @@ public class MemBerDynamicwz {
 
     private String profession;
 
-    public String getId() {
+    private  String dynamicid;//行业id
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -139,5 +149,13 @@ public class MemBerDynamicwz {
 
     public void setProfession(String profession) {
         this.profession = profession;
+    }
+
+    public String getDynamicid() {
+        return dynamicid;
+    }
+
+    public void setDynamicid(String dynamicid) {
+        this.dynamicid = dynamicid;
     }
 }

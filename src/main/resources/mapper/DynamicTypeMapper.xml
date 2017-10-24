@@ -5,10 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="dynamicname" property="dynamicname" jdbcType="VARCHAR" />
     <result column="creat_time" property="creat_time" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
 
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.xe.demo.model.DynamicType">
-    select id, dynamicname, DATE_FORMAT(ind.creat_time, '%Y-%m-%d %H:%i:%s') creat_time  from dynamic_type ind
+    select id, dynamicname, DATE_FORMAT(ind.creat_time, '%Y-%m-%d %H:%i:%s') creat_time ,state  from dynamic_type ind
     WHERE  1=1
     <if test="null != dynamicname"> and dynamicname like CONCAT('%',#{dynamicname},'%')</if>
     order by creat_time desc
@@ -25,6 +26,9 @@
     <set >
       <if test="dynamicname != null" >
         dynamicname = #{dynamicname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
