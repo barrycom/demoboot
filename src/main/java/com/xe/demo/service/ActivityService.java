@@ -161,6 +161,7 @@ public class ActivityService extends AbstratService<Activity> {
             mb=memberMapper.selectOne(mb);
             vlisst.add(mb);
         }
+        activity.setViewCount(vlisst.size());
         activity.setViewmembersList(vlisst);
 
 

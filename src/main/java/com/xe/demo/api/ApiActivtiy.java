@@ -65,6 +65,24 @@ public class ApiActivtiy {
         return aa;
     }
 
+    @Authorization("需token")
+    @ApiOperation(value="根据活动id获取活动详情", notes="根据活动id获取活动详情")
+    @RequestMapping(value = "getActivtiyById", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "id", value = "活动编号", required = true, dataType = "String")
+    public AjaxResult getActivtiyById(@RequestParam String  id)
+    {
+        JsonResult r = new JsonResult();
+    /*    Condition condition=new Condition(Activity.class);
+        condition.createCriteria().andCondition("activitytype = "+id+"");
+        condition.setOrderByClause("createtime desc");*/
+        Activity activity = activityService.getActivityByid(id);
+        AjaxResult aa=new AjaxResult();
+        aa.setData(activity);
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
+
 
     @Authorization("需token")
     @ApiOperation(value="根据活动获取活动感兴趣的人", notes="根据活动获取活动感兴趣的人")
@@ -79,4 +97,7 @@ public class ApiActivtiy {
         aa.setRetmsg("succ");
         return aa;
     }
+
+
+
 }

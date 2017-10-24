@@ -1,5 +1,7 @@
 package com.xe.demo.model;
 
+import io.swagger.models.auth.In;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,6 +44,9 @@ public class Activity {
     private String activitytype;
 
     @Transient
+    private Integer viewCount;
+
+    @Transient
     private String activitytypename;
 
     @Transient
@@ -51,6 +56,14 @@ public class Activity {
     @Transient
     private List<Member> viewmembersList = new ArrayList<Member>();
 
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
 
     public List<Member> getViewmembersList() {
         return viewmembersList;

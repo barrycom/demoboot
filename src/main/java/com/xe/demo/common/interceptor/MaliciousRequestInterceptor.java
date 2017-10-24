@@ -37,7 +37,7 @@ public class MaliciousRequestInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		//启动支持@Autowired注解
-		WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()).getAutowireCapableBeanFactory().autowireBean(this);
+	/*	WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()).getAutowireCapableBeanFactory().autowireBean(this);
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
@@ -72,7 +72,7 @@ public class MaliciousRequestInterceptor extends HandlerInterceptorAdapter {
 		}
 		dataCache.setValue(requestIp + Constant.PRE_REQUEST_PATH, url);
 		dataCache.setValue(requestIp + Constant.PRE_REQUEST_TIME, nowtime);
-
+*/
 
 
 
