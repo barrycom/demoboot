@@ -8,4 +8,19 @@
   </resultMap>
 
 
+
+  <!--关注动态的用户-->
+  <select id="querycollecmycontent" resultType="hashmap">
+    select  uy.dynamicwzid ,
+    mber.id,mber.`name` ,mber.headimg
+    from usercollectiondy uy ,member mber
+    where uy.userid=mber.id
+    AND    uy.dynamicwzid=#{dynamicwzid}
+    order by uy.id desc  LIMIT 0,6
+
+  </select>
+
+
+
+
 </mapper>

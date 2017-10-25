@@ -44,7 +44,10 @@ public class ApiContentController {
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
-    public AjaxResult otherContent (Integer userid,Integer dynamictype_id,Integer pageNo,Integer pageSize){//String begintime,String endtime,
+    public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam Integer userid,
+                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
+                                    @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
+                                    @ApiParam(value = "页面大小") @RequestParam Integer pageSize){//String begintime,String endtime,
         PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
@@ -75,7 +78,8 @@ public class ApiContentController {
     @ApiOperation(value="感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "interest", method = RequestMethod.POST)
-    public AjaxResult interest (Integer user_id,Integer dynamic_id){
+    public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam Integer user_id,
+                                @ApiParam(value = "动态id", required = true) @RequestParam Integer dynamic_id){
         UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
         userCollecTiondy.setUserid(user_id);
         userCollecTiondy.setDynamicwzid(dynamic_id);
@@ -88,7 +92,7 @@ public class ApiContentController {
     @ApiOperation(value="取消感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "notinterest", method = RequestMethod.POST)
-    public AjaxResult interest (Integer id){
+    public AjaxResult interest (@ApiParam(value = "关注id", required = true) @RequestParam Integer id){
         AjaxResult ajaxResult=userCollecTiondyService.deleteByID(id);
 
         return ajaxResult;
@@ -98,11 +102,26 @@ public class ApiContentController {
     @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
-    public AjaxResult myContent (Integer userid,int pageNo,int pageSize){
+    public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+                                 @ApiParam(value = "当前页数", required = true) @RequestParam int pageNo,
+                                 @ApiParam(value = "页面大小 ", required = true) @RequestParam int pageSize){
         PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         List<Map<String, String>> list=memBerDynamicwzService.querymycontent(page,userid);
+        for (Map map:list) {
+           String id= map.get("id").toString();
+            List<Map> li=userCollecTiondyService.querycollecmycontent(Integer.parseInt(id));
+            if(li.size()>0){
+                map.put("collcer",li);
+                map.put("collcersize",li.size());
+            }else{
+                map.put("collcer",null);
+                map.put("collcersize",0);
+            }
+        }
+
+
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");
@@ -114,7 +133,10 @@ public class ApiContentController {
     @ApiOperation(value="发布动态", notes="发布动态")
     @ResponseBody
     @RequestMapping(value = "saveContent", method = RequestMethod.POST)
-    public AjaxResult saveContent (Integer userid,String dynamicwz,String imgurl,String dynamicid){
+    public AjaxResult saveContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+                                   @ApiParam(value = "动态文字", required = true) @RequestParam String dynamicwz,
+                                   @ApiParam(value = "图片", required = true) @RequestParam String imgurl,
+                                   @ApiParam(value = "行业分类", required = true) @RequestParam String dynamicid){
         //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         MemBerDynamicwz memBerDynamicwz=new MemBerDynamicwz();
         memBerDynamicwz.setUserid(userid.toString());
@@ -163,7 +185,12 @@ public class ApiContentController {
     @ApiOperation(value="获取我感兴趣的动态", notes="获取我感兴趣的动态")
     @ResponseBody
     @RequestMapping(value = "myinstrcontent", method = RequestMethod.POST)
-    public AjaxResult myinstrcontent (Integer userid,Integer dynamictype_id,String begintime,String endtime,Integer pageNo,Integer pageSize){
+    public AjaxResult myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+                                      @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id,
+                                      @ApiParam(value = "开始时间", required = true) @RequestParam String begintime,
+                                      @ApiParam(value = "结束时间", required = true) @RequestParam String endtime,
+                                      @ApiParam(value = "当前页面", required = true) @RequestParam Integer pageNo,
+                                      @ApiParam(value = "页面大小", required = true) @RequestParam Integer pageSize){
         PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
@@ -182,7 +209,8 @@ public class ApiContentController {
     @ApiOperation(value="关注行业", notes="关注行业")
     @ResponseBody
     @RequestMapping(value = "choosedyn", method = RequestMethod.POST)
-    public AjaxResult choosedyn (Integer userid, Integer dynamictype_id){
+    public AjaxResult choosedyn (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+                                 @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id){
         UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
         userCollecTindustry.setUserid(userid);
         userCollecTindustry.setDynamicwzid(dynamictype_id);
@@ -194,11 +222,11 @@ public class ApiContentController {
     @ApiOperation(value="用户关组的行业", notes="用户关组的行业")
     @ResponseBody
     @RequestMapping(value = "notedyn", method = RequestMethod.POST)
-    public AjaxResult notedyn (Integer userid){
+    public AjaxResult notedyn (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid){
         UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
         userCollecTindustry.setUserid(userid);
         AjaxResult ajaxResult=new AjaxResult();
-        List<Map<String,String>>  li=userCollecTindustryService.querydyn(userCollecTindustry);
+            List<Map<String,String>>  li=userCollecTindustryService.querydyn(userCollecTindustry);
         ajaxResult.setData(li);
         ajaxResult.setRetmsg("success");
         return ajaxResult;
