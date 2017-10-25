@@ -1,9 +1,6 @@
 package com.xe.demo.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "dynamic_type")
 public class DynamicType {
@@ -17,6 +14,12 @@ public class DynamicType {
     private String creat_time;
 
     private String state;
+
+
+    @Transient
+    private boolean isSelect;
+    @Transient
+    private String userId;
 
     public Integer getId() {
         return id;
@@ -48,5 +51,21 @@ public class DynamicType {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

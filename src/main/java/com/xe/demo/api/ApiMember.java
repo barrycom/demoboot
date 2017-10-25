@@ -5,19 +5,13 @@ import com.qiniu.util.StringUtils;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
-import com.xe.demo.service.ActivityService;
-import com.xe.demo.service.ActivityTypeService;
-import com.xe.demo.service.MemberInfoService;
-import com.xe.demo.service.MemberService;
+import com.xe.demo.service.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
 import java.util.List;
@@ -43,6 +37,9 @@ public class ApiMember {
     private MemberInfoMapper memberInfoMapper;
     @Autowired
     private DynamicTypeMapper dynamicTypeMapper;
+    @Autowired
+    private DynamicTypeService dynamicTypeService;
+
 
 
 
@@ -50,7 +47,7 @@ public class ApiMember {
      @ApiOperation(value="根据ID获取用户信息", notes="根据ID获取用户信息")
      @RequestMapping(value = "getMember", method = RequestMethod.POST)
      @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
-    public AjaxResult getMember(@RequestParam String  memberId)
+    public AjaxResult getMember(@RequestParam(value = "memberId",required = false) String  memberId)
      {
          JsonResult r = new JsonResult();
          Condition condition=new Condition(Activity.class);
@@ -65,15 +62,15 @@ public class ApiMember {
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     @JsonView(Member.class)
-    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam String realname,
-                                   @ApiParam(value = "行业", required = true) @RequestParam String trade,
-                                   @ApiParam(value = "公司名称", required = true) @RequestParam String corporatename,
-                                   @ApiParam(value = "职位", required = true) @RequestParam String personalinfo,
-                                   @ApiParam(value = "工作地区", required = true) @RequestParam String region,
-                                   @ApiParam(value = "微信号", required = true) @RequestParam String wxno,
-                                   @ApiParam(value = "手机号", required = true) @RequestParam String mobile,
-                                   @ApiParam(value = "邮箱", required = true) @RequestParam String email,
-                                   @ApiParam(value = "ID", required = true) @RequestParam String id)
+    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
+                                   @ApiParam(value = "行业", required = true) @RequestParam("trade") String trade,
+                                   @ApiParam(value = "公司名称", required = true) @RequestParam("corporatename") String corporatename,
+                                   @ApiParam(value = "职位", required = true) @RequestParam("personalinfo") String personalinfo,
+                                   @ApiParam(value = "工作地区", required = true) @RequestParam("region") String region,
+                                   @ApiParam(value = "微信号", required = true) @RequestParam("wxno") String wxno,
+                                   @ApiParam(value = "手机号", required = true) @RequestParam("mobile") String mobile,
+                                   @ApiParam(value = "邮箱", required = true) @RequestParam("email") String email,
+                                   @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
     {
         Member member=new Member();
         member.setId(id);
@@ -116,9 +113,9 @@ public class ApiMember {
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
     @JsonView(Member.class)
-    public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam String personalinfo,
-                                   @ApiParam(value = "我的资源", required = true) @RequestParam String resources,
-                                   @ApiParam(value = "ID", required = true) @RequestParam String id)
+    public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam("personalinfo") String personalinfo,
+                                   @ApiParam(value = "我的资源", required = true) @RequestParam("resources") String resources,
+                                   @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
     {
         Member member=new Member();
         member.setId(id);
@@ -129,5 +126,25 @@ public class ApiMember {
         AjaxResult aa=new AjaxResult();
         aa.setRetmsg("succ");
         return aa;
+    }
+
+    //@Authorization("需token")
+    @ApiOperation(value="获取用户选择的行业", notes="获取用户选择的行业")
+    @ResponseBody
+    @RequestMapping(value = "getMemberDynamicType", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
+    public AjaxResult getMemberDynamicType (@RequestParam(value = "memberId",required = false) String  memberId){//int pageNo,int pageSize
+        List<DynamicType> list=dynamicTypeService.getMemberDynamicType(memberId);
+        list.stream().forEach(i->{
+            if(StringUtils.isNullOrEmpty(i.getUserId())){
+                i.setSelect(false);
+            }else {
+                i.setSelect(true);
+            }
+        });
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(list);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
     }
 }

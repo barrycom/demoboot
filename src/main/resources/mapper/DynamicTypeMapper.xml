@@ -21,6 +21,24 @@
     where  ind.id=#{id}
   </select>
 
+  <select id="getMemberDynamicType" parameterType="String" resultType="com.xe.demo.model.DynamicType" >
+        SELECT
+            *
+        FROM
+            dynamic_type c
+        LEFT JOIN (
+            SELECT
+                b.id as isselect,
+        a.userid
+
+            FROM
+                usercollectindustry a,
+                dynamic_type b
+            WHERE
+                a.dynamicwzid = b.id
+        ) d ON c.id = d.isselect and c.state = 0 and d.userid=#{memberId}
+  </select>
+
   <update id="update" parameterType="com.xe.demo.model.DynamicType" >
     update dynamic_type
     <set >

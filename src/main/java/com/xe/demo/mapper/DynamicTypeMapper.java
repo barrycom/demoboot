@@ -17,4 +17,5 @@ public interface DynamicTypeMapper extends MyMapper<DynamicType> {
 
     int update(DynamicType record);
 
+    List<DynamicType> getMemberDynamicType(@Param("memberId")String memberId);
 }

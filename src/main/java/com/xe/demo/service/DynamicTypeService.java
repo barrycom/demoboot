@@ -44,4 +44,7 @@ public class DynamicTypeService extends AbstratService<DynamicType> {
         return AppUtil.returnObj(result);
     }
 
+    public List<DynamicType> getMemberDynamicType(String memberId) {
+        return  DynamicTypeMapper.getMemberDynamicType(memberId);
+    }
 }
