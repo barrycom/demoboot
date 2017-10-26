@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -160,5 +162,30 @@ public class ApiMember {
         aa.setData(list);
         aa.setRetmsg("succ");
         return aa;
+    }
+
+
+    @ApiOperation(value="注册用户", notes="注册用户")
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public AjaxResult register(@RequestBody Member member)
+    {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        member.setRegtime(df.format(new Date()));
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(memberService.save(member));
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
+
+    @ApiOperation(value="发送验证码", notes="发送验证码")
+    @RequestMapping(value = "sendCode", method = RequestMethod.POST)
+    public AjaxResult sendCode(@RequestBody Member member)
+    {
+        //模拟验证码发送
+        Integer code=(int)((Math.random()*9+1)*1000);
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(code);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
     }
 }

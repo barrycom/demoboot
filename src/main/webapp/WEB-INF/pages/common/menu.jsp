@@ -49,6 +49,9 @@
 				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">活动管理</span></a>
 				<ul>
 					<li opCode="060001">
+						<a tabindex="-1" href="javascript:goPage('admin/activityType/mainPage')"><span class="mm-text">活动类型管理</span></a>
+					</li>
+					<li opCode="060001">
 						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPage')"><span class="mm-text">活动管理</span></a>
 					</li>
 

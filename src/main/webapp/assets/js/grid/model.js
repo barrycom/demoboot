@@ -180,6 +180,7 @@
             $(".modal-backdrop").remove();
         });
         rDrag.move('Modal_'+ options.id, "modal-header-" + options.id);
+
         if(options.url) {
             $.ajax({
                 url:options.url,
