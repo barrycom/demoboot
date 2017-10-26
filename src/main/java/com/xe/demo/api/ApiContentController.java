@@ -40,7 +40,7 @@ public class ApiContentController {
     @Autowired
     private UserCollecTindustryService userCollecTindustryService;
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
@@ -52,7 +52,9 @@ public class ApiContentController {
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         Map map=new HashedMap();
-        map.put("dynamictype_id",dynamictype_id);
+        if(dynamictype_id!=0) {
+            map.put("dynamictype_id", dynamictype_id);
+        }
       /*  map.put("begintime",begintime);
         map.put("endtime",endtime);*/
         List<Map<String, String>> list=memBerDynamicwzService.queryneed(map,page);
@@ -62,9 +64,9 @@ public class ApiContentController {
             userCollecTiondy.setDynamicwzid(Integer.parseInt(li.get("id").toString()));
             Integer uctd=userCollecTiondyService.queryCount(userCollecTiondy);
             if(uctd!=0){
-                li.put("isinterest","0");
+                li.put("isinterest","");
             }else{
-                li.put("isinterest","1");
+                li.put("isinterest","interested");
             }
         }
 
@@ -74,7 +76,7 @@ public class ApiContentController {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "interest", method = RequestMethod.POST)
@@ -88,7 +90,7 @@ public class ApiContentController {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="取消感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "notinterest", method = RequestMethod.POST)
@@ -98,17 +100,23 @@ public class ApiContentController {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
     public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
                                  @ApiParam(value = "当前页数", required = true) @RequestParam int pageNo,
                                  @ApiParam(value = "页面大小 ", required = true) @RequestParam int pageSize){
         PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
-        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(page,userid);
+        Map querymap=new HashedMap();
+        querymap.put("userid",userid);
+        if(dynamictype_id!=0) {
+            querymap.put("dynamictype_id", dynamictype_id);
+        }
+        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(page,querymap);
         for (Map map:list) {
            String id= map.get("id").toString();
             List<Map> li=userCollecTiondyService.querycollecmycontent(Integer.parseInt(id));
@@ -129,7 +137,7 @@ public class ApiContentController {
     }
 
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="发布动态", notes="发布动态")
     @ResponseBody
     @RequestMapping(value = "saveContent", method = RequestMethod.POST)
@@ -164,7 +172,7 @@ public class ApiContentController {
     }
 
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="获取行业分类", notes="获取行业分类")
     @ResponseBody
     @RequestMapping(value = "getdynamictype", method = RequestMethod.POST)
@@ -181,7 +189,7 @@ public class ApiContentController {
 
 
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="获取我感兴趣的动态", notes="获取我感兴趣的动态")
     @ResponseBody
     @RequestMapping(value = "myinstrcontent", method = RequestMethod.POST)
@@ -205,7 +213,7 @@ public class ApiContentController {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="关注行业", notes="关注行业")
     @ResponseBody
     @RequestMapping(value = "choosedyn", method = RequestMethod.POST)
@@ -218,7 +226,7 @@ public class ApiContentController {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+   // @Authorization("需token")
     @ApiOperation(value="用户关组的行业", notes="用户关组的行业")
     @ResponseBody
     @RequestMapping(value = "notedyn", method = RequestMethod.POST)

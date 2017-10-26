@@ -56,9 +56,9 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
     }
 
     @ServiceLog("需求广场")
-    public List<Map<String, String>> querymycontent(PageAjax<MemBerDynamicwz> page,Integer userid){
+    public List<Map<String, String>> querymycontent(PageAjax<MemBerDynamicwz> page,Map map){
         PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<Map<String, String>> list = memBerDynamicwzMapper.querymycontent(userid);
+        List<Map<String, String>> list = memBerDynamicwzMapper.querymycontent(map);
         return list;
     }
 
