@@ -171,6 +171,9 @@
     mz.state="0"
     AND
     mz.userid=#{userid}
+    <if test="dynamictype_id != null" >
+      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
+    </if>
     order by createtime desc
 
   </select>

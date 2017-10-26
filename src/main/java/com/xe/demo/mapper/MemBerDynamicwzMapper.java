@@ -22,7 +22,7 @@ public interface MemBerDynamicwzMapper extends MyMapper<MemBerDynamicwz> {
 
     List<Map<String, String>>  myinstrcontent(Map map);
 
-    List<Map<String, String>>  querymycontent(Integer userid);
+    List<Map<String, String>>  querymycontent(Map map);
 
 
     int savecontent(MemBerDynamicwz record);

@@ -18,6 +18,8 @@ import tk.mybatis.mapper.entity.Condition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -164,17 +166,35 @@ public class ApiMember {
             if(!StringUtils.isNullOrEmpty(i.getBuynum())){
                 i.setFinishimg("/images/my/my_act_icon_finish.png");
             }
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");//小写的mm表示的是分钟
-            try {
-                Date date=sdf.parse(i.getActivitysdate());
-                i.setActivitysdate(DateUtil.dateToDateString(date,"yyyy_MM_dd_HH_mm_CN"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         });
         AjaxResult aa=new AjaxResult();
         aa.setData(list);
         aa.setRetmsg("succ");
         return aa;
+    }
+
+
+    @ApiOperation(value="注册用户", notes="注册用户")
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public AjaxResult register(@RequestBody Member member)
+    {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        member.setRegtime(df.format(new Date()));
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(memberService.save(member));
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
+
+    @ApiOperation(value="发送验证码", notes="发送验证码")
+    @RequestMapping(value = "sendCode", method = RequestMethod.POST)
+    public AjaxResult sendCode(@RequestBody Member member)
+    {
+        //模拟验证码发送
+        Integer code=(int)((Math.random()*9+1)*1000);
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(code);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
     }
 }
