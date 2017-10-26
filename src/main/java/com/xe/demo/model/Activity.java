@@ -45,6 +45,8 @@ public class Activity {
 
     @Transient
     private Integer viewCount;
+    @Transient
+    private String activityorderid;
 
     @Transient
     private String activitytypename;
@@ -56,6 +58,13 @@ public class Activity {
     @Transient
     private List<Member> viewmembersList = new ArrayList<Member>();
 
+    public String getActivityorderid() {
+        return activityorderid;
+    }
+
+    public void setActivityorderid(String activityorderid) {
+        this.activityorderid = activityorderid;
+    }
 
     public Integer getViewCount() {
         return viewCount;

@@ -30,7 +30,7 @@ public class ApiMember {
     @Autowired
     private RegionsMapper regionsMapper;
     @Autowired
-    private IndustryMapper industryMapper;
+    private ActivityMapper activityMapper;
     @Autowired
     private MemberInfoService memberInfoService;
     @Autowired
@@ -137,14 +137,28 @@ public class ApiMember {
         List<DynamicType> list=dynamicTypeService.getMemberDynamicType(memberId);
         list.stream().forEach(i->{
             if(StringUtils.isNullOrEmpty(i.getUserId())){
-                i.setSelect(false);
+                i.setChosen(false);
             }else {
-                i.setSelect(true);
+                i.setChosen(true);
             }
         });
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");
         return ajaxResult;
+    }
+
+    //@Authorization("需token")
+    @ApiOperation(value="根据用户ID获取活动", notes="根据用户ID获取活动")
+    @RequestMapping(value = "getActivtiyByMemberId", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
+    public AjaxResult getActivtiyByMemberId(@RequestParam String  memberId)
+    {
+        JsonResult r = new JsonResult();
+        List<Member> list = activityMapper.getActivtiyByMemberId(memberId);
+        AjaxResult aa=new AjaxResult();
+        aa.setData(list);
+        aa.setRetmsg("succ");
+        return aa;
     }
 }

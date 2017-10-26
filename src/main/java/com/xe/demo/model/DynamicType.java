@@ -17,7 +17,7 @@ public class DynamicType {
 
 
     @Transient
-    private boolean isSelect;
+    private boolean chosen;
     @Transient
     private String userId;
 
@@ -53,12 +53,12 @@ public class DynamicType {
         this.state = state;
     }
 
-    public boolean isSelect() {
-        return isSelect;
+    public boolean isChosen() {
+        return chosen;
     }
 
-    public void setSelect(boolean select) {
-        isSelect = select;
+    public void setChosen(boolean chosen) {
+        this.chosen = chosen;
     }
 
     public String getUserId() {
