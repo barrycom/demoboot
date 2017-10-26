@@ -47,16 +47,34 @@ public class Activity {
     private Integer viewCount;
     @Transient
     private String activityorderid;
-
+    @Transient
+    private String buynum;
     @Transient
     private String activitytypename;
-
+    @Transient
+    private String finishimg;
     @Transient
     private List<Member> membersList = new ArrayList<Member>();
 
 //浏览过改活动的
     @Transient
     private List<Member> viewmembersList = new ArrayList<Member>();
+
+    public String getFinishimg() {
+        return finishimg;
+    }
+
+    public void setFinishimg(String finishimg) {
+        this.finishimg = finishimg;
+    }
+
+    public String getBuynum() {
+        return buynum;
+    }
+
+    public void setBuynum(String buynum) {
+        this.buynum = buynum;
+    }
 
     public String getActivityorderid() {
         return activityorderid;

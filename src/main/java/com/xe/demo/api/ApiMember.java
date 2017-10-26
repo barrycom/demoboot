@@ -3,6 +3,7 @@ package com.xe.demo.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.qiniu.util.StringUtils;
 import com.xe.demo.common.pojo.AjaxResult;
+import com.xe.demo.common.utils.DateUtil;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -155,7 +159,19 @@ public class ApiMember {
     public AjaxResult getActivtiyByMemberId(@RequestParam String  memberId)
     {
         JsonResult r = new JsonResult();
-        List<Member> list = activityMapper.getActivtiyByMemberId(memberId);
+        List<Activity> list = activityMapper.getActivtiyByMemberId(memberId);
+        list.stream().forEach(i->{
+            if(!StringUtils.isNullOrEmpty(i.getBuynum())){
+                i.setFinishimg("/images/my/my_act_icon_finish.png");
+            }
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");//小写的mm表示的是分钟
+            try {
+                Date date=sdf.parse(i.getActivitysdate());
+                i.setActivitysdate(DateUtil.dateToDateString(date,"yyyy_MM_dd_HH_mm_CN"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        });
         AjaxResult aa=new AjaxResult();
         aa.setData(list);
         aa.setRetmsg("succ");
