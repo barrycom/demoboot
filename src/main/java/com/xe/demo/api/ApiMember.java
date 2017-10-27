@@ -68,7 +68,7 @@ public class ApiMember {
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     @JsonView(Member.class)
-    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
+    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String realname,
                                    @ApiParam(value = "行业", required = true) @RequestParam("trade") String trade,
                                    @ApiParam(value = "公司名称", required = true) @RequestParam("corporatename") String corporatename,
                                    @ApiParam(value = "职位", required = true) @RequestParam("personalinfo") String personalinfo,
@@ -87,10 +87,11 @@ public class ApiMember {
         member.setEmail(email);
 
         member.setTrade(trade);
-        Condition condition=new Condition(DynamicType.class);
+        /*Condition condition=new Condition(DynamicType.class);
         condition.createCriteria().andCondition("id",trade);
-        DynamicType industry=dynamicTypeMapper.selectByPrimaryKey(condition);
-        member.setTradename(industry.getDynamicname());
+        DynamicType industry=dynamicTypeMapper.selectByPrimaryKey(condition);*/
+        String[] tradeName = trade.split(",");
+        member.setTradename(tradeName[0]+tradeName[1]);
 
         member.setRegion(region);
         Condition condition2=new Condition(Regions.class);
@@ -98,7 +99,7 @@ public class ApiMember {
         Regions regions= regionsMapper.selectByPrimaryKey(condition2);
         member.setRegionname(regions.getRegionname());
 
-        MemberInfo memberInfo=new MemberInfo();
+        /*MemberInfo memberInfo=new MemberInfo();
         memberInfo.setMemberid(id);
         memberInfo = memberInfoMapper.selectOne(memberInfo);
         if(memberInfo == null){
@@ -108,7 +109,7 @@ public class ApiMember {
             memberInfo.setRealname(realname);
             memberInfoService.update(memberInfo);
         }
-
+*/
         memberService.update(member);
         AjaxResult aa=new AjaxResult();
         aa.setRetmsg("succ");
