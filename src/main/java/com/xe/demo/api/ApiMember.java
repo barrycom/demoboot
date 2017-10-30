@@ -42,9 +42,9 @@ public class ApiMember {
     @Autowired
     private MemberInfoMapper memberInfoMapper;
     @Autowired
-    private DynamicTypeMapper dynamicTypeMapper;
-    @Autowired
     private DynamicTypeService dynamicTypeService;
+    @Autowired
+    private DynamicTypeMapper dynamicTypeMapper;
 
 
 
@@ -67,8 +67,7 @@ public class ApiMember {
     //@Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
-    @JsonView(Member.class)
-    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String realname,
+    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
                                    @ApiParam(value = "行业", required = true) @RequestParam("trade") String trade,
                                    @ApiParam(value = "公司名称", required = true) @RequestParam("corporatename") String corporatename,
                                    @ApiParam(value = "职位", required = true) @RequestParam("personalinfo") String personalinfo,
@@ -80,6 +79,7 @@ public class ApiMember {
     {
         Member member=new Member();
         member.setId(id);
+        member.setName(name);
         member.setCorporatename(corporatename);
         member.setPersonalinfo(personalinfo);
         member.setWxno(wxno);
@@ -87,17 +87,16 @@ public class ApiMember {
         member.setEmail(email);
 
         member.setTrade(trade);
-        /*Condition condition=new Condition(DynamicType.class);
-        condition.createCriteria().andCondition("id",trade);
-        DynamicType industry=dynamicTypeMapper.selectByPrimaryKey(condition);*/
-        String[] tradeName = trade.split(",");
-        member.setTradename(tradeName[0]+tradeName[1]);
+        Condition condition=new Condition(DynamicType.class);
+        DynamicType industry=dynamicTypeService.queryOne(Integer.parseInt(trade));
+        member.setTradename(industry.getDynamicname());
 
         member.setRegion(region);
-        Condition condition2=new Condition(Regions.class);
+        /*Condition condition2=new Condition(Regions.class);
         condition2.createCriteria().andCondition("id",region);
-        Regions regions= regionsMapper.selectByPrimaryKey(condition2);
-        member.setRegionname(regions.getRegionname());
+        Regions regions= regionsMapper.selectByPrimaryKey(condition2);*/
+        String[] regionName=region.split(",");
+        member.setRegionname(regionName[0]+regionName[1]);
 
         /*MemberInfo memberInfo=new MemberInfo();
         memberInfo.setMemberid(id);
@@ -112,6 +111,7 @@ public class ApiMember {
 */
         memberService.update(member);
         AjaxResult aa=new AjaxResult();
+        aa.setData(memberService.queryOne(member));
         aa.setRetmsg("succ");
         return aa;
     }
@@ -119,7 +119,6 @@ public class ApiMember {
     //@Authorization("需token")
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
-    @JsonView(Member.class)
     public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam("personalinfo") String personalinfo,
                                    @ApiParam(value = "我的资源", required = true) @RequestParam("resources") String resources,
                                    @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
@@ -131,6 +130,7 @@ public class ApiMember {
 
         memberService.update(member);
         AjaxResult aa=new AjaxResult();
+        aa.setData(memberService.queryOne(member));
         aa.setRetmsg("succ");
         return aa;
     }
