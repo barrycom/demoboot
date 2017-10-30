@@ -197,7 +197,6 @@ $("#activitysdate").datetimepicker({
 });
 $("#activityedate").datetimepicker({
     format: 'yyyy-mm-dd hh:ii',
-
     language: 'zh-CN',
     autoclose:true,
     startDate:new Date()

@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Activity {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String activityid;

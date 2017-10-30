@@ -57,7 +57,7 @@ public class ApiMember {
      {
          JsonResult r = new JsonResult();
          Condition condition=new Condition(Activity.class);
-         condition.createCriteria().andCondition("id = "+memberId+"");
+         condition.createCriteria().andCondition("id = '"+memberId+"'");
          AjaxResult aa=new AjaxResult();
          aa.setData(memberMapper.selectByExample(condition));
          aa.setRetmsg("succ");
@@ -181,6 +181,10 @@ public class ApiMember {
     {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         member.setRegtime(df.format(new Date()));
+        member.setIsblock("0");
+        member.setOpenid(member.getId());
+        member.setIshy("0");
+        member.setState("0");
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(memberService.save(member));
         ajaxResult.setRetmsg("success");
@@ -189,7 +193,7 @@ public class ApiMember {
 
     @ApiOperation(value="发送验证码", notes="发送验证码")
     @RequestMapping(value = "sendCode", method = RequestMethod.POST)
-    public AjaxResult sendCode(@RequestBody Member member)
+    public AjaxResult sendCode()
     {
         //模拟验证码发送
         Integer code=(int)((Math.random()*9+1)*1000);

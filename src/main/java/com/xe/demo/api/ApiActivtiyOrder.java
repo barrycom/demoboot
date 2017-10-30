@@ -16,8 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ApiActivtiyOrder {
+/*
 
-  /*  @Authorization("需token")
+    @Authorization("需token")
     @ApiOperation(value="新增活动订单", notes="新增活动订单")
     @RequestMapping(value = "addActivtiyOrder", method = RequestMethod.POST)
     public AjaxResult getActivtiyallType (){
@@ -27,7 +28,8 @@ public class ApiActivtiyOrder {
         aa.setData(list);
         aa.setRetmsg("succ");
         return aa;
-    }*/
+    }
+*/
 
 
 }
