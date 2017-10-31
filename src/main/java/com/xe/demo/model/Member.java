@@ -29,10 +29,17 @@ public class Member {
     private String openid;
     private String resources;
     private String personalinfo;
+    @Transient
+    private String szm;
 
 
+    public String getSzm() {
+        return szm;
+    }
 
-
+    public void setSzm(String szm) {
+        this.szm = szm;
+    }
 
     @Transient
     private String startTime;

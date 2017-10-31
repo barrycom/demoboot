@@ -3,6 +3,8 @@ package com.xe.demo.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.qiniu.util.StringUtils;
 import com.xe.demo.common.pojo.AjaxResult;
+import com.xe.demo.common.pojo.SzmData;
+import com.xe.demo.common.utils.ChineseCharToEn;
 import com.xe.demo.common.utils.DateUtil;
 import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.*;
@@ -20,6 +22,8 @@ import tk.mybatis.mapper.entity.Condition;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +53,6 @@ public class ApiMember {
     private DynamicTypeMapper dynamicTypeMapper;
     @Autowired
     private UploadUtil uploadUtil;
-
 
 
 
@@ -230,6 +233,98 @@ public class ApiMember {
         map.put("member",member);
         map.put("memberInfo",m);
         aa.setData(map);
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
+
+
+    @ApiOperation(value="获取所有用户除了自己", notes="获取所有用户除了自己")
+    @RequestMapping(value = "getMemberListNoMy", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
+    public AjaxResult getMemberListNoMy(@RequestParam(value = "memberId",required = false) String  memberId)
+    {
+        JsonResult r = new JsonResult();
+        Condition condition=new Condition(Activity.class);
+        condition.createCriteria().andCondition("id != '"+memberId+"'");
+        AjaxResult aa=new AjaxResult();
+        List<Member> memberList=memberMapper.selectByExample(condition);
+        List<SzmData> szmDataList=new ArrayList<SzmData>();
+        SzmData A=new SzmData("A",null);
+        SzmData B=new SzmData("B",null);
+        SzmData C=new SzmData("C",null);
+        SzmData D=new SzmData("D",null);
+        SzmData E=new SzmData("E",null);
+        SzmData F=new SzmData("F",null);
+        SzmData G=new SzmData("G",null);
+        SzmData H=new SzmData("H",null);
+        SzmData I=new SzmData("I",null);
+        SzmData J=new SzmData("J",null);
+        SzmData K=new SzmData("K",null);
+        SzmData L=new SzmData("L",null);
+        SzmData M=new SzmData("M",null);
+        SzmData N=new SzmData("N",null);
+        SzmData O=new SzmData("O",null);
+        SzmData P=new SzmData("P",null);
+        SzmData Q=new SzmData("Q",null);
+        SzmData R=new SzmData("R",null);
+        SzmData S=new SzmData("S",null);
+        SzmData T=new SzmData("T",null);
+        SzmData U=new SzmData("U",null);
+        SzmData V=new SzmData("V",null);
+        SzmData W=new SzmData("W",null);
+        SzmData X=new SzmData("X",null);
+        SzmData Y=new SzmData("Y",null);
+        SzmData Z=new SzmData("Z",null);
+        szmDataList.add(A);
+        szmDataList.add(B);
+        szmDataList.add(C);
+        szmDataList.add(D);
+        szmDataList.add(E);
+        szmDataList.add(F);
+        szmDataList.add(G);
+        szmDataList.add(H);
+        szmDataList.add(I);
+        szmDataList.add(J);
+        szmDataList.add(K);
+        szmDataList.add(L);
+        szmDataList.add(M);
+        szmDataList.add(N);
+        szmDataList.add(O);
+        szmDataList.add(P);
+
+        szmDataList.add(Q);
+        szmDataList.add(R);
+        szmDataList.add(S);
+        szmDataList.add(T);
+
+        szmDataList.add(U);
+        szmDataList.add(V);
+        szmDataList.add(W);
+        szmDataList.add(X);
+
+        szmDataList.add(Y);
+        szmDataList.add(Z);
+
+        for(int j=0;j<szmDataList.size();j++)
+        {
+            List<Member> members=new ArrayList<Member>();
+            for(int i=0;i<memberList.size();i++) {
+                ChineseCharToEn cte = new ChineseCharToEn();
+                String szm=cte.getAllFirstLetter(memberList.get(i).getName().substring(0,1).toUpperCase());
+
+                if (szmDataList.get(j).getAlphabet().equals(szm)) {
+                    members.add(memberList.get(i));
+                }
+
+
+            }
+            szmDataList.get(j).setMembers(members);
+
+        }
+
+
+        aa.setData(szmDataList);
         aa.setRetmsg("succ");
         return aa;
     }
