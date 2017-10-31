@@ -20,10 +20,9 @@ import tk.mybatis.mapper.entity.Condition;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Administrator on 2017-10-13.
@@ -212,11 +211,25 @@ public class ApiMember {
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
     public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
-                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardid") String cardid,
+                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardid") String cardno,
                                    @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
                                    @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
                                    @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
         AjaxResult aa=new AjaxResult();
+        MemberInfo m=new MemberInfo();
+        m.setRealname(realname);
+        m.setCardback(cardback);
+        m.setCardfront(cardfront);
+        m.setMemberid(memberid);
+        m.setCardno(cardno);
+        m.setIspass("0");
+        memberInfoService.insert(m);
+        Member member=memberService.queryByID(memberid);
+        member.setRealname(realname);
+        Map map = new HashMap();
+        map.put("member",member);
+        map.put("memberInfo",m);
+        aa.setData(map);
         aa.setRetmsg("succ");
         return aa;
     }
