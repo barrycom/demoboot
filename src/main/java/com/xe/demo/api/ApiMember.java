@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.qiniu.util.StringUtils;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.utils.DateUtil;
+import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -11,10 +12,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +48,8 @@ public class ApiMember {
     private DynamicTypeService dynamicTypeService;
     @Autowired
     private DynamicTypeMapper dynamicTypeMapper;
+    @Autowired
+    private UploadUtil uploadUtil;
 
 
 
@@ -202,4 +207,19 @@ public class ApiMember {
         ajaxResult.setRetmsg("success");
         return ajaxResult;
     }
+
+    //@Authorization("需token")
+    @ApiOperation(value="实名认证", notes="实名认证")
+    @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
+    public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
+                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardid") String cardid,
+                                   @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
+                                   @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
+                                   @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
+        AjaxResult aa=new AjaxResult();
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
+
 }
