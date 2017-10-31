@@ -248,18 +248,17 @@ public class ApiContentController {
     @ApiOperation(value="图片上传", notes="图片上传")
     @ResponseBody
     @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public AjaxResult upload (HttpServletRequest request, String docBase, String path){
+    public String upload (HttpServletRequest request, String docBase, String path){
         String imgpath="";
         try {
             imgpath=uploadUtil.upload(request,null,path);
         }catch (Exception ex) {
             ex.getStackTrace();
         }
-
-        AjaxResult ajaxResult=new AjaxResult();
+     /*   AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(imgpath);
-        ajaxResult.setRetmsg("success");
-        return ajaxResult;
+        ajaxResult.setRetmsg("success");*/
+        return imgpath;
     }
 
 }
