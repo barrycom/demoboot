@@ -6,6 +6,7 @@ import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.SzmData;
 import com.xe.demo.common.utils.ChineseCharToEn;
 import com.xe.demo.common.utils.DateUtil;
+import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -13,10 +14,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,9 +48,11 @@ public class ApiMember {
     @Autowired
     private MemberInfoMapper memberInfoMapper;
     @Autowired
+    private DynamicTypeService dynamicTypeService;
+    @Autowired
     private DynamicTypeMapper dynamicTypeMapper;
     @Autowired
-    private DynamicTypeService dynamicTypeService;
+    private UploadUtil uploadUtil;
 
 
 
@@ -69,8 +74,7 @@ public class ApiMember {
     //@Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
-    @JsonView(Member.class)
-    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
+    public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
                                    @ApiParam(value = "行业", required = true) @RequestParam("trade") String trade,
                                    @ApiParam(value = "公司名称", required = true) @RequestParam("corporatename") String corporatename,
                                    @ApiParam(value = "职位", required = true) @RequestParam("personalinfo") String personalinfo,
@@ -82,6 +86,7 @@ public class ApiMember {
     {
         Member member=new Member();
         member.setId(id);
+        member.setName(name);
         member.setCorporatename(corporatename);
         member.setPersonalinfo(personalinfo);
         member.setWxno(wxno);
@@ -90,17 +95,17 @@ public class ApiMember {
 
         member.setTrade(trade);
         Condition condition=new Condition(DynamicType.class);
-        condition.createCriteria().andCondition("id",trade);
-        DynamicType industry=dynamicTypeMapper.selectByPrimaryKey(condition);
+        DynamicType industry=dynamicTypeService.queryOne(Integer.parseInt(trade));
         member.setTradename(industry.getDynamicname());
 
         member.setRegion(region);
-        Condition condition2=new Condition(Regions.class);
+        /*Condition condition2=new Condition(Regions.class);
         condition2.createCriteria().andCondition("id",region);
-        Regions regions= regionsMapper.selectByPrimaryKey(condition2);
-        member.setRegionname(regions.getRegionname());
+        Regions regions= regionsMapper.selectByPrimaryKey(condition2);*/
+        String[] regionName=region.split(",");
+        member.setRegionname(regionName[0]+regionName[1]);
 
-        MemberInfo memberInfo=new MemberInfo();
+        /*MemberInfo memberInfo=new MemberInfo();
         memberInfo.setMemberid(id);
         memberInfo = memberInfoMapper.selectOne(memberInfo);
         if(memberInfo == null){
@@ -110,9 +115,10 @@ public class ApiMember {
             memberInfo.setRealname(realname);
             memberInfoService.update(memberInfo);
         }
-
+*/
         memberService.update(member);
         AjaxResult aa=new AjaxResult();
+        aa.setData(memberService.queryOne(member));
         aa.setRetmsg("succ");
         return aa;
     }
@@ -120,7 +126,6 @@ public class ApiMember {
     //@Authorization("需token")
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
-    @JsonView(Member.class)
     public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam("personalinfo") String personalinfo,
                                    @ApiParam(value = "我的资源", required = true) @RequestParam("resources") String resources,
                                    @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
@@ -132,6 +137,7 @@ public class ApiMember {
 
         memberService.update(member);
         AjaxResult aa=new AjaxResult();
+        aa.setData(memberService.queryOne(member));
         aa.setRetmsg("succ");
         return aa;
     }
@@ -203,6 +209,21 @@ public class ApiMember {
         ajaxResult.setRetmsg("success");
         return ajaxResult;
     }
+
+    //@Authorization("需token")
+    @ApiOperation(value="实名认证", notes="实名认证")
+    @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
+    public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
+                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardid") String cardid,
+                                   @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
+                                   @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
+                                   @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
+        AjaxResult aa=new AjaxResult();
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
+
 
     @ApiOperation(value="获取所有用户除了自己", notes="获取所有用户除了自己")
     @RequestMapping(value = "getMemberListNoMy", method = RequestMethod.POST)

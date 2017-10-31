@@ -3,6 +3,7 @@ package com.xe.demo.api;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.support.redis.IRedisService;
+import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.UserCollecTiondyMapper;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,8 @@ public class ApiContentController {
     private DynamicTypeService dynamicTypeService;
     @Autowired
     private UserCollecTindustryService userCollecTindustryService;
+    @Autowired
+    private UploadUtil uploadUtil;
 
     //@Authorization("需token")
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
@@ -238,6 +242,23 @@ public class ApiContentController {
         ajaxResult.setData(li);
         ajaxResult.setRetmsg("success");
         return ajaxResult;
+    }
+
+    // @Authorization("需token")
+    @ApiOperation(value="图片上传", notes="图片上传")
+    @ResponseBody
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    public String upload (HttpServletRequest request, String docBase, String path){
+        String imgpath="";
+        try {
+            imgpath=uploadUtil.upload(request,null,path);
+        }catch (Exception ex) {
+            ex.getStackTrace();
+        }
+     /*   AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(imgpath);
+        ajaxResult.setRetmsg("success");*/
+        return imgpath;
     }
 
 }
