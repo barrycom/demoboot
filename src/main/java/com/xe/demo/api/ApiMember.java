@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
+import org.apache.catalina.User;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,10 @@ public class ApiMember {
     private DynamicTypeMapper dynamicTypeMapper;
     @Autowired
     private UploadUtil uploadUtil;
+    @Autowired
+    private UserCollecTindustryService userCollecTindustryService;
+    @Autowired
+    private UserCollecTindustryMapper userCollecTindustryMapper;
 
 
 
@@ -327,6 +332,32 @@ public class ApiMember {
         aa.setData(szmDataList);
         aa.setRetmsg("succ");
         return aa;
+    }
+
+    //@Authorization("需token")
+    @ApiOperation(value="用户中心关注行业", notes="用户中心关注行业")
+    @ResponseBody
+    @RequestMapping(value = "memberIndexChooseDyn", method = RequestMethod.POST)
+    public AjaxResult memberIndexChooseDyn (@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
+                                 @ApiParam(value = "行业id", required = true) @RequestParam("dynamictypeid") String dynamictypeid){
+        AjaxResult ajaxResult=new AjaxResult();
+        try {
+            Condition condition=new Condition(UserCollecTindustry.class);
+            condition.createCriteria().andCondition("userid="+memberid);
+            userCollecTindustryMapper.deleteByExample(condition);
+            Arrays.stream(dynamictypeid.split(",")).forEach(i->{
+                UserCollecTindustry userCollecTindustry = new UserCollecTindustry();
+                userCollecTindustry.setDynamicwzid(Integer.parseInt(i));
+                userCollecTindustry.setUserid(Integer.parseInt(memberid));
+                userCollecTindustryService.insert(userCollecTindustry);
+                ajaxResult.setRetcode(1);
+                ajaxResult.setRetmsg("succ");
+            });
+        }catch (Exception e){
+            ajaxResult.setRetcode(0);
+        }
+
+        return ajaxResult;
     }
 
 
