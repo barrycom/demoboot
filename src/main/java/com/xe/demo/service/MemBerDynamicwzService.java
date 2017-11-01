@@ -25,7 +25,7 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
 
 
 
-    @ServiceLog("查询活动列表")
+    @ServiceLog("查询动态列表")
     public PageAjax<MemBerDynamicwz> queryPage(PageAjax<MemBerDynamicwz> page, MemBerDynamicwz MemBerDynamicwz) {
         PageMethod.startPage(page.getPageNo(), page.getPageSize());
         List<MemBerDynamicwz> list = memBerDynamicwzMapper.queryList(MemBerDynamicwz);
@@ -49,15 +49,15 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
     }
 
     @ServiceLog("需求广场")
-    public List<Map<String, String>> queryneed(Map map,PageAjax<MemBerDynamicwz> page) {
-        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+    public List<Map<String, String>> queryneed(Map map) {//,PageAjax<MemBerDynamicwz> page
+        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
         List<Map<String, String>> list = memBerDynamicwzMapper.queryneed(map);
         return list;
     }
 
-    @ServiceLog("需求广场")
-    public List<Map<String, String>> querymycontent(PageAjax<MemBerDynamicwz> page,Map map){
-        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+    @ServiceLog("我的动态")
+    public List<Map<String, String>> querymycontent(Map map){//,PageAjax<MemBerDynamicwz> page
+        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
         List<Map<String, String>> list = memBerDynamicwzMapper.querymycontent(map);
         return list;
     }
@@ -73,8 +73,8 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
     }
 
     @ServiceLog("我感兴趣的动态")
-    public List<Map<String, String>> myinstrcontent(Map map,PageAjax<MemBerDynamicwz> page) {
-        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+    public List<Map<String, String>> myinstrcontent(Map map) {//,PageAjax<MemBerDynamicwz> page
+        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
         List<Map<String, String>> list = memBerDynamicwzMapper.myinstrcontent(map);
         return list;
     }

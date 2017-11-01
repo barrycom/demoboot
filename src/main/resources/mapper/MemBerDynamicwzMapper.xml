@@ -204,19 +204,19 @@
 
     where
 
-    mz.id in(select uy.dynamicwzid from usercollectiondy uy where uy.userid=1) and
+    mz.id in(select uy.dynamicwzid from usercollectiondy uy where uy.userid=#{userid}) and
     mz.state="0"
 
     <if test="dynamictype_id != null" >
       AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
     </if>
-    <if test="begintime != null" >
+    <if test="begintime != null and begintime != ''" >
       AND  mz.createtime &gt;= #{begintime,jdbcType=VARCHAR}
     </if>
-    <if test="endtime != null" >
+    <if test="endtime != null and endtime != ''" >
       AND  mz.createtime &lt;= #{endtime,jdbcType=VARCHAR}
     </if>
-    order by RAND() desc
+    order by mz.createtime desc
 
   </select>
 

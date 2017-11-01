@@ -49,19 +49,19 @@ public class ApiContentController {
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
     public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam Integer userid,
-                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
+                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
                                     @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
-                                    @ApiParam(value = "页面大小") @RequestParam Integer pageSize){//String begintime,String endtime,
-        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+                                    @ApiParam(value = "页面大小") @RequestParam Integer pageSize*/){//String begintime,String endtime,
+       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
-        page.setPageSize(pageSize);
+        page.setPageSize(pageSize);*/
         Map map=new HashedMap();
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
         }
       /*  map.put("begintime",begintime);
         map.put("endtime",endtime);*/
-        List<Map<String, String>> list=memBerDynamicwzService.queryneed(map,page);
+        List<Map<String, String>> list=memBerDynamicwzService.queryneed(map);
         for (Map li:list) {
             UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
             userCollecTiondy.setUserid(userid);
@@ -109,18 +109,18 @@ public class ApiContentController {
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
     public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
-                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
-                                 @ApiParam(value = "当前页数", required = true) @RequestParam int pageNo,
-                                 @ApiParam(value = "页面大小 ", required = true) @RequestParam int pageSize){
-        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
+                                 @ApiParam(value = "当前页数", required = false) @RequestParam int pageNo,
+                                 @ApiParam(value = "页面大小 ", required = false) @RequestParam int pageSize*/){
+       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
-        page.setPageSize(pageSize);
+        page.setPageSize(pageSize);*/
         Map querymap=new HashedMap();
         querymap.put("userid",userid);
         if(dynamictype_id!=0) {
             querymap.put("dynamictype_id", dynamictype_id);
         }
-        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(page,querymap);
+        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(querymap);
         for (Map map:list) {
            String id= map.get("id").toString();
             List<Map> li=userCollecTiondyService.querycollecmycontent(Integer.parseInt(id));
@@ -198,19 +198,22 @@ public class ApiContentController {
     @ResponseBody
     @RequestMapping(value = "myinstrcontent", method = RequestMethod.POST)
     public AjaxResult myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
-                                      @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id,
+                                    /*  @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id,*/
                                       @ApiParam(value = "开始时间", required = true) @RequestParam String begintime,
-                                      @ApiParam(value = "结束时间", required = true) @RequestParam String endtime,
+                                      @ApiParam(value = "结束时间", required = true) @RequestParam String endtime/*,
                                       @ApiParam(value = "当前页面", required = true) @RequestParam Integer pageNo,
-                                      @ApiParam(value = "页面大小", required = true) @RequestParam Integer pageSize){
-        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+                                      @ApiParam(value = "页面大小", required = true) @RequestParam Integer pageSize*/){
+       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
-        page.setPageSize(pageSize);
+        page.setPageSize(pageSize);*/
         Map map=new HashedMap();
-        map.put("dynamictype_id",dynamictype_id);
+      /*  if(dynamictype_id!=0) {
+            map.put("dynamictype_id", dynamictype_id);
+        }*/
+        map.put("userid",userid);
         map.put("begintime",begintime);
         map.put("endtime",endtime);
-        List<Map<String, String>> list=memBerDynamicwzService.myinstrcontent(map,page);
+        List<Map<String, String>> list=memBerDynamicwzService.myinstrcontent(map);
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");
