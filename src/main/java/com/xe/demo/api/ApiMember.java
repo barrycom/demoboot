@@ -58,6 +58,12 @@ public class ApiMember {
     private UserCollecTindustryService userCollecTindustryService;
     @Autowired
     private UserCollecTindustryMapper userCollecTindustryMapper;
+    @Autowired
+    private MemberBuyService memberBuyService ;
+    @Autowired
+    private MemberBuyMapper memberBuyMapper;
+
+
 
 
 
@@ -360,5 +366,59 @@ public class ApiMember {
         return ajaxResult;
     }
 
+    //@Authorization("需token")
+    @ApiOperation(value="购买服务", notes="购买服务")
+    @ResponseBody
+    @RequestMapping(value = "memberBuy", method = RequestMethod.POST)
+    public AjaxResult memberBuy (@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
+                                 @ApiParam(value = "购买价格", required = true) @RequestParam("price") String price,
+                                 @ApiParam(value = "购买月数", required = true) @RequestParam("buymonth") String buymonth) throws ParseException {
+        AjaxResult ajaxResult=new AjaxResult();
+        Member member = new Member();
+        MemberBuy memberBuy=new MemberBuy();
 
+        //购买表  productid 1 一个月 3三个月 6六个月 12十二个月
+        memberBuy.setBuyprice(price);
+        memberBuy.setBuystate("1");
+        memberBuy.setProductid(buymonth);
+        memberBuy.setUserid(memberid);
+        memberBuy.setOrderno(UUID.randomUUID().toString());  //随机数订单号
+        memberBuy.setBuytime(DateUtil.getCurDate().toString());
+        if(memberBuyService.insert(memberBuy)>0){
+            //改用户表 ishy buytime buyendtime
+            //如果还是会员
+            member = memberService.queryByID(memberid);
+            if("1".equals(member.getIshy())){
+                member.setViptimeend(compDateMonth(member.getViptimeend(),buymonth));
+            }else{
+                //如果不是会员
+                member.setIshy("1");
+                member.setViptimestart(DateUtil.getCurDate().toString());
+                member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),buymonth));
+            }
+            memberService.update(member);
+        }
+        ajaxResult.setData(member);
+        ajaxResult.setRetcode(1);
+        ajaxResult.setRetmsg("succ");
+        return ajaxResult;
+    }
+
+    /**
+     * //加减月份
+     * @param month
+     * @return
+     */
+    public static String compDateMonth(String dateString, String month) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        GregorianCalendar gc=new GregorianCalendar();
+        gc.setTime(sdf.parse(dateString));
+        gc.add(2,+Integer.parseInt(month));
+        SimpleDateFormat sf  =new SimpleDateFormat("yyyy-MM-dd");
+        return sf.format(gc.getTime());
+    }
+   /* public static void main(String[] args) throws ParseException {
+
+        System.out.print(compDateMonth("2017-10-19 00:00:00","1"));
+    }*/
 }
