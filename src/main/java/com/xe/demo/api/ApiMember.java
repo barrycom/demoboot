@@ -16,9 +16,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-import io.swagger.client.model.RegisterUsers;
-import io.swagger.client.model.User;
-import io.swagger.annotations.Authorization;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
