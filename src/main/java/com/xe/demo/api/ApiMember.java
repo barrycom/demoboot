@@ -354,7 +354,7 @@ public class ApiMember {
             Arrays.stream(dynamictypeid.split(",")).forEach(i->{
                 UserCollecTindustry userCollecTindustry = new UserCollecTindustry();
                 userCollecTindustry.setDynamicwzid(Integer.parseInt(i));
-                userCollecTindustry.setUserid(Integer.parseInt(memberid));
+                userCollecTindustry.setUserid(memberid);
                 userCollecTindustryService.insert(userCollecTindustry);
                 ajaxResult.setRetcode(1);
                 ajaxResult.setRetmsg("succ");

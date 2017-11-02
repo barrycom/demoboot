@@ -48,7 +48,7 @@ public class ApiContentController {
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
-    public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam Integer userid,
+    public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam String userid,
                                     @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
                                     @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
                                     @ApiParam(value = "页面大小") @RequestParam Integer pageSize*/){//String begintime,String endtime,
@@ -84,7 +84,7 @@ public class ApiContentController {
     @ApiOperation(value="感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "interest", method = RequestMethod.POST)
-    public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam Integer user_id,
+    public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam String user_id,
                                 @ApiParam(value = "动态id", required = true) @RequestParam Integer dynamic_id){
         UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
         userCollecTiondy.setUserid(user_id);
@@ -108,7 +108,7 @@ public class ApiContentController {
     @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
-    public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+    public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                  @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
                                  @ApiParam(value = "当前页数", required = false) @RequestParam int pageNo,
                                  @ApiParam(value = "页面大小 ", required = false) @RequestParam int pageSize*/){
@@ -145,7 +145,7 @@ public class ApiContentController {
     @ApiOperation(value="发布动态", notes="发布动态")
     @ResponseBody
     @RequestMapping(value = "saveContent", method = RequestMethod.POST)
-    public AjaxResult saveContent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+    public AjaxResult saveContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                    @ApiParam(value = "动态文字", required = true) @RequestParam String dynamicwz,
                                    @ApiParam(value = "图片", required = true) @RequestParam String imgurl,
                                    @ApiParam(value = "行业分类", required = true) @RequestParam String dynamicid){
@@ -197,7 +197,7 @@ public class ApiContentController {
     @ApiOperation(value="获取我感兴趣的动态", notes="获取我感兴趣的动态")
     @ResponseBody
     @RequestMapping(value = "myinstrcontent", method = RequestMethod.POST)
-    public AjaxResult myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+    public AjaxResult myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                     /*  @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id,*/
                                       @ApiParam(value = "开始时间", required = true) @RequestParam String begintime,
                                       @ApiParam(value = "结束时间", required = true) @RequestParam String endtime/*,
@@ -224,7 +224,7 @@ public class ApiContentController {
     @ApiOperation(value="关注行业", notes="关注行业")
     @ResponseBody
     @RequestMapping(value = "choosedyn", method = RequestMethod.POST)
-    public AjaxResult choosedyn (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid,
+    public AjaxResult choosedyn (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                  @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id){
         UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
         userCollecTindustry.setUserid(userid);
@@ -237,7 +237,7 @@ public class ApiContentController {
     @ApiOperation(value="用户关组的行业", notes="用户关组的行业")
     @ResponseBody
     @RequestMapping(value = "notedyn", method = RequestMethod.POST)
-    public AjaxResult notedyn (@ApiParam(value = "用户id", required = true) @RequestParam Integer userid){
+    public AjaxResult notedyn (@ApiParam(value = "用户id", required = true) @RequestParam String userid){
         UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
         userCollecTindustry.setUserid(userid);
         AjaxResult ajaxResult=new AjaxResult();
