@@ -252,7 +252,7 @@ public class ApiMember {
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
     public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
-                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardid") String cardno,
+                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardno") String cardno,
                                    @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
                                    @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
                                    @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
@@ -271,6 +271,24 @@ public class ApiMember {
         map.put("member",member);
         map.put("memberInfo",m);
         aa.setData(map);
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
+    //@Authorization("需token")
+    @ApiOperation(value="实名认证", notes="实名认证")
+    @RequestMapping(value = "getMemberInfo", method = RequestMethod.POST)
+    public AjaxResult getMemberInfo(HttpServletRequest request,
+                                        @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
+        AjaxResult aa=new AjaxResult();
+        MemberInfo memberInfo = new MemberInfo();
+        memberInfo.setMemberid(memberid);
+        memberInfo=memberInfoMapper.selectOne(memberInfo);
+        if(memberInfo == null){
+            aa.setData(new MemberInfo());
+        }else{
+            aa.setData(memberInfo);
+        }
         aa.setRetmsg("succ");
         return aa;
     }
