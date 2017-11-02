@@ -12,7 +12,7 @@ public class UserCollecTiondy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer userid;
+    private String userid;
 
     private Integer dynamicwzid;
 
@@ -24,11 +24,11 @@ public class UserCollecTiondy {
         this.id = id;
     }
 
-    public Integer getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 

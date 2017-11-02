@@ -3,7 +3,7 @@
 <mapper namespace="com.xe.demo.mapper.UserCollecTiondyMapper" >
   <resultMap id="BaseResultMap" type="com.xe.demo.model.UserCollecTiondy" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="dynamicwzid" property="dynamicwzid" jdbcType="INTEGER" />
   </resultMap>
 
