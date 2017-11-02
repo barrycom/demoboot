@@ -88,6 +88,18 @@ public class ApiMember {
     }
 
     //@Authorization("需token")
+    @ApiOperation(value="根据小写的openId获取用户name", notes="根据小写的openId获取用户name")
+    @RequestMapping(value = "getMemberLowerCase", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
+    public String getMemberLowerCase(@RequestParam(value = "memberId",required = false) String  memberId)
+    {
+        JsonResult r = new JsonResult();
+        Condition condition=new Condition(Activity.class);
+        condition.createCriteria().andCondition("id = '"+convertString(memberId)+"'");
+        return memberMapper.selectByExample(condition).get(0).getName();
+    }
+
+    //@Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
@@ -448,4 +460,26 @@ public class ApiMember {
         return aa;
     }
 
+    private static String convertString(String str){
+
+        char[] ch = str.toCharArray();
+        StringBuffer sbf = new StringBuffer();
+        for(int i=0; i< ch.length; i++){
+                sbf.append(charToLowerCase(ch[i]));
+        }
+        return sbf.toString();
+    }
+
+    /***转小写**/
+    private static char charToLowerCase(char ch){
+        if(ch <= 90 && ch >= 65){
+            ch += 32;
+        }
+        return ch;
+    }
+    public static void main(String[] args){
+
+        convertString("AAA");
+        convertString("AAA");
+    }
 }
