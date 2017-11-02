@@ -91,12 +91,14 @@ public class ApiMember {
     @ApiOperation(value="根据小写的openId获取用户name", notes="根据小写的openId获取用户name")
     @RequestMapping(value = "getMemberLowerCase", method = RequestMethod.POST)
     @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
-    public String getMemberLowerCase(@RequestParam(value = "memberId",required = false) String  memberId)
+    public AjaxResult getMemberLowerCase(@RequestParam(value = "memberId",required = false) String  memberId)
     {
+        AjaxResult aa=new AjaxResult();
         JsonResult r = new JsonResult();
         Condition condition=new Condition(Activity.class);
         condition.createCriteria().andCondition("id = '"+convertString(memberId)+"'");
-        return memberMapper.selectByExample(condition).get(0).getName();
+        aa.setData(memberMapper.selectByExample(condition).get(0));
+        return aa;
     }
 
     //@Authorization("需token")
@@ -217,7 +219,7 @@ public class ApiMember {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         member.setRegtime(df.format(new Date()));
         member.setIsblock("0");
-        member.setOpenid(member.getId());
+        member.setOpenid(member.getId().toLowerCase());
         member.setIshy("0");
         member.setState("0");
         AjaxResult ajaxResult=new AjaxResult();
