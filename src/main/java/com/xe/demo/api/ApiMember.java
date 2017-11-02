@@ -349,7 +349,7 @@ public class ApiMember {
         AjaxResult ajaxResult=new AjaxResult();
         try {
             Condition condition=new Condition(UserCollecTindustry.class);
-            condition.createCriteria().andCondition("userid="+memberid);
+            condition.createCriteria().andCondition("userid= '"+memberid+"'");
             userCollecTindustryMapper.deleteByExample(condition);
             Arrays.stream(dynamictypeid.split(",")).forEach(i->{
                 UserCollecTindustry userCollecTindustry = new UserCollecTindustry();
