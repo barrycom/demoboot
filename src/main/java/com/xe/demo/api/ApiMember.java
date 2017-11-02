@@ -2,6 +2,8 @@ package com.xe.demo.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.qiniu.util.StringUtils;
+
+import com.xe.demo.common.hx.api.IMUserAPI;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.SzmData;
 import com.xe.demo.common.utils.ChineseCharToEn;
@@ -13,6 +15,9 @@ import com.xe.demo.service.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
+import io.swagger.client.model.RegisterUsers;
+import io.swagger.client.model.User;
 import io.swagger.annotations.Authorization;
 import org.apache.catalina.User;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -23,6 +28,7 @@ import tk.mybatis.mapper.entity.Condition;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.*;
@@ -64,6 +70,8 @@ public class ApiMember {
     private MemberBuyMapper memberBuyMapper;
 
 
+    @Autowired
+    private IMUserAPI iMUserAPI;
 
 
 
@@ -206,6 +214,16 @@ public class ApiMember {
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(memberService.save(member));
         ajaxResult.setRetmsg("success");
+     /*   Map map=new HashMap();
+        map.put("username",member.getId());
+        map.put("password","123456");
+        map.put("nickname",member.getName());*/
+     /*   User user=new User();
+        user.setUsername(member.getOpenid());
+        user.setPassword("123456");
+        RegisterUsers registerUsers=new RegisterUsers();
+        registerUsers.add(0,user);*/
+      //  iMUserAPI.createNewIMUserSingle(registerUsers);
         return ajaxResult;
     }
 
@@ -421,4 +439,16 @@ public class ApiMember {
 
         System.out.print(compDateMonth("2017-10-19 00:00:00","1"));
     }*/
+    //@Authorization("需token")
+    @ApiOperation(value="添加好友", notes="添加好友")
+    @RequestMapping(value = "addFriend", method = RequestMethod.POST)
+    public AjaxResult addFriend(HttpServletRequest request,@ApiParam(value = "我", required = true) @RequestParam("my") String my,
+                                        @ApiParam(value = "你", required = true) @RequestParam("yuo") String you
+                                       ) throws IOException {
+        iMUserAPI.addFriendSingle(my,you);
+        AjaxResult aa=new AjaxResult();
+        aa.setRetmsg("succ");
+        return aa;
+    }
+
 }
