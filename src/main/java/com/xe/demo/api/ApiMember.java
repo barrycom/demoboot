@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.client.model.RegisterUsers;
 import io.swagger.client.model.User;
 import io.swagger.annotations.Authorization;
-import org.apache.catalina.User;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
