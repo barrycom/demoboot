@@ -140,7 +140,7 @@
     <if test="endtime != null" >
       AND  createtime &lt;= #{endtime,jdbcType=VARCHAR}
     </if>-->
-    order by RAND() desc
+    order by RAND() desc LIMIT 30
 
   </select>
 
