@@ -39,6 +39,8 @@ public class MemBerDynamicwz {
 
     private  String dynamicid;//行业id
 
+    private String isinterest;
+
     public Integer getId() {
         return id;
     }
@@ -157,5 +159,13 @@ public class MemBerDynamicwz {
 
     public void setDynamicid(String dynamicid) {
         this.dynamicid = dynamicid;
+    }
+
+    public String getIsinterest() {
+        return isinterest;
+    }
+
+    public void setIsinterest(String isinterest) {
+        this.isinterest = isinterest;
     }
 }
