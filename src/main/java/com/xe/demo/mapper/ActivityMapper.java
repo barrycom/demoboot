@@ -23,7 +23,7 @@ public interface ActivityMapper extends MyMapper<Activity> {
 
     List<Member> getUserByActivtiyId(@Param("id")String id);
 
-    List<Activity> getActivtiyByMemberId(String memberId);
+    List<Activity> getActivtiyByMemberId(@Param("memberId")String memberId);
 
 
 
