@@ -264,4 +264,29 @@ public class ApiContentController {
         return imgpath;
     }
 
+    // @Authorization("需token")
+    @ApiOperation(value="通过动态id查询", notes="通过动态id查询")
+    @ResponseBody
+    @RequestMapping(value = "singlenew", method = RequestMethod.POST)
+    public AjaxResult singlenew (@ApiParam(value = "动态id", required = true) @RequestParam String id,@ApiParam(value = "用户userid", required = true) @RequestParam String userid){
+        AjaxResult ajaxResult=new AjaxResult();
+        MemBerDynamicwz memBerDynamicwz=memBerDynamicwzService.queryOne(id);
+        Integer uctd=0;
+        if(!userid.equals("") && userid!=null) {
+            UserCollecTiondy userCollecTiondy = new UserCollecTiondy();
+            userCollecTiondy.setUserid(userid);
+            userCollecTiondy.setDynamicwzid(Integer.parseInt(id));
+            uctd = userCollecTiondyService.queryCount(userCollecTiondy);
+        }
+        if(uctd!=0){
+            memBerDynamicwz.setIsinterest("");
+        }else{
+            memBerDynamicwz.setIsinterest("interested");
+        }
+
+        ajaxResult.setData(memBerDynamicwz);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
+
 }
