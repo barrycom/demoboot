@@ -1,13 +1,10 @@
 package com.xe.demo.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+@Table(name = "sendcardlog")
 public class Sendcardlog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

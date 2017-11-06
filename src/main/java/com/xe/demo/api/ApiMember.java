@@ -65,7 +65,7 @@ public class ApiMember {
     private MemberBuyService memberBuyService ;
     @Autowired
     private MemberBuyMapper memberBuyMapper;
-    @Autowired
+   @Autowired
     private SendcardlogService sendcardlogService;
 
     @Autowired
@@ -306,7 +306,7 @@ public class ApiMember {
         Sendcardlog sendcardlog = new Sendcardlog();
         sendcardlog.setSendid(sendid);
         sendcardlog.setReceiveid(receiveid);
-        aa.setRetcode(sendcardlogService.insert(sendcardlog));
+     aa.setRetcode(sendcardlogService.insert(sendcardlog));
         aa.setRetmsg("succ");
         return aa;
     }
