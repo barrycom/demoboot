@@ -135,7 +135,7 @@
      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
     </if>
     <if test="userid != null" >
-      mz.userid !=#{userid,jdbcType=VARCHAR}
+      AND   mz.userid !=#{userid,jdbcType=VARCHAR}
     </if>
     <!--<if test="begintime != null" >
       AND  createtime &gt;= #{begintime,jdbcType=VARCHAR}
