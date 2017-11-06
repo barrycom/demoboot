@@ -59,6 +59,9 @@ public class ApiContentController {
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
         }
+        if(!userid.equals("0")) {
+            map.put("userid", userid);
+        }
       /*  map.put("begintime",begintime);
         map.put("endtime",endtime);*/
         List<Map<String, String>> list=memBerDynamicwzService.queryneed(map);
