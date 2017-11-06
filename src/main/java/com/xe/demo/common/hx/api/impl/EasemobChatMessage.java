@@ -7,8 +7,9 @@ import com.xe.demo.common.hx.comm.ResponseHandler;
 import com.xe.demo.common.hx.comm.TokenUtil;
 import io.swagger.client.ApiException;
 import io.swagger.client.api.ChatHistoryApi;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class EasemobChatMessage  implements ChatMessageAPI {
 
     private ResponseHandler responseHandler = new ResponseHandler();
