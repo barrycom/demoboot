@@ -130,9 +130,10 @@ public class ApiContentController {
             if(li.size()>0){
                 map.put("collcer",li);
                 map.put("collcersize",li.size());
+                map.put("show",false);
             }else{
-                map.put("collcer",null);
-                map.put("collcersize",0);
+                map.put("collcer",0);
+                map.put("show",true);
             }
         }
 
