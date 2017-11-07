@@ -113,6 +113,14 @@
 					</li>
 				</ul>
 			</li>
+			<li class="mm-dropdown" opCode="06">
+				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">公司管理</span></a>
+				<ul>
+					<li opCode="06">
+						<a tabindex="-1" href="javascript:goPage('admin/corporate/mainPage')"><span class="mm-text">公司列表</span></a>
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 </div>

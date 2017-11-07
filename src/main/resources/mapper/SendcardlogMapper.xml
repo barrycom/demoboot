@@ -27,5 +27,44 @@
           order by a.id desc
   </select>
 
+    <select id="queryCorporateList" parameterType="com.xe.demo.model.Member" resultType="HashMap">
+        select v1.* from (
+        SELECT
+        d.corporatename,
+        c.tradename,
+        f.regionname
+        FROM
+        (
+        SELECT
+        a.corporatename
+        FROM
+        member a
+        GROUP BY
+        a.corporatename
+        ) d
+        LEFT JOIN (
+        SELECT
+        b.tradename,
+        b.corporatename
+        FROM
+        member b
+        GROUP BY
+        b.tradename,
+        b.corporatename
+        ) c ON d.corporatename = c.corporatename
+        LEFT JOIN (
+        SELECT
+        e.regionname,
+        e.corporatename
+        FROM
+        member e
+        GROUP BY
+        e.regionname,
+        e.corporatename
+        ) f ON f.corporatename = c.corporatename
+        ) v1 where 1=1
+        <if test="null != member.name"> and v1.corporatename like CONCAT('%',#{member.name},'%')</if>
+    </select>
+
 
 </mapper>

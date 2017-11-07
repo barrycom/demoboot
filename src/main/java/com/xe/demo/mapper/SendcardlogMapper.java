@@ -15,4 +15,6 @@ import java.util.List;
  */
 public interface SendcardlogMapper  extends MyMapper<Sendcardlog> {
     List<HashMap> queryList(@Param("member")Member member);
+
+    List<HashMap> queryCorporateList(@Param("member")Member member);
 }

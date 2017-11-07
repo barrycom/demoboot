@@ -30,4 +30,11 @@ public class ChatService extends AbstratService<Sendcardlog> {
         List<HashMap> list = sendcardlogMapper.queryList(member);
         return AppUtil.returnPage(list);
     }
+
+    @ServiceLog("查询公司数据")
+    public PageAjax<HashMap> queryCorporateList(PageAjax<HashMap> page, Member member) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<HashMap> list = sendcardlogMapper.queryCorporateList(member);
+        return AppUtil.returnPage(list);
+    }
 }
