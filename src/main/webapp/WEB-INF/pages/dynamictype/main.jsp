@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-3" style="text-align: left;padding-bottom: unset">
-        <button id="addBtn" class="btn btn-labeled btn-primary" onclick="javascript:goPage('admin/content/dynamicaddpage');"><span class="btn-label icon fa fa-plus"></span>添加动态分类</button>
+        <button id="addBtn" class="btn btn-labeled btn-primary" onclick="javascript:goPage('admin/content/dynamicaddpage');"><span class="btn-label icon fa fa-plus"></span>添加行业分类</button>
     </div>
 </div>
 <div class="openAppGrid">
@@ -28,7 +28,7 @@
             columns:[
                 {
                     field:"dynamicname",
-                    text:"动态分类",
+                    text:"行业分类",
                     width:"900",
                     style:"text-align:left"
                 },

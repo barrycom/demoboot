@@ -4,7 +4,7 @@
 	<input name="id" value="${dynamicType.id}" type="text" hidden="hidden">
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">动态分类：</label><%--for="username"--%>
+        <label class="col-sm-3 control-label">行业分类：</label><%--for="username"--%>
         <div class="col-sm-8">
             <input class="form-control" type="text" id="dynamicname" name="dynamicname" value="${dynamicType.dynamicname}"/>
             <div id="validation-username" class="validate-error help-block"></div>
