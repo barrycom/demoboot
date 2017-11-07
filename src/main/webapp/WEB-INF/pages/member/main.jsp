@@ -39,8 +39,7 @@
     $(function (){
         $("#openAppGrid").sgrid({
             columns:[
-                {field:"id",width:40,text:"用户ID", sortColumn:"id"},
-                {field:"name",width:80, text:"用户名称",formatter:function(index, content, data){
+                {field:"name",width:150, text:"用户名称",formatter:function(index, content, data){
                     return "<img src="+data.headimg+" height='30px' class='u_img'/>" + content;
                 }},
                 {field:"mobile",width:100, text:"手机号"},

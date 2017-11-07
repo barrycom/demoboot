@@ -2,13 +2,16 @@
 <div class="page-header" style="padding:10px 20px;margin:-18px 0px 0px">
     <div id="searchForm">
         <div class="col-md-6" style="width: 400px">
+            公司名称：
             <input type="text" class="form-control search-query" disabled name="corporatename" value="${member.corporatename}" placeholder="公司名称">
         </div>
     </div>
     <div class="col-md-6" style="width: 400px">
+        行业：
         <input type="text" class="form-control search-query" disabled  value="${member.tradename}" placeholder="行业">
     </div>
     <div class="col-md-6" style="width: 400px">
+        地区：
         <input type="text" class="form-control search-query" disabled  value="${member.regionname}" placeholder="地区">
     </div>
 </div>
@@ -25,7 +28,7 @@
     $(function (){
         $("#openAppGrid").sgrid({
             columns:[
-                {field:"name",width:80, text:"用户名称",formatter:function(index, content, data){
+                {field:"name",width:150, text:"用户名称",formatter:function(index, content, data){
                     return "<img src="+data.headimg+" height='30px' class='u_img'/>" + content;
                 }},
                 {field:"mobile",width:100, text:"手机号"},
