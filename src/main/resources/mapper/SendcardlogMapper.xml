@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.SendcardlogMapper" >
+
+  <select id="queryList" parameterType="com.xe.demo.model.Member" resultType="HashMap">
+          SELECT
+              a.sendid AS sendid,
+              b.headimg AS sendimg,
+              b.`name` AS sendname,
+              b.mobile AS sendmobile,
+              b.wxno AS sendwxno,
+              a.receiveid AS receiveid,
+              c.headimg AS receiveimg,
+              c.`name` AS receivename,
+              c.mobile AS receivemobile,
+              c.wxno AS receivewxno,
+              a.createtime
+          FROM
+              sendcardlog a,
+              member b,
+              member c
+          WHERE
+              a.sendid = b.id
+          AND a.receiveid = c.id
+    <if test="null != member.name"> and b.name like CONCAT('%',#{member.name},'%')</if>
+    <if test="null != member.mobile"> and b.mobile like CONCAT('%',#{member.mobile},'%')</if>
+          order by a.id desc
+  </select>
+
+
+</mapper>

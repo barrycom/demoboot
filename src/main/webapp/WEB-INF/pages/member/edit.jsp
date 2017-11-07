@@ -322,6 +322,8 @@
             goPage("admin/member/vipMainPage")
         }else if(type == 6){
             goPage("admin/member/blockMainPage")
+        }else if(type == 7){
+            goPage("admin/chat/mainPage")
         }else{
             goPage("admin/member/mainPage")
         }

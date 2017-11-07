@@ -104,6 +104,15 @@
 
 				</ul>
 			</li>
+
+			<li class="mm-dropdown" opCode="06">
+				<a href="#"><i class="menu-icon fa fa-cogs"></i><span class="mm-text">聊天管理</span></a>
+				<ul>
+					<li opCode="06">
+						<a tabindex="-1" href="javascript:goPage('admin/chat/mainPage')"><span class="mm-text">交换名片</span></a>
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 </div>
