@@ -306,7 +306,8 @@ public class ApiMember {
         Sendcardlog sendcardlog = new Sendcardlog();
         sendcardlog.setSendid(sendid);
         sendcardlog.setReceiveid(receiveid);
-     aa.setRetcode(sendcardlogService.insert(sendcardlog));
+        sendcardlog.setCreatetime(DateUtil.getCurDateTime());
+        aa.setRetcode(sendcardlogService.insert(sendcardlog));
         aa.setRetmsg("succ");
         return aa;
     }
