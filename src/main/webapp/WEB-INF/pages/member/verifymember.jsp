@@ -64,7 +64,7 @@
                     return "<img src="+data.cardfront+" height='30px' width='80px' onclick='bigPhoto(\""+content+"\")' />";
                 }},
                 {field:"cardback",width:80, text:"身份证反面照",formatter:function(index, content, data){
-                    return "<img src="+data.cardfront+" height='30px' width='80px' onclick='bigPhoto(\""+content+"\")' />";
+                    return "<img src="+data.cardback+" height='30px' width='80px' onclick='bigPhoto(\""+content+"\")' />";
                 }},
                 {field:"ispass", width:40,text:"审核状态",formatter:function(index, content, data){
                     if(content == 0){
