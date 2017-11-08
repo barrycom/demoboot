@@ -155,14 +155,29 @@ if(data.membersList!="")
 
                 {field:"createtime", text:"发布时间"},
                 {field:"id", text:"操作", style:"text-align:center", width: 80, formatter:function(index, content, data){
-                    var datzx=data;
+
+                    console.log(data.state)
                     var editUrl = "admin/activity/updateActivitPage?cz=all&id=" + content;
-                    var delUrl = "admin/activity/delActivit/" + content;
+              /*      var delUrl = "admin/activity/delActivit/" + content;*/
+                    var tyUrl = "admin/activity/sxstatus?id=" + content;
                     var pviewUrl = "admin/activity/view?id=" + content;
-                    return "<a href='javascript:goPage(\""+editUrl+"\");' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>修改</i></a>"
-                    +"&nbsp;<a href='javascript:yl("+JSON.stringify(data)+");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-eye'>预览</i></a>"
-                        + "&nbsp;<a href='javascript:goPage(\""+pviewUrl+"\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-book'>详情</i></a>"
-                        + "&nbsp;<a href='javascript:showCfm(\"确定删除该记录\", \""+delUrl+"\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times-circle'>删除</i></a>";
+                    if(data.state==0) {
+                        return "<a href='javascript:goPage(\"" + editUrl + "\");' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>修改</i></a>"
+                            + "&nbsp;<a href='javascript:yl(" + JSON.stringify(data) + ");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-eye'>预览</i></a>"
+                            + "&nbsp;<a href='javascript:goPage(\"" + pviewUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-book'>详情</i></a>"
+
+                            + "&nbsp;<a href='javascript:showCfm(\"确定停用该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-sort-desc'>启用</i></a>"
+                    }
+                    else
+                    {
+                        return "<a href='javascript:goPage(\"" + editUrl + "\");' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>修改</i></a>"
+                            + "&nbsp;<a href='javascript:yl(" + JSON.stringify(data) + ");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-eye'>预览</i></a>"
+                            + "&nbsp;<a href='javascript:goPage(\"" + pviewUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-book'>详情</i></a>"
+
+                            + "&nbsp;<a href='javascript:showCfm(\"确定停用该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-sort-asc'>停用</i></a>"
+
+                    }
+                       /* + "&nbsp;<a href='javascript:showCfm(\"确定删除该活动\", \""+delUrl+"\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times-circle'>删除</i></a>";*/
                 }}
             ],
             cls: "",
@@ -205,4 +220,6 @@ if(data.membersList!="")
      $("#base").show();
 
  }
+
+
 </script>

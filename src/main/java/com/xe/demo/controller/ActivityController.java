@@ -187,13 +187,21 @@ public class ActivityController extends BaseController {
         return activityService.update(activity);
     }
 
-/*
-    @ControllerLog("上架活动")
-    @RequestMapping("edit")
+
+    @ControllerLog("上架/下架活动")
+    @RequestMapping("sxstatus")
     @ResponseBody
     @Authority(opCode = "06", opName = "上架活动")
-    public AjaxResult upActivity(Activity activity) {
-        return activityService.update(activity);
-    }*/
+    public AjaxResult upActivity(String id) {
+        Activity zx=activityService.getActivityByid(id);
+        if(zx.getState().equals("0"))
+        {
+            zx.setState("1");
+        }
+        else {
+            zx.setState("0");
+        }
+        return activityService.update(zx);
+    }
 }
 
