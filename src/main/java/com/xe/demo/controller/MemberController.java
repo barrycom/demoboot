@@ -191,9 +191,13 @@ public class MemberController extends BaseController {
     @ControllerLog("审核通过")
     @RequestMapping("memberInfoPass/{id}")
     @ResponseBody
-    @Authority(opCode = "06", opName = "屏蔽用户")
+    @Authority(opCode = "06", opName = "审核通过")
     public AjaxResult memberInfoPass(@PathVariable("id") String id) {
-       MemberInfo memberInfo=new MemberInfo();
+       MemberInfo memberInfo=memberInfoService.queryByID(id);
+       Member member = new Member();
+       member.setState("1");
+       member.setId(memberInfo.getMemberid());
+       memberService.update(member);
        memberInfo.setId(id);
        memberInfo.setIspass("1");
        memberInfo.setRegtime(DateUtil.getCurDate());
@@ -213,7 +217,6 @@ public class MemberController extends BaseController {
     @ResponseBody
     @Authority(opCode = "06", opName = "屏蔽用户")
     public AjaxResult memberInfoPass(MemberInfo memberInfo) {
-        MemberInfo memberInfo1=new MemberInfo();
         memberInfo.setIspass("2");
         memberInfo.setRegtime(DateUtil.getCurDate());
         return memberInfoService.update(memberInfo);
