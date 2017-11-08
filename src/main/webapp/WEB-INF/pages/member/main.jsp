@@ -59,7 +59,7 @@
                         var sj = "admin/member/updateMemberPage?type=2&memberid=" + content;
                         var bj = "admin/member/updateMemberPage?type=3&memberid=" + content;
 
-                        var delUrl = "admin/member/blockMember/" + content;
+                        var delUrl = "admin/member/blockMember?memberid=" + content;
                         return "<a href='javascript:goPage(\""+ck+"\");' data-original-title='查看' class='btn btn-xs btn-warning add-tooltip'><i class='fa fa-pencil'>查看</i></a>"
                             + "&nbsp;<a href='javascript:goPage(\""+sj+"\");' data-original-title='升级' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>升级</i></a>"
                             + "&nbsp;<a href='javascript:goPage(\""+bj+"\");' data-original-title='编辑' class='btn btn-xs btn-success add-tooltip'><i class='fa fa-repeat'>编辑</i></a>"

@@ -123,12 +123,12 @@ public class MemberController extends BaseController {
 
 
     @ControllerLog("屏蔽/解除屏蔽 用户操作")
-    @RequestMapping("blockMember/{id}")
+    @RequestMapping("blockMember")
     @ResponseBody
     @Authority(opCode = "06", opName = "屏蔽/解除屏蔽 用户操作")
-    public AjaxResult blockMember(@PathVariable("id") String id) {
+    public AjaxResult blockMember(String memberid) {
         Member member=new Member();
-        member.setId(id);
+        member.setId(memberid);
         member=memberService.queryOne(member);
         if(member.getIsblock() .equals("1")){
             member.setIsblock("0");
@@ -206,7 +206,7 @@ public class MemberController extends BaseController {
 
     @ControllerLog("拒绝审核页面")
     @RequestMapping("memberInfoRefusePage/{id}")
-    @Authority(opCode = "06", opName = "屏蔽用户")
+    @Authority(opCode = "06", opName = "拒绝审核页面")
     public String memberInfoRefusePage(Map<String, Object> map,@PathVariable("id") String id){
         map.put("id",id);
         return "member/refusePage";
@@ -215,7 +215,7 @@ public class MemberController extends BaseController {
     @ControllerLog("拒绝通过")
     @RequestMapping("memberInfoRefuse")
     @ResponseBody
-    @Authority(opCode = "06", opName = "屏蔽用户")
+    @Authority(opCode = "06", opName = "拒绝通过")
     public AjaxResult memberInfoPass(MemberInfo memberInfo) {
         memberInfo.setIspass("2");
         memberInfo.setRegtime(DateUtil.getCurDate());
