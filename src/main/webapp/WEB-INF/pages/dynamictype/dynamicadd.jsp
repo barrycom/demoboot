@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">行业分类名称：</label><%--for="username"--%>
                 <div class="col-sm-2">
-                    <input class="form-control" type="text" id="dynamicname_1" name="dynamicname_1"/>
+                    <input class="form-control" type="text" id="dynamicname_1" maxlength="10" name="dynamicname_1"/>
                     <div id="validation-username" class="validate-error help-block"></div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             $("#addcloum").click(function(){
                 if(count<11){
                     var html="<div class=\"form-group\">"
-                            +"<label class=\"col-sm-1 control-label\">行业分类名称：</label><div class=\"col-sm-2\"><input class=\"form-control\" type=\"text\" id=\"dynamicname_"+count+"\" name=\"dynamicname_"+count+"\"/>"
+                            +"<label class=\"col-sm-1 control-label\">行业分类名称：</label><div class=\"col-sm-2\"><input class=\"form-control\" maxlength=\"10\" type=\"text\" id=\"dynamicname_"+count+"\" name=\"dynamicname_"+count+"\"/>"
                             +"<div id=\"validation-username\" class=\"validate-error help-block\"></div></div></div>";
                     $("#cloum").append(html)
                     count++;
