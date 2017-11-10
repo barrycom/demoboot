@@ -151,6 +151,8 @@ public class ActivityController extends BaseController {
     @RequestMapping("updateActivitPage")
     public String updateActivitPage(String id,String cz, Map<String, Object> map) {
         Activity activity = activityService.getActivityByid(id);
+        List<ActivityType> activityTypeList=activityTypeService.queryAll();
+        map.put("list", activityTypeList);
         map.put("cz", cz);
         map.put("activity", activity);
         return "activity/edit";

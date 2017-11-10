@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <link href="${ctx}/assets/css/view.css" type="text/css" rel="stylesheet"/>
 
@@ -99,6 +100,29 @@
 
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>活动类型：</label>
+        <div class="col-sm-8">
+            <div class="btn-group">
+                <select class="form-control" name="activitytype" <%--onchange="javascript:formSubmit();"--%>>
+                    <option value="">==活动类型==</option>
+                    <c:forEach items="${list}" var="types">
+
+
+                        <c:choose>      <c:when test="${types.id==activity.activitytype}">   <option value="${types.id}" selected>${types.typename}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${types.id}">${types.typename}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
 
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activitysdate"><font color="red">*</font>活动开始时间：</label>
