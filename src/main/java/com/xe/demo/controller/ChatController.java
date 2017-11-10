@@ -47,8 +47,8 @@ public class ChatController extends BaseController {
     @RequestMapping("queryPage")
     @ResponseBody
     @Authority(opCode = "06", opName = "交换名片用户列表数据")
-    public PageAjax<HashMap> queryPage(PageAjax<HashMap> page, Member member) {
-        PageAjax<HashMap> pl=chatService.queryList(page,member);
+    public PageAjax<HashMap<String,String>> queryPage(PageAjax<HashMap<String,String>> page, Member member) {
+        PageAjax<HashMap<String,String>> pl=chatService.queryList(page,member);
         return pl;
     }
 

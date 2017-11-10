@@ -25,9 +25,9 @@ public class ChatService extends AbstratService<Sendcardlog> {
     private SendcardlogMapper sendcardlogMapper;
 
     @ServiceLog("查询互换名片")
-    public PageAjax<HashMap> queryList(PageAjax<HashMap> page, Member member) {
+    public PageAjax<HashMap<String,String>> queryList(PageAjax<HashMap<String,String>> page, Member member) {
         PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<HashMap> list = sendcardlogMapper.queryList(member);
+        List<HashMap<String,String>> list = sendcardlogMapper.queryList(member);
         return AppUtil.returnPage(list);
     }
 

@@ -14,7 +14,7 @@
               c.`name` AS receivename,
               c.mobile AS receivemobile,
               c.wxno AS receivewxno,
-              a.createtime
+              CONCAT('',a.createtime) as createtime
           FROM
               sendcardlog a,
               member b,

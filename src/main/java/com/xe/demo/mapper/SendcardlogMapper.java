@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Administrator on 2017-11-6.
  */
 public interface SendcardlogMapper  extends MyMapper<Sendcardlog> {
-    List<HashMap> queryList(@Param("member")Member member);
+    List<HashMap<String,String>> queryList(@Param("member")Member member);
 
     List<HashMap> queryCorporateList(@Param("member")Member member);
 }
