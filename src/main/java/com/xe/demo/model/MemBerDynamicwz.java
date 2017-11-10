@@ -41,6 +41,8 @@ public class MemBerDynamicwz {
 
     private String isinterest;
 
+    private String dynamicwzall;
+
     public Integer getId() {
         return id;
     }
@@ -167,5 +169,13 @@ public class MemBerDynamicwz {
 
     public void setIsinterest(String isinterest) {
         this.isinterest = isinterest;
+    }
+
+    public String getDynamicwzall() {
+        return dynamicwzall;
+    }
+
+    public void setDynamicwzall(String dynamicwzall) {
+        this.dynamicwzall = dynamicwzall;
     }
 }

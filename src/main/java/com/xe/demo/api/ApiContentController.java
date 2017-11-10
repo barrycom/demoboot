@@ -66,6 +66,14 @@ public class ApiContentController {
         map.put("endtime",endtime);*/
         List<Map<String, String>> list=memBerDynamicwzService.queryneed(map);
         for (Map li:list) {
+            if(li.get("dynamicwz").toString().length()<=60){
+                li.put("dynamicwzall",li.get("dynamicwz").toString());
+                li.put("dynamicwz",li.get("dynamicwz").toString());
+            }else{
+                li.put("dynamicwzall",li.get("dynamicwz").toString());
+                li.put("dynamicwz",li.get("dynamicwz").toString().substring(0,59)+"...");
+            }
+
             UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
             userCollecTiondy.setUserid(userid);
             userCollecTiondy.setDynamicwzid(Integer.parseInt(li.get("id").toString()));
@@ -125,6 +133,13 @@ public class ApiContentController {
         }
         List<Map<String, String>> list=memBerDynamicwzService.querymycontent(querymap);
         for (Map map:list) {
+            if(map.get("dynamicwz").toString().length()<=60){
+                map.put("dynamicwzall",map.get("dynamicwz").toString());
+                map.put("dynamicwz",map.get("dynamicwz").toString());
+            }else{
+                map.put("dynamicwzall",map.get("dynamicwz").toString());
+                map.put("dynamicwz",map.get("dynamicwz").toString().substring(0,59)+"...");
+            }
            String id= map.get("id").toString();
             List<Map> li=userCollecTiondyService.querycollecmycontent(Integer.parseInt(id));
             if(li.size()>0){
@@ -218,6 +233,15 @@ public class ApiContentController {
         map.put("begintime",begintime);
         map.put("endtime",endtime);
         List<Map<String, String>> list=memBerDynamicwzService.myinstrcontent(map);
+        for (Map map1:list) {
+            if (map1.get("dynamicwz").toString().length() <= 60) {
+                map1.put("dynamicwzall", map1.get("dynamicwz").toString());
+                map1.put("dynamicwz", map1.get("dynamicwz").toString());
+            } else {
+                map1.put("dynamicwzall", map1.get("dynamicwz").toString());
+                map1.put("dynamicwz", map1.get("dynamicwz").toString().substring(0, 59) + "...");
+            }
+        }
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");
@@ -276,6 +300,13 @@ public class ApiContentController {
         AjaxResult ajaxResult=new AjaxResult();
         MemBerDynamicwz memBerDynamicwz=memBerDynamicwzService.queryOne(id);
         Integer uctd=0;
+        if(memBerDynamicwz.getDynamicwz().length()<=15){
+            memBerDynamicwz.setDynamicwzall(memBerDynamicwz.getDynamicwz());
+        }else{
+            memBerDynamicwz.setDynamicwzall(memBerDynamicwz.getDynamicwz());
+            memBerDynamicwz.setDynamicwz(memBerDynamicwz.getDynamicwz().substring(0,14));
+        }
+
         if(!userid.equals("") && userid!=null) {
             UserCollecTiondy userCollecTiondy = new UserCollecTiondy();
             userCollecTiondy.setUserid(userid);
