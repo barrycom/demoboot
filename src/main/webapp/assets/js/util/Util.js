@@ -182,10 +182,9 @@ function onblurEvent(type){
 
 //初始化百度富文本编辑器
 function initUeditor(){
-
 	UE.delEditor("content");
 	UE.getEditor("content",{
-		serverUrl: "http://127.0.0.1:8180/upload/ueditoUpload",
+		serverUrl: "https://zallhy.mynatapp.cc/upload/ueditoUpload",
 		autoClearinitialContent: false,
 		retainOnlyLabelPasted: true,
 	    toolbars:[[
