@@ -100,7 +100,7 @@
 <%--    <link rel="stylesheet" href="${ctx}/assets/css/jquery-ui.min.css">--%>
     <script src="${ctx}/assets/js/jquery-ui-1.10.4.min.js"></script>
 
-    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp"></script>
 
     <script src="${ctx}/assets/js/ueditor/ueditor.config.js" type="text/javascript"></script>
 	<script src="${ctx}/assets/js/ueditor/ueditor.all.min.js" type="text/javascript"> </script>

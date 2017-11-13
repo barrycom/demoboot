@@ -305,7 +305,7 @@ $("#activityprice").keyup(function () {
     }).on("success.form.bv",function(e){
 
         var data = $("#submitForm").serialize();
-        alert(data)
+     /*   alert(data)*/
         $.ajax({
             url: _urlPath + "admin/activity/add",
             dataType: "json",
