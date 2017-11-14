@@ -252,7 +252,7 @@ public class ApiMember {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
     public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
@@ -262,13 +262,23 @@ public class ApiMember {
                                    @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
         AjaxResult aa=new AjaxResult();
         MemberInfo m=new MemberInfo();
+        m.setMemberid(memberid);
+        MemberInfo m2 = memberInfoMapper.selectOne(m);
         m.setRealname(realname);
         m.setCardback(cardback);
         m.setCardfront(cardfront);
         m.setMemberid(memberid);
         m.setCardno(cardno);
         m.setIspass("0");
-        memberInfoService.insert(m);
+        m.setRemark(null);
+
+        if(m2 == null){
+            memberInfoService.insert(m);
+        }else{
+            m.setId(m2.getId());
+            memberInfoService.update(m);
+        }
+
         Member member=memberService.queryByID(memberid);
         member.setRealname(realname);
         Map map = new HashMap();
