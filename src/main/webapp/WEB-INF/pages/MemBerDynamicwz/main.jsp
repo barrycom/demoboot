@@ -201,8 +201,8 @@
                     style:"text-align:center",
                     width: 80,
                     formatter:function(index, content, data) {
-                    return "<a href='javascript:showphone(\"" + data.id + "\" )' class='btn btn-primary'>预览详情</a>"
-                        +"&nbsp;<a href='javascript:screening(" + data.id + ");' class='btn btn-success'>屏蔽动态</a>";
+                    return "<a href='javascript:showphone(\"" + data.id + "\" )' class='btn btn-xs btn-success add-tooltip'>预览详情</a>"
+                        +"&nbsp;<a href='javascript:screening(" + data.id + ");' class='btn btn-xs btn-danger add-tooltip'>屏蔽/取消屏蔽动态</a>";
                     }
                 }
 
@@ -221,13 +221,12 @@
     function screening(url){
         var delUrl = "admin/content/screening?id=" + url;
         /*showCfm(, delUrl);*/
-        $.Cfm("确定屏蔽该动态",function(){
+        $.Cfm("确定屏蔽/取消屏蔽该动态",function(){
             $.ajax({
                 url: _urlPath + delUrl,
                 type:"post",
                 dataType:"json",
                 success: function (req){
-                    debugger;
                     var aa=req;
                     if (req.retcode == 1) {
                         $("#openAppGrid").sgrid("refresh");

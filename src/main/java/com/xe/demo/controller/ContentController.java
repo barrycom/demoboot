@@ -120,9 +120,12 @@ public class ContentController extends BaseController {
     @ResponseBody
     @RequestMapping("screening")
     public AjaxResult screening(String id) {
-        MemBerDynamicwz meb=new MemBerDynamicwz();
-        meb.setId(Integer.parseInt(id));
-        meb.setState("1");
+        MemBerDynamicwz meb=memBerDynamicwzService.queryOne(id);
+        if("1".equals(meb.getState())){
+            meb.setState("0");
+        }else{
+            meb.setState("1");
+        }
         return memBerDynamicwzService.update(meb);
     }
 
