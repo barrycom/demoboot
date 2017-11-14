@@ -18,6 +18,8 @@ public class ActivityOrder {
 
     private String userid;
 
+
+
     private BigDecimal paymoney;
 
     private String paymemo;
@@ -40,11 +42,19 @@ public class ActivityOrder {
     private String iszs;
 
     private String createtime;
-
-
+    @Transient
+    private String form_id;
     @Transient
     private Activity activity;
 
+
+    public String getForm_id() {
+        return form_id;
+    }
+
+    public void setForm_id(String form_id) {
+        this.form_id = form_id;
+    }
 
     public Activity getActivity() {
         return activity;

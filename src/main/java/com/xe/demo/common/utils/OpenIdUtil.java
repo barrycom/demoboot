@@ -4,6 +4,8 @@ package com.xe.demo.common.utils;
  * Created by Administrator on 2017-10-24.
  */
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import com.xe.demo.model.Activity;
+import com.xe.demo.model.ActivityOrder;
 import net.sf.json.JSONObject;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -66,7 +68,7 @@ public class OpenIdUtil {
     }
 
 
-    public static JSONObject sendMessage(String token,String openid,String form_id){
+    public static JSONObject sendMessage(String token,String openid,String form_id,Activity activity){
         //微信端登录code值
      /*   String appid="wx7d6fcdecb6fd652c";
         String appsecret="87f5b9ccdd49ef185600addb5faf2833";
@@ -79,25 +81,25 @@ public class OpenIdUtil {
 
         KeyWordModel keyWordModel1=new KeyWordModel();
         keyWordModel1.setColor("#173177");
-        keyWordModel1.setValue("晚上一起去跑步");
+        keyWordModel1.setValue(activity.getActivityname());
 
         KeyWordModel keyWordModel2=new KeyWordModel();
         keyWordModel2.setColor("#173177");
-        keyWordModel2.setValue("2017/09/11 18:00");
+        keyWordModel2.setValue(activity.getActivitysdate());
 
 
         KeyWordModel keyWordModel3=new KeyWordModel();
         keyWordModel3.setColor("#173177");
-        keyWordModel3.setValue("七号免费请你喝奶茶");
+        keyWordModel3.setValue(activity.getActivityaddr());
 
 
         KeyWordModel keyWordModel4=new KeyWordModel();
-        keyWordModel3.setColor("#173177");
-        keyWordModel3.setValue("在小区门前的田野上集合");
+        keyWordModel4.setColor("#173177");
+        keyWordModel4.setValue(activity.getActivityidmemo());
 
         KeyWordModel keyWordModel5=new KeyWordModel();
-        keyWordModel3.setColor("#173177");
-        keyWordModel3.setValue("免费的超级大满贯一杯");
+        keyWordModel5.setColor("#173177");
+        keyWordModel5.setValue("等待您的参加");
 
         modelMessage.setKeyword1(keyWordModel1);
         modelMessage.setKeyword2(keyWordModel2);

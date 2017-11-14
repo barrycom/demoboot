@@ -2,6 +2,7 @@ package com.xe.demo.api;
 
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.utils.OpenIdUtil;
+import com.xe.demo.model.Activity;
 import com.xe.demo.model.ActivityOrder;
 import com.xe.demo.model.ActivityType;
 import com.xe.demo.service.ActivityOrderService;
@@ -29,10 +30,12 @@ public class ApiActivtiyOrder {
 
     @Autowired
     private ActivityOrderService activityOrderService;
+    @Autowired
+    private ActivityService activityService;
     @Authorization("需token")
     @ApiOperation(value="新增活动订单", notes="新增活动订单")
     @RequestMapping(value = "addActivtiyOrder", method = RequestMethod.POST)
-    public AjaxResult getActivtiyallType (@RequestBody ActivityOrder activityOrder,String form_id){
+    public AjaxResult getActivtiyallType (@RequestBody ActivityOrder activityOrder){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         /*activityOrder.setBuytime(df.format(new Date()));*/
         String orderNo="wx"+activityOrder.getUserid()+"_"+System.currentTimeMillis();
@@ -51,8 +54,9 @@ public class ApiActivtiyOrder {
         ajaxResult.setRetmsg("success");
 
        String token= OpenIdUtil.getToken().get("access_token").toString();
+        Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
 
-        OpenIdUtil.sendMessage(token,activityOrder.getUserid(),form_id);
+        OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
 
         //后面调用支付的。（暂时没有）
         return ajaxResult;
