@@ -270,12 +270,14 @@ public class ApiMember {
         m.setMemberid(memberid);
         m.setCardno(cardno);
         m.setIspass("0");
-        m.setRemark(null);
+        m.setRemark("");
 
         if(m2 == null){
+            m.setCreatetime(DateUtil.getCurDateTime());
             memberInfoService.insert(m);
         }else{
             m.setId(m2.getId());
+            m.setRegtime(DateUtil.getCurDateTime());
             memberInfoService.update(m);
         }
 
