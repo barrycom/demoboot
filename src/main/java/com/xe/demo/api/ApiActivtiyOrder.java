@@ -1,6 +1,8 @@
 package com.xe.demo.api;
 
 import com.xe.demo.common.pojo.AjaxResult;
+import com.xe.demo.common.utils.OpenIdUtil;
+import com.xe.demo.model.Activity;
 import com.xe.demo.model.ActivityOrder;
 import com.xe.demo.model.ActivityType;
 import com.xe.demo.service.ActivityOrderService;
@@ -28,6 +30,8 @@ public class ApiActivtiyOrder {
 
     @Autowired
     private ActivityOrderService activityOrderService;
+    @Autowired
+    private ActivityService activityService;
     @Authorization("需token")
     @ApiOperation(value="新增活动订单", notes="新增活动订单")
     @RequestMapping(value = "addActivtiyOrder", method = RequestMethod.POST)
@@ -48,6 +52,12 @@ public class ApiActivtiyOrder {
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(orderNo);
         ajaxResult.setRetmsg("success");
+
+       String token= OpenIdUtil.getToken().get("access_token").toString();
+        Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
+
+        OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
+
         //后面调用支付的。（暂时没有）
         return ajaxResult;
 

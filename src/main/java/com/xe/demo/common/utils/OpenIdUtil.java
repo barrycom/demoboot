@@ -4,6 +4,8 @@ package com.xe.demo.common.utils;
  * Created by Administrator on 2017-10-24.
  */
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import com.xe.demo.model.Activity;
+import com.xe.demo.model.ActivityOrder;
 import net.sf.json.JSONObject;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -20,6 +22,7 @@ import java.security.spec.InvalidParameterSpecException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author xsx
@@ -58,6 +61,80 @@ public class OpenIdUtil {
         Map<String,String> requestUrlParam = new HashMap<String,String>();
         String grant_type = "authorization_code";
         String params = "appid=" + appid + "&secret=" + appsecret + "&js_code=" + code + "&grant_type=" + grant_type;
+        String data= HttpUtil.get(requestUrl, params);
+        JSONObject  json = JSONObject.fromObject(data);
+    /*    String session_key =String.valueOf(json.get("session_key"));*/
+        return json;
+    }
+
+
+    public static JSONObject sendMessage(String token,String openid,String form_id,Activity activity){
+        //微信端登录code值
+     /*   String appid="wx7d6fcdecb6fd652c";
+        String appsecret="87f5b9ccdd49ef185600addb5faf2833";
+        //String wxCode = code;*/
+        String requestUrl = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token="+token;
+
+
+        ModelMessage modelMessage=new ModelMessage();
+
+
+        KeyWordModel keyWordModel1=new KeyWordModel();
+        keyWordModel1.setColor("#173177");
+        keyWordModel1.setValue(activity.getActivityname());
+
+        KeyWordModel keyWordModel2=new KeyWordModel();
+        keyWordModel2.setColor("#173177");
+        keyWordModel2.setValue(activity.getActivitysdate());
+
+
+        KeyWordModel keyWordModel3=new KeyWordModel();
+        keyWordModel3.setColor("#173177");
+        keyWordModel3.setValue(activity.getActivityaddr());
+
+
+        KeyWordModel keyWordModel4=new KeyWordModel();
+        keyWordModel4.setColor("#173177");
+        keyWordModel4.setValue(activity.getActivityidmemo());
+
+        KeyWordModel keyWordModel5=new KeyWordModel();
+        keyWordModel5.setColor("#173177");
+        keyWordModel5.setValue("等待您的参加");
+
+        modelMessage.setKeyword1(keyWordModel1);
+        modelMessage.setKeyword2(keyWordModel2);
+        modelMessage.setKeyword3(keyWordModel3);
+        modelMessage.setKeyword4(keyWordModel4);
+        modelMessage.setKeyword5(keyWordModel5);
+
+     //   requestUrlParam.put("data",ModelMessage);
+
+        NewOrdersTemplate newOrdersTemplate=new NewOrdersTemplate();
+        newOrdersTemplate.setTouser(openid);
+        newOrdersTemplate.setForm_id(form_id);
+        newOrdersTemplate.setTemplate_id("Jnd99okWzFtuYHKD8GFZFU48KeIu6aD-NfFoUSD2hNk");
+        newOrdersTemplate.setData(modelMessage);
+        String jsonString = JSONObject.fromObject(newOrdersTemplate).toString().replace("day", "Day");
+        String data= HttpUtil.sendPostUrl(requestUrl,jsonString,"utf-8");
+
+
+        JSONObject  json = JSONObject.fromObject(data);
+    /*    String session_key =String.valueOf(json.get("session_key"));*/
+        return json;
+    }
+
+
+
+
+
+    public static JSONObject getToken(){
+        //微信端登录code值
+        String appid="wx7d6fcdecb6fd652c";
+        String appsecret="87f5b9ccdd49ef185600addb5faf2833";
+        String requestUrl = "https://api.weixin.qq.com/cgi-bin/token";
+        Map<String,String> requestUrlParam = new HashMap<String,String>();
+        String grant_type = "client_credential";
+        String params = "appid=" + appid + "&secret=" + appsecret + "&grant_type=" + grant_type;
         String data= HttpUtil.get(requestUrl, params);
         JSONObject  json = JSONObject.fromObject(data);
     /*    String session_key =String.valueOf(json.get("session_key"));*/
