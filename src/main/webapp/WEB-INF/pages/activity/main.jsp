@@ -113,7 +113,7 @@
                 {field:"activitytypename",text:"活动类型", sortColumn:"activitytypename",width:80},
 
                 {field:"activityimg",text:"活动名称",style:"text-align:center",width: 200,formatter:function(index, content, data){
-                    return "<div><img align='left' src='" + content + "' height='20px'/>"+data.activityname+"</div>";
+                    return "<div><img align='left' src='" + content + "' width='40px' height='20px'/>"+data.activityname+"</div>";
                 }},
                 {field:"activitysdate", text:"活动开始时间"},
                 {field:"activityedate", text:"活动结束时间"},
@@ -202,6 +202,9 @@ if(data.membersList!="")
  /*   function  goadd() {
         location.href=_urlPath+"admin/activity/addPage"
     }*/
+ function goshow() {
+
+ }
 
  function yl(data) {
      console.log(JSON.stringify(data));

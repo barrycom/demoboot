@@ -100,7 +100,6 @@
 <%--    <link rel="stylesheet" href="${ctx}/assets/css/jquery-ui.min.css">--%>
     <script src="${ctx}/assets/js/jquery-ui-1.10.4.min.js"></script>
 
-    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp"></script>
 
     <script src="${ctx}/assets/js/ueditor/ueditor.config.js" type="text/javascript"></script>
 	<script src="${ctx}/assets/js/ueditor/ueditor.all.min.js" type="text/javascript"> </script>
@@ -136,7 +135,9 @@
 <script src="${ctx}/assets/js/util/lunarUtil.js"></script>
 <script src="${ctx}/assets/js/util/Util.js"></script>
 
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key=DN3BZ-2BY2Q-SR35E-GGXOV-YMFIF-SLFVR"></script>
+
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.3&s=1"></script>
 <link href="${ctx}/assets/css/bootstrap/datetimepicker.css" rel="stylesheet" />
 <script src="${ctx}/assets/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
 <div id="main-wrapper" style="vertical-align: unset;">
