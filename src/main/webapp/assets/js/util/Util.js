@@ -184,7 +184,7 @@ function onblurEvent(type){
 function initUeditor(){
 	UE.delEditor("content");
 	UE.getEditor("content",{
-		serverUrl: "https://zallhy.mynatapp.cc/upload/ueditoUpload",
+		serverUrl: "http://zallhy.mynatapp.cc/upload/ueditoUpload",
 		autoClearinitialContent: false,
 		retainOnlyLabelPasted: true,
 	    toolbars:[[

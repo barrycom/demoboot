@@ -91,8 +91,18 @@
                 </c:otherwise>
             </c:choose>
         </div>
+
     </div>
 
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-8" style="text-align: center;">
+
+            <button class="btn btn-warning" type="reset" onclick="javascript:reback();">
+                <i class="ace-icon fa fa-reply bigger-110"></i>返回
+            </button>
+        </div>
+    </div>
 </form>
 </body>
 <script>
@@ -101,6 +111,14 @@
 
     function goUser(id) {
        // alert(id)
+    }
+
+
+    function reback() {
+
+            goPage("admin/activity/mainPage")
+
+
     }
 </script>
 </html>
