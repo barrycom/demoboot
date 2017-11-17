@@ -20,10 +20,10 @@
     <div id="openAppGrid">
     </div>
 </div>
-    <%--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-                            <div id="base" class="modal-dialog" style="margin-left: 196px;margin-top: -66px;">
-    </div>--%>
+                        <div id="base" class="modal-dialog" style="margin-left: 196px;margin-top: -66px;">
+</div>--%>
 <style>
     .u_img{
         border-radius: 999999px;
@@ -93,12 +93,37 @@
     }
 </style>
 
-        <div class="modal fade" id="myModal" tabindex="-1" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div id="base"></div>
+<div class="modal fade" id="myModal" tabindex="-1" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="base"></div>
+</div>
 
-
-
+<div class="modal fade" id="myModalpic" tabindex="-1" role="dialog" aria-labelledby="myModalpicLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    身份证照片
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img src="" id="cartPhoto" width="400" height="300"/>
+            </div>
+            <div class="modal-body">
+                按下 ESC 按钮退出。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
         </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
     $(function (){
         $("#openAppGrid").sgrid({
@@ -112,7 +137,7 @@
                         if("" == data.headimg || null == data.headimg){
                             return null;
                         }else{
-                            return "<img src="+data.headimg+" height='30px' class='u_img'><span style='margin-left: 10px;'>"+data.uname+"</span></img>";
+                            return "<img src="+data.headimg+"?imageMogr2/thumbnail/230x200!"+"  height='30px' class='u_img'><span style='margin-left: 10px;'>"+data.uname+"</span></img>";
                         }
                     }
                 },
@@ -136,17 +161,17 @@
                     width: 150,
                 },
                 {
-                     field:"state",
-                     style:"text-align:center",
-                     width: 50,
-                     text:"状态",
-                     formatter:function(index, content, data){
-                            if(data.state=="0"){
-                                return "<span class=\"label label-success\">正常</span>" ;
-                            }else{
-                                return "<span class=\"label label-danger\">屏蔽</span>" ;
-                            }
+                    field:"state",
+                    style:"text-align:center",
+                    width: 50,
+                    text:"状态",
+                    formatter:function(index, content, data){
+                        if(data.state=="0"){
+                            return "<span class=\"label label-success\">正常</span>" ;
+                        }else{
+                            return "<span class=\"label label-danger\">屏蔽</span>" ;
                         }
+                    }
                 },
                 {
                     field:"dynamicwz",
@@ -161,30 +186,32 @@
                     }
                 },
                 {
-                 field:"dynamicname",
-                 width: 150,
-                 style:"text-align:center",
-                 text:"动态分类"
+                    field:"dynamicname",
+                    width: 150,
+                    style:"text-align:center",
+                    text:"动态分类"
                 },
                 {
-                 field:"imgurl",
-                 text:"动态图片",
-                 width: 150,
-                 formatter:function(index, content, data){
-                     var html="";
-                    if("" == data.imgurl || null == data.imgurl){
-                            return null;
+                    field:"imgurl",
+                    text:"动态图片",
+                    width: 150,
+                    formatter:function(index, content, data){
+                        var html="";
+                        if("" == data.imgurl || null == data.imgurl){
+                            return "";
                         }else{
                             var myArray=new Array()
                             myArray=data.imgurl.split(",");
                             myArray.length;
-                                for(var i=0;i<myArray.length;i++){
-                                    if(i==3){
-                                        break;
-                                    }else {
-                                        html+="<img src="+myArray[i]+" height='30px' class='u_img' />"
+                            for(var i=0;i<myArray.length;i++){
+                                if(i==3){
+                                    break;
+                                }else {
+                                    if(myArray[i]!="" &&  myArray[i]!=null &&  myArray[i]!="null"){
+                                        html+="<img src='"+myArray[i]+"?imageMogr2/thumbnail/100x100!' onclick=\"showBigImg('"+myArray[i]+"')\"  height='30px' width='45px' class='u_img' />"
                                     }
                                 }
+                            }
                             return html;
                         }
                     }
@@ -201,8 +228,8 @@
                     style:"text-align:center",
                     width: 80,
                     formatter:function(index, content, data) {
-                    return "<a href='javascript:showphone(\"" + data.id + "\" )' class='btn btn-xs btn-success add-tooltip'>预览详情</a>"
-                        +"&nbsp;<a href='javascript:screening(" + data.id + ");' class='btn btn-xs btn-danger add-tooltip'>屏蔽/取消屏蔽动态</a>";
+                        return "<a href='javascript:showphone(\"" + data.id + "\" )' class='btn btn-xs btn-success add-tooltip'>预览详情</a>"
+                            +"&nbsp;<a href='javascript:screening(" + data.id + ");' class='btn btn-xs btn-danger add-tooltip'>屏蔽/取消屏蔽动态</a>";
                     }
                 }
 
@@ -217,7 +244,14 @@
             }
         });
     });
-     //弹出确认框
+
+    function showBigImg(src) {
+       $("#cartPhoto").attr("src",src);
+         $('#myModalpic').modal({
+         keyboard: true
+         });
+    }
+    //弹出确认框
     function screening(url){
         var delUrl = "admin/content/screening?id=" + url;
         /*showCfm(, delUrl);*/
@@ -239,13 +273,13 @@
         });
     }
 
-   function showphone(url){
+    function showphone(url){
         $.ajax({
             url : '${ctx}/admin/content/showphone?id='+url,
             type : "post",
             dataType : "json",
             success : function(req) {
-                debugger
+                //debugger
                 if (req.retcode == 1) {
                     $("#base").html(req.data);
                 } else {
@@ -262,6 +296,8 @@
         })
 
     }
+
+
 
 
 </script>
