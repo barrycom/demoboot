@@ -3,6 +3,7 @@
 <script type="text/javascript" src="${ctx}/assets/js/util/js/jquery.cityselect.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<body onload="on()">
 <form id="submitForm" class="form-horizontal">
     <input name="id" value="${member.id}" type="text" hidden="hidden">
     <input name="type" id="type" value="${member.type}" type="text" hidden="hidden">
@@ -114,6 +115,7 @@
     </div>
 
 </form>
+</body>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -186,8 +188,10 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
-    window.onload(on());
-
+    //window.onload();
+    $(function () {
+    on();
+    })
     function on() {
        var type = $("#type").val();
        var ishy=$("#ishy").val();
