@@ -74,7 +74,7 @@ public class ApiMember {
 
 
 
-    @Authorization("需token")
+        //@Authorization("需token")
      @ApiOperation(value="根据ID获取用户信息", notes="根据ID获取用户信息")
      @RequestMapping(value = "getMember", method = RequestMethod.POST)
      @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
@@ -89,7 +89,7 @@ public class ApiMember {
          return aa;
     }
 
-    @Authorization("需token")
+   // @Authorization("需token")
     @ApiOperation(value="根据小写的openId获取用户name", notes="根据小写的openId获取用户name")
     @RequestMapping(value = "getMemberLowerCase", method = RequestMethod.POST)
     @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
@@ -103,7 +103,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+   // @Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
@@ -155,7 +155,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
     public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam("personalinfo") String personalinfo,
@@ -174,7 +174,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="获取用户选择的行业", notes="获取用户选择的行业")
     @ResponseBody
     @RequestMapping(value = "getMemberDynamicType", method = RequestMethod.POST)
@@ -194,7 +194,7 @@ public class ApiMember {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="根据用户ID获取活动", notes="根据用户ID获取活动")
     @RequestMapping(value = "getActivtiyByMemberId", method = RequestMethod.POST)
     @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
@@ -291,7 +291,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+   // @Authorization("需token")
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "getMemberInfo", method = RequestMethod.POST)
     public AjaxResult getMemberInfo(HttpServletRequest request,
@@ -309,7 +309,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="用户发送名片记录", notes="用户发送名片记录")
     @RequestMapping(value = "sendcardlog", method = RequestMethod.POST)
     public AjaxResult sendcardlog(HttpServletRequest request,
@@ -417,7 +417,7 @@ public class ApiMember {
         return aa;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="用户中心关注行业", notes="用户中心关注行业")
     @ResponseBody
     @RequestMapping(value = "memberIndexChooseDyn", method = RequestMethod.POST)
@@ -443,7 +443,7 @@ public class ApiMember {
         return ajaxResult;
     }
 
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="购买服务", notes="购买服务")
     @ResponseBody
     @RequestMapping(value = "memberBuy", method = RequestMethod.POST)
@@ -498,7 +498,7 @@ public class ApiMember {
 
         System.out.print(compDateMonth("2017-10-19 00:00:00","1"));
     }*/
-    @Authorization("需token")
+    //@Authorization("需token")
     @ApiOperation(value="添加好友", notes="添加好友")
     @RequestMapping(value = "addFriend", method = RequestMethod.POST)
     public AjaxResult addFriend(HttpServletRequest request,@ApiParam(value = "我", required = true) @RequestParam("my") String my,
