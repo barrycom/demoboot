@@ -168,7 +168,7 @@ if(data.membersList!="")
                             + "&nbsp;<a href='javascript:yl(" + JSON.stringify(data) + ");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-eye'>预览</i></a>"
                             + "&nbsp;<a href='javascript:goPage(\"" + pviewUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-book'>详情</i></a>"
 
-                            + "&nbsp;<a href='javascript:showCfm(\"确定启用该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-sort-desc'>启用</i></a>"
+                            + "&nbsp;<a href='javascript:showCfm(\"确定发布该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-sort-desc'>启用</i></a>"
                     }
                     else
                     {
@@ -176,7 +176,7 @@ if(data.membersList!="")
                             + "&nbsp;<a href='javascript:yl(" + JSON.stringify(data) + ");' class='btn btn-xs btn-success add-tooltip'><i class='fa  fa-eye'>预览</i></a>"
                             + "&nbsp;<a href='javascript:goPage(\"" + pviewUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-book'>详情</i></a>"
 
-                            + "&nbsp;<a href='javascript:showCfm(\"确定停用该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-sort-asc'>停用</i></a>"
+                            + "&nbsp;<a href='javascript:showCfm(\"确定下架该活动\", \"" + tyUrl + "\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-sort-asc'>停用</i></a>"
 
                     }
                        /* + "&nbsp;<a href='javascript:showCfm(\"确定删除该活动\", \""+delUrl+"\");' class='btn btn-xs btn-danger add-tooltip'><i class='fa fa-times-circle'>删除</i></a>";*/
