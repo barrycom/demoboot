@@ -16,6 +16,8 @@ public class UserCollecTiondy {
 
     private Integer dynamicwzid;
 
+    private String creattime;
+
     public Integer getId() {
         return id;
     }
@@ -38,5 +40,13 @@ public class UserCollecTiondy {
 
     public void setDynamicwzid(Integer dynamicwzid) {
         this.dynamicwzid = dynamicwzid;
+    }
+
+    public String getCreattime() {
+        return creattime;
+    }
+
+    public void setCreattime(String creattime) {
+        this.creattime = creattime;
     }
 }

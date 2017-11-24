@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -93,8 +94,12 @@ public class ApiContentController {
     public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam String user_id,
                                 @ApiParam(value = "动态id", required = true) @RequestParam Integer dynamic_id){
         UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
+        Date now = new Date();
+        DateFormat d1 = DateFormat.getDateInstance(); //默认语言（汉语）下的默认风格（MEDIUM风格，比如：2008-6-16 20:54:53）
+        String str1 = d1.format(now);
         userCollecTiondy.setUserid(user_id);
         userCollecTiondy.setDynamicwzid(dynamic_id);
+        userCollecTiondy.setCreattime(str1);
         AjaxResult ajaxResult=userCollecTiondyService.save(userCollecTiondy);
 
         return ajaxResult;
