@@ -1,3 +1,4 @@
+/*
 package com.xe.demo.common.support.redis;
 
 import org.slf4j.Logger;
@@ -11,9 +12,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.clients.jedis.JedisPoolConfig;
 
+*/
 /**
  * Created by Administrator on 2017-10-16.
- */
+ *//*
+
 @Configuration
 @EnableAutoConfiguration
 public class RedisConfig {
@@ -44,3 +47,4 @@ public class RedisConfig {
         return template;
     }
 }
+*/

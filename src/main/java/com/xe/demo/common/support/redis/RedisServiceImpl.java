@@ -1,3 +1,4 @@
+/*
 package com.xe.demo.common.support.redis;
 
 import com.xe.demo.common.conf.Constants;
@@ -15,20 +16,24 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+*/
 /**
  * Created by Administrator on 2017-10-16.
- */
+ *//*
+
 @Service
 public class RedisServiceImpl implements IRedisService{
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-  /*  @Autowired
+  */
+/*  @Autowired
     public void setRedis(RedisTemplate redis) {
         this.redis = redis;
         //泛型设置成Long后必须更改对应的序列化方案
         redis.setKeySerializer(new JdkSerializationRedisSerializer());
-    }*/
+    }*//*
+
 
     public TokenModel createToken(String  userId) {
         //使用uuid作为源token
@@ -90,4 +95,4 @@ public class RedisServiceImpl implements IRedisService{
     public void deleteToken(String userId) {
         redisTemplate.delete(userId);
     }
-}
+}*/
