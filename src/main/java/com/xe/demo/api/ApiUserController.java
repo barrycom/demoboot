@@ -23,8 +23,7 @@ import java.util.List;
  */
 @RestController
 public class ApiUserController {
-    @Autowired
-    private IRedisService manager;
+
     @ApiOperation(value="获取用户详细信息", notes="根据url的id来获取用户详细信息")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "path")
     @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
@@ -41,7 +40,7 @@ public class ApiUserController {
 
         AjaxResult aa=new AjaxResult();
   /*      String token=manager.createToken(mobile).toString();*/
-        aa.setData(manager.createToken(mobile));
+       // aa.setData(manager.createToken(mobile));
         aa.setRetmsg("succ");
         return aa;
     }

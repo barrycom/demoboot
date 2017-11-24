@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +50,7 @@ public class ApiContentController {
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
     public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam String userid,
-                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
-                                    @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
-                                    @ApiParam(value = "页面大小") @RequestParam Integer pageSize*/){//String begintime,String endtime,
-       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
-        page.setPageNo(pageNo);
-        page.setPageSize(pageSize);*/
+                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id){
         Map map=new HashedMap();
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
@@ -98,8 +94,12 @@ public class ApiContentController {
     public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam String user_id,
                                 @ApiParam(value = "动态id", required = true) @RequestParam Integer dynamic_id){
         UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
+        Date now = new Date();
+        DateFormat d1 = DateFormat.getDateInstance(); //默认语言（汉语）下的默认风格（MEDIUM风格，比如：2008-6-16 20:54:53）
+        String str1 = d1.format(now);
         userCollecTiondy.setUserid(user_id);
         userCollecTiondy.setDynamicwzid(dynamic_id);
+        userCollecTiondy.setCreattime(str1);
         AjaxResult ajaxResult=userCollecTiondyService.save(userCollecTiondy);
 
         return ajaxResult;
@@ -120,12 +120,7 @@ public class ApiContentController {
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
     public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
-                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id/*,
-                                 @ApiParam(value = "当前页数", required = false) @RequestParam int pageNo,
-                                 @ApiParam(value = "页面大小 ", required = false) @RequestParam int pageSize*/){
-       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
-        page.setPageNo(pageNo);
-        page.setPageSize(pageSize);*/
+                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id){
         Map querymap=new HashedMap();
         querymap.put("userid",userid);
         if(dynamictype_id!=0) {
@@ -150,6 +145,7 @@ public class ApiContentController {
                 map.put("collcer",0);
                 map.put("show",true);
             }
+
         }
 
 
@@ -320,6 +316,57 @@ public class ApiContentController {
         }
 
         ajaxResult.setData(memBerDynamicwz);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
+
+    //@Authorization("需token")
+    @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
+    @ResponseBody
+    @RequestMapping(value = "myContentwithmember", method = RequestMethod.POST)
+    public AjaxResult myContentwithmember (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
+                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
+                                 @ApiParam(value = "当前用户id") @RequestParam(required = false) String member_id){
+        Map querymap=new HashedMap();
+        querymap.put("userid",userid);
+        if(dynamictype_id!=0) {
+            querymap.put("dynamictype_id", dynamictype_id);
+        }
+        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(querymap);
+        for (Map map:list) {
+            if(map.get("dynamicwz").toString().length()<=60){
+                map.put("dynamicwzall",map.get("dynamicwz").toString());
+                map.put("dynamicwz",map.get("dynamicwz").toString());
+            }else{
+                map.put("dynamicwzall",map.get("dynamicwz").toString());
+                map.put("dynamicwz",map.get("dynamicwz").toString().substring(0,59)+"...");
+            }
+            String id= map.get("id").toString();
+            List<Map> li=userCollecTiondyService.querycollecmycontent(Integer.parseInt(id));
+            if(li.size()>0){
+                map.put("collcer",li);
+                map.put("collcersize",li.size());
+                map.put("show",false);
+            }else{
+                map.put("collcer",0);
+                map.put("show",true);
+            }
+            if(!member_id.equals("")){
+                UserCollecTiondy userCollecTiondy = new UserCollecTiondy();
+                userCollecTiondy.setUserid(member_id);
+                userCollecTiondy.setDynamicwzid(Integer.parseInt(id));
+                Integer uctd = userCollecTiondyService.queryCount(userCollecTiondy);
+                if (uctd != 0) {
+                    map.put("isinterest", "");
+                } else {
+                    map.put("isinterest", "interested");
+                }
+            }
+        }
+
+
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");
         return ajaxResult;
     }
