@@ -116,13 +116,13 @@
             <input size="16" type="text" id="activitysdate" name="activitysdate" readonly class="form_datetime" placeholder="请填写活动开始时间">
         </div>
     </div>
-    <div class="form-group">
+ <%--   <div class="form-group">
         <label class="col-sm-3 control-label" for="activityedate"><font color="red">*</font>活动结束时间：</label>
         <div class="col-sm-8">
 
             <input size="16" type="text" id="activityedate" name="activityedate" readonly class="form_datetime" placeholder="请填写活动结束时间">
         </div>
-    </div>
+    </div>--%>
     <div class="form-group">
         <label class="col-sm-3 control-label" for="activityaddr"><font color="red">*</font>活动地点：</label>
         <div class="col-sm-8">
@@ -179,7 +179,7 @@
         <div class="col-sm-8" style="text-align: center;">
 
             <button class="btn btn-primary" type="submit"name="submit">
-                <i class="ace-icon fa fa-reply bigger-110"></i>确定
+                <i class="ace-icon fa fa-reply bigger-110"></i>保存
             </button>
             <button class="btn btn-success" type="button"   onclick="showview()">
                 <i class="ace-icon fa fa-reply bigger-110"></i>预览
@@ -200,7 +200,7 @@ $("#activitysdate").datetimepicker({
 }).on("click",function(){
     $("#activitysdate").datetimepicker("setEndDate",$("#datetimeEnd").val())
 });
-$("#activityedate").datetimepicker({
+/*$("#activityedate").datetimepicker({
     format: 'yyyy-mm-dd hh:ii',
 
     language: 'zh-CN',
@@ -208,7 +208,7 @@ $("#activityedate").datetimepicker({
     startDate:new Date()
 }).on("click",function(){
     $("#activityedate").datetimepicker("setStartDate",$("#datetimeStart".val()))
-});
+});*/
 
 uploadImg("uploadCover", "activityimg", "upload/uploadImg.do", "");
 $("#activityprice").keyup(function () {
@@ -251,14 +251,14 @@ $("#activityprice").keyup(function () {
                     }
                 }
             },
-            activityedate: {
+           /* activityedate: {
                 message: '活动结束日期不能为空',
                 validators: {
                     notEmpty: {
                         message: '活动起始日期不能为空'
                     }
                 }
-            },
+            },*/
 
             activityaddr: {
                 message: '活动地址不能为空',
@@ -337,7 +337,7 @@ function showview() {
     $("#viewlogo").attr("src",$("#activityimg").val())
     $(".activity-name").html($("#activityname").val())
     $("#pricetext").html("¥"+$("#activityprice").val())
-    $("#hddate").html($("#activitysdate").val()+"-"+$("#activityedate").val())
+    $("#hddate").html($("#activitysdate").val()/*+"-"+$("#activityedate").val()*/)
     $("#hdaddress").html($("#activityaddr").val())
     $("#hdxq").html(UE.getEditor('content').getContent());
     $("#wxts").html($("#activityidmemo").html())
