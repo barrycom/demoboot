@@ -116,7 +116,7 @@
                     return "<div><img align='left' src='" + content + "' width='40px' height='20px'/>"+data.activityname+"</div>";
                 }},
                 {field:"activitysdate", text:"活动开始时间"},
-                {field:"activityedate", text:"活动结束时间"},
+                /*{field:"activityedate", text:"活动结束时间"},*/
                 {field:"activityaddr", text:"活动地址"},
                 {field:"membersList", text:"参与人",
                 formatter:function(index, content, data){

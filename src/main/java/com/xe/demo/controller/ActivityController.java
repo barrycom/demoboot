@@ -177,6 +177,7 @@ public class ActivityController extends BaseController {
         String daynow = dateFormat.format(now);
         activity.setCreatetime(daynow);
         activity.setState("0");
+        activity.setActivityedate(activity.getActivitysdate());
         return activityService.save(activity);
     }
 
@@ -186,6 +187,7 @@ public class ActivityController extends BaseController {
     @ResponseBody
     @Authority(opCode = "06", opName = "修改活动")
     public AjaxResult edit(Activity activity) {
+        activity.setActivityedate(activity.getActivitysdate());
         return activityService.update(activity);
     }
 
