@@ -58,7 +58,13 @@
     $(function (){
         $("#openAppGrid").sgrid({
             columns:[
-                {field:"realname",width:80, text:"用户名称"},
+                {field:"realname",width:80, text:"用户昵称",formatter:function(index, content, data){
+                    return data.member.name;
+                }},
+                {field:"realname",width:80, text:"微信号",formatter:function(index, content, data){
+                    return data.member.wxno;
+                }},
+                {field:"realname",width:80, text:"用户姓名"},
                 {field:"cardno",width:100, text:"身份证号"},
                 {field:"cardfront",width:80, text:"身份证正面照",formatter:function(index, content, data){
                     return "<img src="+data.cardfront+" height='30px' width='80px' onclick='bigPhoto(\""+content+"\")' />";

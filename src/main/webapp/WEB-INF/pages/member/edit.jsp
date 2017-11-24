@@ -105,7 +105,7 @@
         <div class="col-sm-2" style="text-align: center;">
 
             <button   id="tijiao" class="btn btn-primary" type="submit"name="submit" >
-                <i class="ace-icon fa fa-reply bigger-110"></i>确定
+                <i class="ace-icon fa fa-reply bigger-110"></i>保存
             </button>
 
             <button class="btn btn-warning" type="reset" onclick="javascript:reback();">
@@ -142,7 +142,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-                        data-dismiss="modal" onclick="closeTrade()">确定
+                        data-dismiss="modal" onclick="closeTrade()">保存
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -181,7 +181,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-                        data-dismiss="modal" onclick="closeCityIdName()">确定
+                        data-dismiss="modal" onclick="closeCityIdName()">保存
                 </button>
             </div>
         </div><!-- /.modal-content -->

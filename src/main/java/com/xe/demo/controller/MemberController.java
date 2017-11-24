@@ -74,8 +74,24 @@ public class MemberController extends BaseController {
         PageAjax<Member> memberList= null;
         if(StringUtils.isNullOrEmpty(member.getName()) && StringUtils.isNullOrEmpty(member.getMobile())){
             memberList=memberService.queryPage(page, member);
+            memberList.getRows().stream().forEach(i->{
+                MemberInfo memberInfo=new MemberInfo();
+                memberInfo.setMemberid(i.getId());
+                MemberInfo memberInfo1 = memberInfoService.queryOne(memberInfo);
+                if(memberInfo1 != null){
+                    i.setMemberInfo(memberInfo1);
+                }
+            });
         }else{
             memberList=memberService.querySearchPage(page, member);
+            memberList.getRows().stream().forEach(i->{
+                MemberInfo memberInfo=new MemberInfo();
+                memberInfo.setMemberid(i.getId());
+                MemberInfo memberInfo1 = memberInfoService.queryOne(memberInfo);
+                if(memberInfo1 != null){
+                    i.setMemberInfo(memberInfo1);
+                }
+            });
         }
         return memberList;
     }
@@ -185,7 +201,11 @@ public class MemberController extends BaseController {
             condition.createCriteria().andCondition(memberInfo.getIspass());
         }
         condition.setOrderByClause("createtime");
-        return AppUtil.returnPage(memberInfoMapper.selectByExample(condition));
+        List<MemberInfo> m2 = memberInfoMapper.selectByExample(condition);
+        m2.stream().forEach(i->{
+            i.setMember(memberService.queryByID(i.getMemberid()));
+        });
+        return AppUtil.returnPage(m2);
     }
 
     @ControllerLog("审核通过")

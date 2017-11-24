@@ -194,7 +194,7 @@
         <div class="col-sm-8" style="text-align: center;">
 
             <button class="btn btn-primary" type="submit"name="submit">
-                <i class="ace-icon fa fa-reply bigger-110"></i>确定
+                <i class="ace-icon fa fa-reply bigger-110"></i>保存
             </button>
 
             <button class="btn btn-success" type="button"   onclick="showview()">

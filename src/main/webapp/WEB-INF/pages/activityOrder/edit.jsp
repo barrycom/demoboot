@@ -83,7 +83,6 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="activityname"><font color="red">*</font>订单金额：</label>
                 <div class="col-sm-8">
-
                     <input size="16" type="text"  class="form-control" id="ordermoney" name="ordermoney"   value="${activityOrder.ordermoney}"  placeholder="订单金额">
                 </div>
             </div>
@@ -91,8 +90,10 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="activitysdate"><font color="red">*</font>支付方式</label>
                 <div class="col-sm-8">
-
-                    <input size="16" type="text"  class="form-control"  disabled id="paymemo" name="paymemo"  value="${activityOrder.paymemo}"  placeholder="支付方式">
+                    <select   class="form-control"   id="paymemo" name="paymemo"  placeholder="支付方式">
+                        <option>微信支付</option>
+                    </select>
+                   <%-- <input size="16" type="text"  class="form-control"  disabled id="paymemo" name="paymemo"  value="${activityOrder.paymemo}"  placeholder="支付方式">--%>
                 </div>
             </div>
 
@@ -137,7 +138,7 @@
         <div class="col-sm-8" style="text-align: center;">
 
             <button class="btn btn-primary" type="submit"name="submit">
-                <i class="ace-icon fa fa-reply bigger-110"></i>确定
+                <i class="ace-icon fa fa-reply bigger-110"></i>保存
             </button>
 
 

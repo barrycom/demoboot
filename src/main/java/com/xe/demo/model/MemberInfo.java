@@ -17,6 +17,18 @@ public class MemberInfo {
     private String createtime;
     private String regtime;  //审核时间
 
+
+    @Transient
+    private Member member;
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public String getId() {
         return id;
     }

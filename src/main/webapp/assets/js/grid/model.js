@@ -49,7 +49,7 @@
         html.push('<div class="modal-title"></div>');
         html.push('<div class="modal-body" style="min-height: 40px;font-size: 22px;font-weight: bold;color: #444">'+ content +'</div>');
         html.push('<div class="modal-footer">');
-        html.push('<button type="button" class="btn btn-success" id="suc_modal'+id+'" data-dismiss="modal">确定</button>');
+        html.push('<button type="button" class="btn btn-success" id="suc_modal'+id+'" data-dismiss="modal">保存</button>');
         html.push('</div>');
         html.push('</div>');
         html.push('</div>');
@@ -79,7 +79,7 @@
         html.push('<div class="modal-title"></div>');
         html.push('<div class="modal-body" style="min-height: 40px;font-size: 22px;font-weight: bold;color: #444">'+ content +'</div>');
         html.push('<div class="modal-footer">');
-        html.push('<button type="button" class="btn btn-warning" id="alt_modal'+id+'" data-dismiss="modal">确定</button>');
+        html.push('<button type="button" class="btn btn-warning" id="alt_modal'+id+'" data-dismiss="modal">保存</button>');
         html.push('</div>');
         html.push('</div>');
         html.push('</div>');
@@ -107,7 +107,7 @@
         html.push('<div class="modal-title"></div>');
         html.push('<div class="modal-body" style="min-height: 40px;font-size: 22px;font-weight: bold;color: #444">'+ content +'</div>');
         html.push('<div class="modal-footer">');
-        html.push('<button type="button" class="btn btn-danger" id="err_modal'+id+'" data-dismiss="modal">确定</button>');
+        html.push('<button type="button" class="btn btn-danger" id="err_modal'+id+'" data-dismiss="modal">保存</button>');
         html.push('</div>');
         html.push('</div>');
         html.push('</div>');
@@ -137,7 +137,7 @@
         html.push('<div class="modal-body" style="min-height: 40px;font-size: 22px;font-weight: bold;color: #444">'+ content +'</div>');
         html.push('<div class="modal-footer">');
         html.push('<button type="button" class="btn" id="cfm_modal_close'+id+'" data-dismiss="modal">取消</button>&nbsp;&nbsp;');
-        html.push('<button type="button" class="btn btn-info" id="cfm_modal'+id+'" data-dismiss="modal">确定</button>');
+        html.push('<button type="button" class="btn btn-info" id="cfm_modal'+id+'" data-dismiss="modal">保存</button>');
         html.push('</div>');
         html.push('</div>');
         html.push('</div>');
@@ -167,7 +167,7 @@
         html.push('</div>');
         html.push('<div class="modal-footer"> <div class="col-sm-8 alert alert-danger modal-err-div" style="display:none;text-align: left;padding: 0 0 0 6px;margin: 0 0;height: 31px;line-height: 31px"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;<span class="modal-err-span" style="font-size: 14px"></span></div>');
         html.push('<button class="btn closeBtn" data-dismiss="modal" aria-hidden="true">关闭</button>&nbsp;&nbsp;');
-        html.push('<button class="btn btn-primary" data-loading-text="加载中..." onclick="submit()">确定</button>');
+        html.push('<button class="btn btn-primary" data-loading-text="加载中..." onclick="submit()">保存</button>');
         html.push('</div>');
         html.push('</div>');
         html.push('</div>');

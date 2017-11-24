@@ -12,21 +12,21 @@
                     </swiper>
 
                     <!--活动名称价格。。  -->
-                    <div class='details-head'>
-                        <div class='activity-name'>
+                    <div align="left">
+                        <div class='details-head'>
+                            <div class='activity-name'>
 
+                            </div>
+                            <div class='activity-price'>
+                                <text id="pricetext" >¥950</text> /人
+                            </div>
+                            <div class='activity-addresss'>
+                                <image src='${ctx}/assets/images/activity/act_det_icon_time.png'  width="13" height="13"></image><span id="hddate">10月1日-10月8日</span></div>
+                            <div class='activity-addresss'>
+                                <image src='${ctx}/assets/images/activity/act_det_icon_add.png'  width="15" height="17"></image> <span id="hdaddress">武汉江岸区武汉剧院</span>
+                                <image src='${ctx}/assets/images/activity/list_btn_path.png' class='arrow-right'  width="13" height="13"></image>
+                            </div>
                         </div>
-                        <div class='activity-price'>
-                            <text id="pricetext">¥950</text> /人
-                        </div>
-                        <div class='activity-addresss'>
-                            <image src='${ctx}/assets/images/activity/act_det_icon_time.png'  width="13" height="13"></image><span id="hddate">10月1日-10月8日</span></div>
-                        <div class='activity-addresss'>
-                            <image src='${ctx}/assets/images/activity/act_det_icon_add.png'  width="15" height="17"></image> <span id="hdaddress">武汉江岸区武汉剧院</span>
-                            <image src='${ctx}/assets/images/activity/list_btn_path.png' class='arrow-right'  width="13" height="13"></image>
-                        </div>
-                    </div>
-
                     <!--感兴趣的人  -->
                     <div class='watch-people-bg'>
                         新增此处无数据
@@ -59,6 +59,8 @@
 
 
                 </div>
+                </div>
+
                 <!--我要参加  -->
 
 
@@ -212,7 +214,7 @@ if(data.membersList!="")
      $("#viewlogo").attr("src",data.activityimg)
      $(".activity-name").html(data.activityname)
      $("#pricetext").html("¥"+data.activityprice)
-     $("#hddate").html(data.activitysdate+"-"+data.activityedate)
+     $("#hddate").html(data.activitysdate/*+"-"+data.activityedate*/)
      $("#hdaddress").html(data.activityaddr)
      $("#hdxq").html(data.activityidcontent);
      $("#wxts").html(data.activityidmemo)
