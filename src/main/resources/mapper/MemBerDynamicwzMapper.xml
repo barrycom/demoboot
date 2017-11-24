@@ -137,13 +137,8 @@
     <if test="userid != null" >
       AND   mz.userid !=#{userid,jdbcType=VARCHAR}
     </if>
-    <!--<if test="begintime != null" >
-      AND  createtime &gt;= #{begintime,jdbcType=VARCHAR}
-    </if>
-    <if test="endtime != null" >
-      AND  createtime &lt;= #{endtime,jdbcType=VARCHAR}
-    </if>-->
-    order by RAND() desc LIMIT 30
+
+    order by createtime desc LIMIT 30
 
   </select>
 
