@@ -178,9 +178,14 @@
 
   <!--我感兴趣-->
   <select id="myinstrcontent" resultType="hashmap">
+
     select
+
     mz.id,
+
     mz.userid, mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
+
+    uy.dynamicwzid ,uy.userid,DATE_FORMAT(uy.creattime, '%Y-%m-%d %H:%i:%s') creattime,
 
     mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
 
@@ -188,11 +193,12 @@
 
     dyt.dynamicname
 
-    from
 
-    member mb
+    from usercollectiondy uy
 
-    INNER JOIN MemBerDynamicwz mz on mb.id=mz.userid
+    INNER JOIN member mb on mb.id=uy.userid
+
+    INNER JOIN MemBerDynamicwz mz on uy.dynamicwzid=mz.id
 
     left join memberinfo mbi on mbi.memberid=mb.id
 
@@ -200,21 +206,16 @@
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
 
-    where
 
-    mz.id in(select uy.dynamicwzid from usercollectiondy uy where uy.userid=#{userid}) and
-    mz.state="0"
+    where uy.userid=#{userid,jdbcType=VARCHAR}  and  mz.state="0"
 
-    <if test="dynamictype_id != null" >
-      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
-    </if>
     <if test="begintime != null and begintime != ''" >
-      AND  mz.createtime &gt;= #{begintime,jdbcType=VARCHAR}
+      AND  uy.creattime &gt;= #{begintime,jdbcType=VARCHAR}
     </if>
     <if test="endtime != null and endtime != ''" >
-      AND  mz.createtime &lt;= #{endtime,jdbcType=VARCHAR}
+      AND  uy.creattime &lt;= #{endtime,jdbcType=VARCHAR}
     </if>
-    order by mz.createtime desc
+    order by uy.creattime desc
 
   </select>
 

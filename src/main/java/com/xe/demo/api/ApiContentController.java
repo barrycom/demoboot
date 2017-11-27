@@ -95,8 +95,8 @@ public class ApiContentController {
                                 @ApiParam(value = "动态id", required = true) @RequestParam Integer dynamic_id){
         UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
         Date now = new Date();
-        DateFormat d1 = DateFormat.getDateInstance(); //默认语言（汉语）下的默认风格（MEDIUM风格，比如：2008-6-16 20:54:53）
-        String str1 = d1.format(now);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String str1 = df.format(new Date());
         userCollecTiondy.setUserid(user_id);
         userCollecTiondy.setDynamicwzid(dynamic_id);
         userCollecTiondy.setCreattime(str1);
