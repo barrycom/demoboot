@@ -183,9 +183,9 @@
 
     mz.id,
 
-    mz.userid, mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
+    mz.userid as userid , mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
 
-    uy.dynamicwzid ,uy.userid,DATE_FORMAT(uy.creattime, '%Y-%m-%d %H:%i:%s') creattime,
+    uy.dynamicwzid ,uy.userid as useridmy ,DATE_FORMAT(uy.creattime, '%Y-%m-%d %H:%i:%s') creattime,
 
     mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,
 
@@ -193,19 +193,17 @@
 
     dyt.dynamicname
 
-
     from usercollectiondy uy
 
-    INNER JOIN member mb on mb.id=uy.userid
-
     INNER JOIN MemBerDynamicwz mz on uy.dynamicwzid=mz.id
+
+    INNER JOIN member mb on mb.id=mz.userid
 
     left join memberinfo mbi on mbi.memberid=mb.id
 
     left join dynamicwzimg dg on mz.id=dg.dynamicwzid
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
-
 
     where uy.userid=#{userid,jdbcType=VARCHAR}  and  mz.state="0"
 
