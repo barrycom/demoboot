@@ -3,8 +3,9 @@ package com.xe.demo.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-
+@Table(name = "i_tag")
 public class ITag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

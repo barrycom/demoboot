@@ -15,4 +15,6 @@ public interface UserCollecTiondyMapper extends MyMapper<UserCollecTiondy> {
 
     List<Map>   querycollecmycontent(Integer dynamicwzid);
 
+    Integer   deleteinterest(UserCollecTiondy userCollecTiondy);
+
 }

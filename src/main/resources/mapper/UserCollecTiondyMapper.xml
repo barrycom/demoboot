@@ -21,6 +21,9 @@
   </select>
 
 
+  <delete id="deleteinterest"   parameterType="com.xe.demo.model.UserCollecTiondy">
+    delete from usercollectiondy where userid=#{userid,jdbcType=VARCHAR} AND dynamicwzid= #{dynamicwzid,jdbcType=INTEGER}
+  </delete>
 
 
 </mapper>

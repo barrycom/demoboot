@@ -30,4 +30,13 @@ public class UserCollecTiondyService extends AbstratService<UserCollecTiondy> {
        return  userCollecTiondyMapper.querycollecmycontent(dynamicwzid);
     }
 
+    public AjaxResult   deleteinterest(UserCollecTiondy userCollecTiondy){
+        int ret = userCollecTiondyMapper.deleteinterest(userCollecTiondy);
+        String result = null;
+        if(ret <= 0){
+            result = "删除失败";
+        }
+        return AppUtil.returnObj(result);
+    }
+
 }
