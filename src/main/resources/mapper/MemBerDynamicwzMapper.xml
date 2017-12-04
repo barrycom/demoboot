@@ -146,6 +146,12 @@
     <if test="dynamictype_id != null" >
      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
     </if>
+    <if test="dynamictype_ids.size() > 0" >
+      AND  dynamicid IN
+      <foreach collection="dynamictype_ids" index="index" item="item" open="(" separator="," close=")">
+        #{item.dynamicwzid}
+      </foreach>
+    </if>
     <!--<if test="userid != null" >
       AND   mz.userid !=#{userid,jdbcType=VARCHAR}
     </if>-->

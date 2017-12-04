@@ -58,12 +58,17 @@ public class ApiContentController {
         Map map=new HashedMap();
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
+        }else{
+            UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
+            userCollecTindustry.setUserid(userid);
+            List<UserCollecTindustry>  li=userCollecTindustryService.queryList(userCollecTindustry);
+            map.put("dynamictype_ids",li);
         }
         if(!userid.equals("0")) {
             map.put("userid", userid);
         }
-      /*  map.put("begintime",begintime);
-        map.put("endtime",endtime);*/
+
+
         List<Map<String, String>> list=memBerDynamicwzService.queryneed(map);
         for (Map li:list) {
             if(li.get("dynamicwz").toString().length()<=60){
