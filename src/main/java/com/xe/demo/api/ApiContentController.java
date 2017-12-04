@@ -44,6 +44,10 @@ public class ApiContentController {
     private UserCollecTindustryService userCollecTindustryService;
     @Autowired
     private UploadUtil uploadUtil;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private UserTagService userTagService;
 
     //@Authorization("需token")
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
@@ -109,10 +113,12 @@ public class ApiContentController {
     @ApiOperation(value="取消感兴趣动态", notes="感兴趣动态")
     @ResponseBody
     @RequestMapping(value = "notinterest", method = RequestMethod.POST)
-    public AjaxResult interest (@ApiParam(value = "关注id", required = true) @RequestParam Integer id){
-        AjaxResult ajaxResult=userCollecTiondyService.deleteByID(id);
-
-        return ajaxResult;
+    public AjaxResult interest (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
+                                @ApiParam(value = "关注id", required = true) @RequestParam int dynamic_id){
+        UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
+        userCollecTiondy.setUserid(userid);
+        userCollecTiondy.setDynamicwzid(dynamic_id);
+        return userCollecTiondyService.deleteinterest(userCollecTiondy);
     }
 
     //@Authorization("需token")
@@ -163,14 +169,15 @@ public class ApiContentController {
     public AjaxResult saveContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                    @ApiParam(value = "动态文字", required = true) @RequestParam String dynamicwz,
                                    @ApiParam(value = "图片", required = true) @RequestParam String imgurl,
-                                   @ApiParam(value = "行业分类", required = true) @RequestParam String dynamicid){
+                                   @ApiParam(value = "行业分类", required = true) @RequestParam String dynamicid,
+                                   @ApiParam(value = "兴趣标签", required = true) @RequestParam String tagid){
         //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         MemBerDynamicwz memBerDynamicwz=new MemBerDynamicwz();
-        memBerDynamicwz.setUserid(userid.toString());
+        memBerDynamicwz.setUserid(userid);
         memBerDynamicwz.setDynamicwz(dynamicwz);
         memBerDynamicwz.setDynamicid(dynamicid);
+        memBerDynamicwz.setTag_id(tagid);
         memBerDynamicwz.setState("0");
-       // memBerDynamicwz.setCreatetime(df.format(new Date()));
 
         AjaxResult ajaxResult=memBerDynamicwzService.savecontent(memBerDynamicwz);
         if(ajaxResult.getRetcode()!=1){
@@ -187,6 +194,14 @@ public class ApiContentController {
             return ajaxResult;
         }
 
+       /* UserTag userTag=new UserTag();
+        userTag.setTag_id(tagid);
+        userTag.setUserid(userid);
+        ajaxResult=userTagService.save(userTag);
+        if(ajaxResult.getRetcode()!=1){
+            ajaxResult.setRetmsg("false");
+            return ajaxResult;
+        }*/
         return ajaxResult;
     }
 
@@ -200,6 +215,19 @@ public class ApiContentController {
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);*/
         List<DynamicType> list=dynamicTypeService.queryAll();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(list);
+        ajaxResult.setRetmsg("success");
+        return ajaxResult;
+    }
+
+    @ApiOperation(value="获取兴趣分类", notes="获取兴趣分类")
+    @ResponseBody
+    @RequestMapping(value = "getITag", method = RequestMethod.POST)
+    public AjaxResult getITag (){
+        ITag iTag=new ITag();
+        iTag.setState("0");
+        List<ITag> list=tagService.queryList(iTag);
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");

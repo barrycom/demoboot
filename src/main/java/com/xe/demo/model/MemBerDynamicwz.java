@@ -15,6 +15,8 @@ public class MemBerDynamicwz {
 
     private String dynamicwz;
 
+    private String tag_id;
+
     private String createtime;
 
     private String state;
@@ -177,5 +179,13 @@ public class MemBerDynamicwz {
 
     public void setDynamicwzall(String dynamicwzall) {
         this.dynamicwzall = dynamicwzall;
+    }
+
+    public String getTag_id() {
+        return tag_id;
+    }
+
+    public void setTag_id(String tag_id) {
+        this.tag_id = tag_id;
     }
 }

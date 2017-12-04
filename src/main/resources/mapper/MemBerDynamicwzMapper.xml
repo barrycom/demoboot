@@ -60,7 +60,11 @@
 
     dg.dynamicwzid,dg.imgurl,
 
-    dyt.dynamicname from
+    dyt.dynamicname,
+
+    ig.tname
+
+     from
 
     member mb
 
@@ -71,6 +75,8 @@
     left join dynamicwzimg dg on mz.id=dg.dynamicwzid
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    left join i_tag ig on ig.id=mz.tag_id
 
     where
     mb.id=mz.userid AND mz.id=dg.dynamicwzid
@@ -117,7 +123,11 @@
 
     dg.dynamicwzid,dg.imgurl,
 
-    dyt.dynamicname from
+    dyt.dynamicname,mz.tag_id,
+
+    ig.tname
+
+    from
 
     member mb
 
@@ -129,14 +139,16 @@
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
 
+    left join i_tag ig on ig.id=mz.tag_id
+
     where
-     mz.state="0"
+    mz.state="0"
     <if test="dynamictype_id != null" >
      AND  dynamicid = #{dynamictype_id,jdbcType=VARCHAR}
     </if>
-    <if test="userid != null" >
+    <!--<if test="userid != null" >
       AND   mz.userid !=#{userid,jdbcType=VARCHAR}
-    </if>
+    </if>-->
 
     order by createtime desc LIMIT 30
 
@@ -153,7 +165,11 @@
 
     dg.dynamicwzid,dg.imgurl,
 
-    dyt.dynamicname from
+    dyt.dynamicname,mz.tag_id,
+
+    ig.tname
+
+    from
 
     member mb
 
@@ -164,6 +180,8 @@
     left join dynamicwzimg dg on mz.id=dg.dynamicwzid
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    left join i_tag ig on ig.id=mz.tag_id
 
     where
     mz.state="0"
@@ -191,7 +209,9 @@
 
     dg.dynamicwzid,dg.imgurl,
 
-    dyt.dynamicname
+    dyt.dynamicname,mz.tag_id,
+
+    ig.tname
 
     from usercollectiondy uy
 
@@ -204,6 +224,9 @@
     left join dynamicwzimg dg on mz.id=dg.dynamicwzid
 
     left join dynamic_type dyt on mz.dynamicid=dyt.id
+
+    left join i_tag ig on ig.id=mz.tag_id
+
 
     where uy.userid=#{userid,jdbcType=VARCHAR}  and  mz.state="0"
 
