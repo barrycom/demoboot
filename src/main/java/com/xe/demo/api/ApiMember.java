@@ -475,6 +475,9 @@ public class ApiMember {
             }
             memberService.update(member);
         }
+        HashMap map = new HashMap();
+        map.put("member",member);
+        map.put("pushPrce","¥"+price);
         ajaxResult.setData(member);
         ajaxResult.setRetcode(1);
         ajaxResult.setRetmsg("succ");
