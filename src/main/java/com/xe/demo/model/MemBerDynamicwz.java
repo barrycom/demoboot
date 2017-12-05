@@ -45,6 +45,8 @@ public class MemBerDynamicwz {
 
     private String dynamicwzall;
 
+    private String ishy;
+
     public Integer getId() {
         return id;
     }
@@ -187,5 +189,13 @@ public class MemBerDynamicwz {
 
     public void setTag_id(String tag_id) {
         this.tag_id = tag_id;
+    }
+
+    public String getIshy() {
+        return ishy;
+    }
+
+    public void setIshy(String ishy) {
+        this.ishy = ishy;
     }
 }
