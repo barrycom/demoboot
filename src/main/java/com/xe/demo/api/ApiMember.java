@@ -66,7 +66,7 @@ public class ApiMember {
     private MemberBuyService memberBuyService ;
     @Autowired
     private MemberBuyMapper memberBuyMapper;
-   @Autowired
+    @Autowired
     private SendcardlogService sendcardlogService;
 
     @Autowired
@@ -74,22 +74,22 @@ public class ApiMember {
 
 
 
-        //@Authorization("需token")
-     @ApiOperation(value="根据ID获取用户信息", notes="根据ID获取用户信息")
-     @RequestMapping(value = "getMember", method = RequestMethod.POST)
-     @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
+    //@Authorization("需token")
+    @ApiOperation(value="根据ID获取用户信息", notes="根据ID获取用户信息")
+    @RequestMapping(value = "getMember", method = RequestMethod.POST)
+    @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
     public AjaxResult getMember(@RequestParam(value = "memberId",required = false) String  memberId)
-     {
-         JsonResult r = new JsonResult();
-         Condition condition=new Condition(Activity.class);
-         condition.createCriteria().andCondition("id = '"+memberId+"'");
-         AjaxResult aa=new AjaxResult();
-         aa.setData(memberMapper.selectByExample(condition));
-         aa.setRetmsg("succ");
-         return aa;
+    {
+        JsonResult r = new JsonResult();
+        Condition condition=new Condition(Activity.class);
+        condition.createCriteria().andCondition("id = '"+memberId+"'");
+        AjaxResult aa=new AjaxResult();
+        aa.setData(memberMapper.selectByExample(condition));
+        aa.setRetmsg("succ");
+        return aa;
     }
 
-   // @Authorization("需token")
+    // @Authorization("需token")
     @ApiOperation(value="根据小写的openId获取用户name", notes="根据小写的openId获取用户name")
     @RequestMapping(value = "getMemberLowerCase", method = RequestMethod.POST)
     @ApiImplicitParam(paramType="query", name = "memberId", value = "用户ID", required = true, dataType = "String")
@@ -103,7 +103,7 @@ public class ApiMember {
         return aa;
     }
 
-   // @Authorization("需token")
+    // @Authorization("需token")
     @ApiOperation(value="修改名片", notes="修改名片")
     @RequestMapping(value = "updateMember", method = RequestMethod.POST)
     public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
@@ -159,8 +159,8 @@ public class ApiMember {
     @ApiOperation(value="编辑主页", notes="编辑主页")
     @RequestMapping(value = "updateHomePage", method = RequestMethod.POST)
     public AjaxResult updateHomePage(@ApiParam(value = "个人介绍", required = true) @RequestParam("personalinfo") String personalinfo,
-                                   @ApiParam(value = "我的资源", required = true) @RequestParam("resources") String resources,
-                                   @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
+                                     @ApiParam(value = "我的资源", required = true) @RequestParam("resources") String resources,
+                                     @ApiParam(value = "ID", required = true) @RequestParam("id") String id)
     {
         Member member=new Member();
         member.setId(id);
@@ -236,7 +236,7 @@ public class ApiMember {
         user.setPassword("123456");
         RegisterUsers registerUsers=new RegisterUsers();
         registerUsers.add(0,user);*/
-      //  iMUserAPI.createNewIMUserSingle(registerUsers);
+        //  iMUserAPI.createNewIMUserSingle(registerUsers);
         return ajaxResult;
     }
 
@@ -256,10 +256,10 @@ public class ApiMember {
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "realNameVerMember", method = RequestMethod.POST)
     public AjaxResult realNameVerMember(HttpServletRequest request,@ApiParam(value = "真实姓名", required = true) @RequestParam("realname") String realname,
-                                   @ApiParam(value = "身份证号", required = true) @RequestParam("cardno") String cardno,
-                                   @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
-                                   @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
-                                   @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
+                                        @ApiParam(value = "身份证号", required = true) @RequestParam("cardno") String cardno,
+                                        @ApiParam(value = "身份证正面图片", required = true) @RequestParam("cardfront") String cardfront,
+                                        @ApiParam(value = "身份证反面图片", required = true) @RequestParam("cardback") String cardback,
+                                        @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
         AjaxResult aa=new AjaxResult();
         MemberInfo m=new MemberInfo();
         m.setMemberid(memberid);
@@ -291,11 +291,11 @@ public class ApiMember {
         return aa;
     }
 
-   // @Authorization("需token")
+    // @Authorization("需token")
     @ApiOperation(value="实名认证", notes="实名认证")
     @RequestMapping(value = "getMemberInfo", method = RequestMethod.POST)
     public AjaxResult getMemberInfo(HttpServletRequest request,
-                                        @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
+                                    @ApiParam(value = "用户ID", required = true) @RequestParam("memberid") String memberid) throws IOException {
         AjaxResult aa=new AjaxResult();
         MemberInfo memberInfo = new MemberInfo();
         memberInfo.setMemberid(memberid);
@@ -313,7 +313,7 @@ public class ApiMember {
     @ApiOperation(value="用户发送名片记录", notes="用户发送名片记录")
     @RequestMapping(value = "sendcardlog", method = RequestMethod.POST)
     public AjaxResult sendcardlog(HttpServletRequest request,
-                                    @ApiParam(value = "发送用户ID", required = true) @RequestParam("sendid") String sendid,
+                                  @ApiParam(value = "发送用户ID", required = true) @RequestParam("sendid") String sendid,
                                   @ApiParam(value = "接收用户ID", required = true) @RequestParam("receiveid") String receiveid) throws IOException {
         AjaxResult aa=new AjaxResult();
         Sendcardlog sendcardlog = new Sendcardlog();
@@ -400,7 +400,9 @@ public class ApiMember {
             for(int i=0;i<memberList.size();i++) {
                 ChineseCharToEn cte = new ChineseCharToEn();
                 String szm=cte.getAllFirstLetter(memberList.get(i).getName().substring(0,1).toUpperCase());
-
+               String dd= memberList.get(i).getIshy();
+                boolean falg=memberList.get(i).getIshy().equals("0")?true:false;
+                szmDataList.get(j).setIshy(falg);
                 if (szmDataList.get(j).getAlphabet().equals(szm)) {
                     members.add(memberList.get(i));
                 }
@@ -422,7 +424,7 @@ public class ApiMember {
     @ResponseBody
     @RequestMapping(value = "memberIndexChooseDyn", method = RequestMethod.POST)
     public AjaxResult memberIndexChooseDyn (@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
-                                 @ApiParam(value = "行业id", required = true) @RequestParam("dynamictypeid") String dynamictypeid){
+                                            @ApiParam(value = "行业id", required = true) @RequestParam("dynamictypeid") String dynamictypeid){
         AjaxResult ajaxResult=new AjaxResult();
         try {
             Condition condition=new Condition(UserCollecTindustry.class);
@@ -478,7 +480,7 @@ public class ApiMember {
         HashMap map = new HashMap();
         map.put("member",member);
         map.put("pushPrce","¥"+price);
-        ajaxResult.setData(member);
+        ajaxResult.setData(map);
         ajaxResult.setRetcode(1);
         ajaxResult.setRetmsg("succ");
         return ajaxResult;
@@ -497,16 +499,16 @@ public class ApiMember {
         SimpleDateFormat sf  =new SimpleDateFormat("yyyy-MM-dd");
         return sf.format(gc.getTime());
     }
-   /* public static void main(String[] args) throws ParseException {
+    /* public static void main(String[] args) throws ParseException {
 
-        System.out.print(compDateMonth("2017-10-19 00:00:00","1"));
-    }*/
+         System.out.print(compDateMonth("2017-10-19 00:00:00","1"));
+     }*/
     //@Authorization("需token")
     @ApiOperation(value="添加好友", notes="添加好友")
     @RequestMapping(value = "addFriend", method = RequestMethod.POST)
     public AjaxResult addFriend(HttpServletRequest request,@ApiParam(value = "我", required = true) @RequestParam("my") String my,
-                                        @ApiParam(value = "你", required = true) @RequestParam("yuo") String you
-                                       ) throws IOException {
+                                @ApiParam(value = "你", required = true) @RequestParam("yuo") String you
+    ) throws IOException {
         iMUserAPI.addFriendSingle(my,you);
         AjaxResult aa=new AjaxResult();
         aa.setRetmsg("succ");
@@ -518,7 +520,7 @@ public class ApiMember {
         char[] ch = str.toCharArray();
         StringBuffer sbf = new StringBuffer();
         for(int i=0; i< ch.length; i++){
-                sbf.append(charToLowerCase(ch[i]));
+            sbf.append(charToLowerCase(ch[i]));
         }
         return sbf.toString();
     }

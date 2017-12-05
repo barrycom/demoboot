@@ -199,7 +199,7 @@ public class ApiContentController {
             return ajaxResult;
         }
 
-       /* UserTag userTag=new UserTag();
+        /*UserTag userTag=new UserTag();
         userTag.setTag_id(tagid);
         userTag.setUserid(userid);
         ajaxResult=userTagService.save(userTag);
@@ -219,7 +219,9 @@ public class ApiContentController {
        /* PageAjax<DynamicType> page=new PageAjax<DynamicType>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);*/
-        List<DynamicType> list=dynamicTypeService.queryAll();
+        DynamicType dynamicType=new DynamicType();
+        dynamicType.setState("0");
+        List<DynamicType> list=dynamicTypeService.queryList(dynamicType);
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(list);
         ajaxResult.setRetmsg("success");

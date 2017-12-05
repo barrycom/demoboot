@@ -318,11 +318,11 @@ public class ContentController extends BaseController {
 
     @Authority(opCode = "06", opName = "删除动态分类")
     @ResponseBody
-    @RequestMapping("dynamicdelect/{id}")
-    public AjaxResult dynamicdelect(@PathVariable("id") int id) {
+    @RequestMapping("dynamicdelect")
+    public AjaxResult dynamicdelect(int id,String state) {
         DynamicType dynamicType=new DynamicType();
         dynamicType.setId(id);
-        dynamicType.setState("1");
+        dynamicType.setState(state);
         AjaxResult aa=dynamicTypeService.update(dynamicType);
         return aa;
     }

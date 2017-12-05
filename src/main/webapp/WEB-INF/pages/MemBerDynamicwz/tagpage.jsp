@@ -59,8 +59,14 @@
                     style:"text-align:center",
                      formatter:function(index, content, data){
                          var delUrl = "admin/content/tagupdatepage?id="+data.id;
-                         var html="<a href='javascript:showModal(\"修改标签\" ,\"" + delUrl + "\")' class='btn btn-primary'>编辑</a>" +
-                                    "<a href='javascript:delect(\"" + data.id + "\",\"1\")' class='btn btn-success'>停用</a>" ;
+                         var html="" ;
+                         if(content=="0"){
+                             html+="<a href='javascript:showModal(\"修改标签\" ,\"" + delUrl + "\")' class='btn btn-primary'>编辑</a>" +
+                                 "<a href='javascript:delect(\"" + data.id + "\",\"1\")' class='btn btn-danger'>停用</a>" ;
+                         }else{
+                             html+="<a href='javascript:showModal(\"修改标签\" ,\"" + delUrl + "\")' class='btn btn-primary'>编辑</a>" +
+                                 "<a href='javascript:delect(\"" + data.id + "\",\"0\")' class='btn btn-success'>启用</a>" ;
+                         }
 
                          return html;
                         }
@@ -80,13 +86,11 @@
 
     function delect(id,state){
         var delUrl ="";
-        if(state==1){
-            delUrl = "admin/content/tagupdate?id="+id+"&state="+ state;
-        }else{
-            delUrl = "admin/content/tagdelect/"+id;
-        }
 
-        showCfm("是否决定停用?", delUrl);
+            delUrl = "admin/content/tagupdate?id="+id+"&state="+ state;
+
+
+        showCfm("是否决定操作?", delUrl);
     }
 
     function gorelod(s) {

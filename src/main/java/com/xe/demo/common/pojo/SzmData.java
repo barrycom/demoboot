@@ -10,7 +10,7 @@ import java.util.List;
 public class SzmData {
     public  String alphabet;
     public List<Member> members;
-
+    public  boolean ishy;
     public SzmData(String alphabet, List<Member> members) {
         this.alphabet = alphabet;
         this.members = members;
@@ -30,5 +30,13 @@ public class SzmData {
 
     public void setMembers(List<Member> members) {
         this.members = members;
+    }
+
+    public boolean getIshy() {
+        return ishy;
+    }
+
+    public void setIshy(boolean ishy) {
+        this.ishy = ishy;
     }
 }
