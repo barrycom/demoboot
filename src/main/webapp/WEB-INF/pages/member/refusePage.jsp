@@ -14,7 +14,6 @@
 	submit = function(){
 		frmValidate();
 		var data = $("#submitForm").serialize();
-		debugger;
 		ajaxRequest("admin/member/memberInfoRefuse", data);
 	}
 </script>
