@@ -32,7 +32,6 @@ public class ApiActivtiyOrder {
     private ActivityOrderService activityOrderService;
     @Autowired
     private ActivityService activityService;
-    @Authorization("需token")
     @ApiOperation(value="新增活动订单", notes="新增活动订单")
     @RequestMapping(value = "addActivtiyOrder", method = RequestMethod.POST)
     public AjaxResult getActivtiyallType (@RequestBody ActivityOrder activityOrder){
