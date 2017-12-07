@@ -257,10 +257,8 @@
     </if>
     order by createtime desc
   </select>
-
+  <!--SELECT a.*,b.buynum  FROM `activity` a LEFT JOIN activityorder b on a.activityid = b.activityid and b.userid = #{memberId}-->
   <select id="getActivtiyByMemberId" parameterType="String" resultType="com.xe.demo.model.Activity">
-      /*  SELECT a.*,b.buynum  FROM `activity` a LEFT JOIN activityorder b on a.activityid = b.activityid and b.userid = #{memberId}*/
-
       SELECT
           a.*, b.buynum
       FROM

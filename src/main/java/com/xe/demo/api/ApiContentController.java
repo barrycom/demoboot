@@ -58,11 +58,16 @@ public class ApiContentController {
         Map map=new HashedMap();
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
+            map.put("dynamictype_ids",null);
         }else{
             UserCollecTindustry userCollecTindustry=new UserCollecTindustry();
             userCollecTindustry.setUserid(userid);
             List<UserCollecTindustry>  li=userCollecTindustryService.queryList(userCollecTindustry);
-            map.put("dynamictype_ids",li);
+            if(li.size()>0) {
+                map.put("dynamictype_ids", li);
+            }else{
+                map.put("dynamictype_ids", null);
+            }
         }
         if(!userid.equals("0")) {
             map.put("userid", userid);
