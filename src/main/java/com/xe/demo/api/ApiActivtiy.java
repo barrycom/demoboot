@@ -61,26 +61,23 @@ public class ApiActivtiy {
      @ApiOperation(value="根据活动类型获取对应的活动", notes="根据活动类型获取对应的活动")
      @RequestMapping(value = "getActivtiyByType", method = RequestMethod.POST)
      @ApiImplicitParam(paramType="query", name = "typeid",  value = "活动类型编号", required = true, dataType = "String")
-    public AjaxResult getActivtiyByType(@RequestParam String  typeid)
-     {
+    public  PageAjax<Activity> getActivtiyByType(@RequestParam String  typeid,
+                                        @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
+                                        @ApiParam(value = "页面大小") @RequestParam Integer pageSize) {
 
-
-       //  RowBounds rowBounds = new RowBounds(pageNo, pageSize);
-         /*}
-         else {
-             RowBounds rowBounds = new RowBounds();
-         }*/
-        JsonResult r = new JsonResult();
+         PageAjax<Activity> page=new PageAjax<Activity>();
+         page.setPageNo(pageNo);
+         page.setPageSize(pageSize);
+        /*JsonResult r = new JsonResult();
         Condition condition=new Condition(Activity.class);
         condition.createCriteria().andCondition("activitytype = '"+typeid+"'").andCondition("state = '1'");
         condition.setOrderByClause("createtime desc");
-
-      //   PageMethod.startPage(1, 99999);
-        List<Activity> list = activityMapper.selectByExample(condition);
-        AjaxResult aa=new AjaxResult();
-        aa.setData(list);
-        aa.setRetmsg("succ");
-        return aa;
+         List<Activity> list = activityMapper.selectByExample(condition);*/
+         Activity activity=new Activity();
+         activity.setActivitytype(typeid);
+         activity.setState("1");
+         PageAjax<Activity> list=activityService.queryPage(page,activity);
+        return list;
     }
 
     //@Authorization("需token")

@@ -49,17 +49,17 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
     }
 
     @ServiceLog("需求广场")
-    public List<Map<String, String>> queryneed(Map map) {//,PageAjax<MemBerDynamicwz> page
-        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<Map<String, String>> list = memBerDynamicwzMapper.queryneed(map);
-        return list;
+    public  PageAjax<Map> queryneed(Map map,PageAjax<MemBerDynamicwz> page) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List list= memBerDynamicwzMapper.queryneed(map);
+        return AppUtil.returnPage(list);
     }
 
     @ServiceLog("我的动态")
-    public List<Map<String, String>> querymycontent(Map map){//,PageAjax<MemBerDynamicwz> page
-        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<Map<String, String>> list = memBerDynamicwzMapper.querymycontent(map);
-        return list;
+    public PageAjax<Map> querymycontent(Map map,PageAjax<MemBerDynamicwz> page){
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Map> list = memBerDynamicwzMapper.querymycontent(map);
+        return AppUtil.returnPage(list);
     }
 
     @ServiceLog("新增动态")
@@ -73,9 +73,9 @@ public class MemBerDynamicwzService extends AbstratService<MemBerDynamicwz> {
     }
 
     @ServiceLog("我感兴趣的动态")
-    public List<Map<String, String>> myinstrcontent(Map map) {//,PageAjax<MemBerDynamicwz> page
-        //PageMethod.startPage(page.getPageNo(), page.getPageSize());
-        List<Map<String, String>> list = memBerDynamicwzMapper.myinstrcontent(map);
-        return list;
+    public PageAjax<Map> myinstrcontent(Map map,PageAjax<MemBerDynamicwz> page) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List list = memBerDynamicwzMapper.myinstrcontent(map);
+        return  AppUtil.returnPage(list);
     }
 }

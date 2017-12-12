@@ -3,6 +3,7 @@ package com.xe.demo.api;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.support.redis.IRedisService;
+import com.xe.demo.common.utils.AppUtil;
 import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.UserCollecTiondyMapper;
 import com.xe.demo.model.*;
@@ -53,9 +54,14 @@ public class ApiContentController {
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")
     @ResponseBody
     @RequestMapping(value = "otherContent", method = RequestMethod.POST)
-    public AjaxResult otherContent (@ApiParam(value = "用户id") @RequestParam String userid,
-                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id){
+    public PageAjax<Map> otherContent (@ApiParam(value = "用户id") @RequestParam String userid,
+                                    @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
+                                    @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
+                                    @ApiParam(value = "页面大小") @RequestParam Integer pageSize){
         Map map=new HashedMap();
+        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
         if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
             map.put("dynamictype_ids",null);
@@ -74,8 +80,8 @@ public class ApiContentController {
         }
 
 
-        List<Map<String, String>> list=memBerDynamicwzService.queryneed(map);
-        for (Map li:list) {
+        PageAjax<Map> list=memBerDynamicwzService.queryneed(map,page);
+        for (Map li:list.getRows()) {
             if(li.get("dynamicwz").toString().length()<=60){
                 li.put("dynamicwzall",li.get("dynamicwz").toString());
                 li.put("dynamicwz",li.get("dynamicwz").toString());
@@ -95,10 +101,7 @@ public class ApiContentController {
             }
         }
 
-        AjaxResult ajaxResult=new AjaxResult();
-        ajaxResult.setData(list);
-        ajaxResult.setRetmsg("success");
-        return ajaxResult;
+        return list;
     }
 
     //@Authorization("需token")
@@ -135,15 +138,20 @@ public class ApiContentController {
     @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
     @ResponseBody
     @RequestMapping(value = "myContent", method = RequestMethod.POST)
-    public AjaxResult myContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
-                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id){
+    public PageAjax<Map> myContent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
+                                 @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
+                                @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
+                                @ApiParam(value = "页面大小") @RequestParam Integer pageSize){
+        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
         Map querymap=new HashedMap();
         querymap.put("userid",userid);
         if(dynamictype_id!=0) {
             querymap.put("dynamictype_id", dynamictype_id);
         }
-        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(querymap);
-        for (Map map:list) {
+        PageAjax<Map> list=memBerDynamicwzService.querymycontent(querymap,page);
+        for (Map map:list.getRows()) {
             if(map.get("dynamicwz").toString().length()<=60){
                 map.put("dynamicwzall",map.get("dynamicwz").toString());
                 map.put("dynamicwz",map.get("dynamicwz").toString());
@@ -161,14 +169,8 @@ public class ApiContentController {
                 map.put("collcer",0);
                 map.put("show",true);
             }
-
         }
-
-
-        AjaxResult ajaxResult=new AjaxResult();
-        ajaxResult.setData(list);
-        ajaxResult.setRetmsg("success");
-        return ajaxResult;
+        return list;
     }
 
 
@@ -252,15 +254,15 @@ public class ApiContentController {
     @ApiOperation(value="获取我感兴趣的动态", notes="获取我感兴趣的动态")
     @ResponseBody
     @RequestMapping(value = "myinstrcontent", method = RequestMethod.POST)
-    public AjaxResult myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
+    public PageAjax<Map> myinstrcontent (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                     /*  @ApiParam(value = "行业id", required = true) @RequestParam Integer dynamictype_id,*/
                                       @ApiParam(value = "开始时间", required = true) @RequestParam String begintime,
-                                      @ApiParam(value = "结束时间", required = true) @RequestParam String endtime/*,
+                                      @ApiParam(value = "结束时间", required = true) @RequestParam String endtime,
                                       @ApiParam(value = "当前页面", required = true) @RequestParam Integer pageNo,
-                                      @ApiParam(value = "页面大小", required = true) @RequestParam Integer pageSize*/){
-       /* PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+                                      @ApiParam(value = "页面大小", required = true) @RequestParam Integer pageSize){
+        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
         page.setPageNo(pageNo);
-        page.setPageSize(pageSize);*/
+        page.setPageSize(pageSize);
         Map map=new HashedMap();
       /*  if(dynamictype_id!=0) {
             map.put("dynamictype_id", dynamictype_id);
@@ -268,8 +270,8 @@ public class ApiContentController {
         map.put("userid",userid);
         map.put("begintime",begintime);
         map.put("endtime",endtime);
-        List<Map<String, String>> list=memBerDynamicwzService.myinstrcontent(map);
-        for (Map map1:list) {
+        PageAjax<Map> list=memBerDynamicwzService.myinstrcontent(map,page);
+        for (Map map1:list.getRows()) {
             if (map1.get("dynamicwz").toString().length() <= 60) {
                 map1.put("dynamicwzall", map1.get("dynamicwz").toString());
                 map1.put("dynamicwz", map1.get("dynamicwz").toString());
@@ -278,10 +280,7 @@ public class ApiContentController {
                 map1.put("dynamicwz", map1.get("dynamicwz").toString().substring(0, 59) + "...");
             }
         }
-        AjaxResult ajaxResult=new AjaxResult();
-        ajaxResult.setData(list);
-        ajaxResult.setRetmsg("success");
-        return ajaxResult;
+        return list;
     }
 
     //@Authorization("需token")
@@ -364,16 +363,21 @@ public class ApiContentController {
     @ApiOperation(value="获取我的动态数据", notes="获取我的动态数据")
     @ResponseBody
     @RequestMapping(value = "myContentwithmember", method = RequestMethod.POST)
-    public AjaxResult myContentwithmember (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
+    public  PageAjax<Map> myContentwithmember (@ApiParam(value = "用户id", required = true) @RequestParam String userid,
                                  @ApiParam(value = "行业类型") @RequestParam(required = false) Integer dynamictype_id,
-                                 @ApiParam(value = "当前用户id") @RequestParam(required = false) String member_id){
+                                 @ApiParam(value = "当前用户id") @RequestParam(required = false) String member_id,
+                               @ApiParam(value = "当前页数") @RequestParam Integer pageNo,
+                               @ApiParam(value = "页面大小") @RequestParam Integer pageSize){
         Map querymap=new HashedMap();
         querymap.put("userid",userid);
         if(dynamictype_id!=0) {
             querymap.put("dynamictype_id", dynamictype_id);
         }
-        List<Map<String, String>> list=memBerDynamicwzService.querymycontent(querymap);
-        for (Map map:list) {
+        PageAjax<MemBerDynamicwz> page=new PageAjax<MemBerDynamicwz>();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+        PageAjax<Map> list=memBerDynamicwzService.querymycontent(querymap,page);
+        for (Map map:list.getRows()) {
             if(map.get("dynamicwz").toString().length()<=60){
                 map.put("dynamicwzall",map.get("dynamicwz").toString());
                 map.put("dynamicwz",map.get("dynamicwz").toString());
@@ -404,11 +408,7 @@ public class ApiContentController {
             }
         }
 
-
-        AjaxResult ajaxResult=new AjaxResult();
-        ajaxResult.setData(list);
-        ajaxResult.setRetmsg("success");
-        return ajaxResult;
+        return list;
     }
 
 }

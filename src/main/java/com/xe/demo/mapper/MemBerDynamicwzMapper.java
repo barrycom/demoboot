@@ -18,11 +18,11 @@ public interface MemBerDynamicwzMapper extends MyMapper<MemBerDynamicwz> {
 
     int update(MemBerDynamicwz record);
 
-    List<Map<String, String>>  queryneed(Map map);
+    List<Map>  queryneed(Map map);
 
     List<Map<String, String>>  myinstrcontent(Map map);
 
-    List<Map<String, String>>  querymycontent(Map map);
+    List<Map>  querymycontent(Map map);
 
 
     int savecontent(MemBerDynamicwz record);

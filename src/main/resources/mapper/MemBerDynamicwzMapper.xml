@@ -157,7 +157,7 @@
       AND   mz.userid !=#{userid,jdbcType=VARCHAR}
     </if>-->
 
-    order by createtime desc LIMIT 30
+    order by createtime desc
 
   </select>
 
@@ -204,35 +204,16 @@
   <!--我感兴趣-->
   <select id="myinstrcontent" resultType="hashmap">
 
-    select
-
-    mz.id,
-
-    mz.userid as userid , mz.dynamicwz,mz.dynamicid, mz.state,DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime,
-
-    uy.dynamicwzid ,uy.userid as useridmy ,DATE_FORMAT(uy.creattime, '%Y-%m-%d %H:%i:%s') creattime,
-
-    mb.id as memberid,mb.mobile,mb.name as uname,mb.headimg,mb.corporatename,mb.profession,mb.ishy,
-
-    dg.dynamicwzid,dg.imgurl,
-
-    dyt.dynamicname,mz.tag_id,
-
-    ig.tname
-
-    from usercollectiondy uy
-
-    INNER JOIN MemBerDynamicwz mz on uy.dynamicwzid=mz.id
-
-    INNER JOIN member mb on mb.id=mz.userid
-
-    left join memberinfo mbi on mbi.memberid=mb.id
-
-    left join dynamicwzimg dg on mz.id=dg.dynamicwzid
-
-    left join dynamic_type dyt on mz.dynamicid=dyt.id
-
-    left join i_tag ig on ig.id=mz.tag_id
+    SELECT mz.id, mz.userid AS userid, mz.dynamicwz, mz.dynamicid as dynid, mz.state, DATE_FORMAT(mz.createtime, '%Y-%m-%d %H:%i:%s') createtime, uy.dynamicwzid as uydyn,
+    uy.userid AS useridmy, DATE_FORMAT(uy.creattime, '%Y-%m-%d %H:%i:%s') creattime, mb.id AS memberid, mb.mobile, mb.name AS uname, mb.headimg,
+    mb.corporatename, mb.profession, mb.ishy, dg.dynamicwzid, dg.imgurl, dyt.dynamicname, mz.tag_id, ig.tname
+    FROM usercollectiondy uy
+    INNER JOIN MemBerDynamicwz mz ON uy.dynamicwzid = mz.id
+    INNER JOIN member mb ON mb.id = mz.userid
+    LEFT JOIN memberinfo mbi ON mbi.memberid = mb.id
+    LEFT JOIN dynamicwzimg dg ON mz.id = dg.dynamicwzid
+    LEFT JOIN dynamic_type dyt ON mz.dynamicid = dyt.id
+    LEFT JOIN i_tag ig ON ig.id = mz.tag_id
 
 
     where uy.userid=#{userid,jdbcType=VARCHAR}  and  mz.state="0"
