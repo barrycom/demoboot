@@ -8,6 +8,7 @@ import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.SzmData;
 import com.xe.demo.common.utils.ChineseCharToEn;
 import com.xe.demo.common.utils.DateUtil;
+import com.xe.demo.common.utils.JavaSmsApi;
 import com.xe.demo.common.utils.UploadUtil;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
@@ -241,11 +242,18 @@ public class ApiMember {
     }
 
     @ApiOperation(value="发送验证码", notes="发送验证码")
-    @RequestMapping(value = "sendCode", method = RequestMethod.POST)
-    public AjaxResult sendCode()
+    @RequestMapping(value = "sendCode", method = {RequestMethod.POST,RequestMethod.GET})
+    public AjaxResult sendCode(String mobile)
     {
         //模拟验证码发送
         Integer code=(int)((Math.random()*9+1)*1000);
+       /* String  apikey = "9be86b85556252ebdef9363d955656fb";
+        String text = String.format("验证码:"+code);
+        try {
+            JavaSmsApi.sendSms(apikey, text, mobile,null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(code);
         ajaxResult.setRetmsg("success");
