@@ -109,6 +109,8 @@
           <element id="library" level="project" name="Maven: com.squareup.okhttp:logging-interceptor:2.7.5" />
           <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.7" />
           <element id="library" level="project" name="Maven: org.json:json:20140107" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

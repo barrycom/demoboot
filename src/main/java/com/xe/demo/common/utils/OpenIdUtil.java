@@ -32,8 +32,8 @@ public class OpenIdUtil {
 
 
     public static String oauth2GetOpenid(String code) {
-        String appid="wx7d6fcdecb6fd652c";
-        String appsecret="87f5b9ccdd49ef185600addb5faf2833";
+        String appid="wxe2cc38ade8981367";
+        String appsecret="de892e18e425f89860f8981cfdd3ea84";
 
 
         //授权（必填）
@@ -54,8 +54,8 @@ public class OpenIdUtil {
 
     public static JSONObject getSessionKeyOropenid(String code){
         //微信端登录code值
-         String appid="wx7d6fcdecb6fd652c";
-         String appsecret="87f5b9ccdd49ef185600addb5faf2833";
+         String appid="wxe2cc38ade8981367";
+         String appsecret="de892e18e425f89860f8981cfdd3ea84";
         String wxCode = code;
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session";
         Map<String,String> requestUrlParam = new HashMap<String,String>();
@@ -129,8 +129,8 @@ public class OpenIdUtil {
 
     public static JSONObject getToken(){
         //微信端登录code值
-        String appid="wx7d6fcdecb6fd652c";
-        String appsecret="87f5b9ccdd49ef185600addb5faf2833";
+        String appid="wxe2cc38ade8981367";
+        String appsecret="de892e18e425f89860f8981cfdd3ea84";
         String requestUrl = "https://api.weixin.qq.com/cgi-bin/token";
         Map<String,String> requestUrlParam = new HashMap<String,String>();
         String grant_type = "client_credential";
