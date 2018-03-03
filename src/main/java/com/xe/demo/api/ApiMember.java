@@ -3,13 +3,14 @@ package com.xe.demo.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.qiniu.util.StringUtils;
 
+import com.xe.demo.api.wxpay.CommonTools;
+import com.xe.demo.api.wxpay.HttpUtil;
+import com.xe.demo.api.wxpay.PayCommonUtil;
+import com.xe.demo.api.wxpay.XMLUtil;
 import com.xe.demo.common.hx.api.IMUserAPI;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.SzmData;
-import com.xe.demo.common.utils.ChineseCharToEn;
-import com.xe.demo.common.utils.DateUtil;
-import com.xe.demo.common.utils.JavaSmsApi;
-import com.xe.demo.common.utils.UploadUtil;
+import com.xe.demo.common.utils.*;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -20,11 +21,15 @@ import io.swagger.annotations.ApiParam;
 
 import io.swagger.annotations.Authorization;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -408,7 +413,7 @@ public class ApiMember {
             for(int i=0;i<memberList.size();i++) {
                 ChineseCharToEn cte = new ChineseCharToEn();
                 String szm=cte.getAllFirstLetter(memberList.get(i).getName().substring(0,1).toUpperCase());
-               String dd= memberList.get(i).getIshy();
+                String dd= memberList.get(i).getIshy();
                 boolean falg=memberList.get(i).getIshy().equals("0")?true:false;
                 szmDataList.get(j).setIshy(falg);
                 if (szmDataList.get(j).getAlphabet().equals(szm)) {
@@ -459,17 +464,18 @@ public class ApiMember {
     @RequestMapping(value = "memberBuy", method = RequestMethod.POST)
     public AjaxResult memberBuy (@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
                                  @ApiParam(value = "购买价格", required = true) @RequestParam("price") String price,
-                                 @ApiParam(value = "购买月数", required = true) @RequestParam("buymonth") String buymonth) throws ParseException {
+                                 @ApiParam(value = "购买月数", required = true) @RequestParam("buymonth") String buymonth) throws ParseException, IOException, JDOMException {
         AjaxResult ajaxResult=new AjaxResult();
+
         Member member = new Member();
         MemberBuy memberBuy=new MemberBuy();
-
+        HashMap hashMap = new HashMap();
         //购买表  productid 1 一个月 3三个月 6六个月 12十二个月
         memberBuy.setBuyprice(price);
-        memberBuy.setBuystate("1");
+        memberBuy.setBuystate("0");
         memberBuy.setProductid(buymonth);
         memberBuy.setUserid(memberid);
-        memberBuy.setOrderno(UUID.randomUUID().toString());  //随机数订单号
+        memberBuy.setOrderno("wx"+memberid.substring(0,4)+"_"+System.currentTimeMillis());  //随机数订单号
         memberBuy.setBuytime(DateUtil.getCurDate().toString());
         if(memberBuyService.insert(memberBuy)>0){
             //改用户表 ishy buytime buyendtime
@@ -484,13 +490,117 @@ public class ApiMember {
                 member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),buymonth));
             }
             memberService.update(member);
+            String openid = memberid;
+            int fee = 0;
+            //得到小程序传过来的价格，注意这里的价格必须为整数，1代表1分，所以传过来的值必须*100；
+            if (null != memberBuy.getBuyprice()) {
+                //fee = Integer.parseInt(String.valueOf(activityOrder.getPaymoney()))*100;
+                DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+                fee = Integer.parseInt(decimalFormat.format(Double.parseDouble(memberBuy.getBuyprice())*100));
+            }
+            String did = memberBuy.getOrderno();
+            String title = "购买会员";
+            String times = System.currentTimeMillis() + "";
+            SortedMap<Object, Object> packageParams = new TreeMap<Object, Object>();
+            packageParams.put("appid", "wxe2cc38ade8981367");
+            packageParams.put("mch_id", "1499373952");
+            packageParams.put("nonce_str", times);//时间戳
+            packageParams.put("body", title);//支付主体
+            packageParams.put("out_trade_no", did);//编号
+            packageParams.put("total_fee", fee);//价格
+            // packageParams.put("spbill_create_ip", getIp2(request));这里之前加了ip，但是总是获取sign失败，原因不明，之后就注释掉了
+            packageParams.put("notify_url", "http://zallhy.mynatapp.cc/api/membernotify");//支付返回地址，不用纠结这个东西，我就是随便写了一个接口，内容什么都没有
+            packageParams.put("trade_type", "JSAPI");//这个api有，固定的
+            packageParams.put("openid", openid);//openid
+
+            String sign = PayCommonUtil.createSign("UTF-8", packageParams, "IvofeVGC3NpjltvBpQuCu8rAJ8croFTd");//最后这个是自己设置的32位密钥
+            packageParams.put("sign", sign);
+            //转成XML
+            String requestXML = PayCommonUtil.getRequestXml(packageParams);
+            System.out.println(requestXML);
+            //得到含有prepay_id的XML
+            String resXml = HttpUtil.postData("https://api.mch.weixin.qq.com/pay/unifiedorder", requestXML);
+            System.out.println(resXml);
+            //解析XML存入Map
+            Map map = XMLUtil.doXMLParse(resXml);
+            System.out.println(map);
+            // String return_code = (String) map.get("return_code");
+            //得到prepay_id
+            String prepay_id = (String) map.get("prepay_id");
+            SortedMap<Object, Object> packageP = new TreeMap<Object, Object>();
+            packageP.put("appId", "wxe2cc38ade8981367");
+            packageP.put("nonceStr", times);//时间戳
+            packageP.put("package", "prepay_id=" + prepay_id);//必须把package写成 "prepay_id="+prepay_id这种形式
+            packageP.put("signType", "MD5");//paySign加密
+            packageP.put("timeStamp", (System.currentTimeMillis() / 1000) + "");
+            //得到paySign
+            String paySign = PayCommonUtil.createSign("UTF-8", packageP, "IvofeVGC3NpjltvBpQuCu8rAJ8croFTd");
+            packageP.put("paySign", paySign);
+            ajaxResult.setRetmsg("success");
+               /*Gson gson = new Gson();
+            String json = gson.toJson(packageP);*/
+            //ajaxResult.setData(packageP);
+            hashMap.put("packageP",packageP);
+            String token= OpenIdUtil.getToken().get("access_token").toString();
+            //Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
+            // OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
         }
-        HashMap map = new HashMap();
-        map.put("member",member);
-        map.put("pushPrce","¥"+price);
-        ajaxResult.setData(map);
+
+        hashMap.put("member",member);
+        hashMap.put("pushPrce","¥"+price);
+        ajaxResult.setData(hashMap);
         ajaxResult.setRetcode(1);
         ajaxResult.setRetmsg("succ");
+        return ajaxResult;
+    }
+
+
+    @ApiOperation(value="支付回调", notes="支付回调")
+    @RequestMapping(value = "membernotify", method = RequestMethod.POST)
+    public AjaxResult notify(javax.servlet.http.HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException, ParseException {
+        ServletInputStream in = null;
+        AjaxResult ajaxResult=new AjaxResult();
+        try {
+            in = request.getInputStream();
+            String xmlMsg = CommonTools.inputStream2String(in);
+            SortedMap<String, Object> map = XMLUtil.doXMLParseTwo(xmlMsg);
+            //安全校验
+            if (!PayCommonUtil.checkIsSignValidFromResponseString(xmlMsg)) {
+                // throw new ResponseException("返回签名错误", HttpStatus.INTERNAL_SERVER_ERROR)
+                ajaxResult.setRetcode(-1);
+                ajaxResult.setRetmsg("返回签名错误");
+            }
+            //系统订单号
+            String out_trade_no=String.valueOf(map.get("out_trade_no"));
+            //微信支付流水号
+            String transaction_id=String.valueOf(map.get("transaction_id"));
+            //修改订单状态
+            MemberBuy memberBuy=new MemberBuy();
+            memberBuy.setOrderno(out_trade_no);
+            memberBuy= memberBuyService.queryOne(memberBuy);
+            if(memberBuy!=null){
+                memberBuy.setBuystate("1");
+                memberBuyService.update(memberBuy);
+                Member member=new Member();
+                member = memberService.queryByID(memberBuy.getUserid());
+                if(member!=null) {
+                    member.setIshy("1");
+                    member.setViptimestart(DateUtil.getCurDate().toString());
+                    //member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),memberBuy.getProductid()));
+                    if(member.getViptimeend()!=null || !member.getViptimeend().equals("")){
+                        member.setViptimeend(compDateMonth(member.getViptimeend(),memberBuy.getProductid()));
+                    }else{
+                        member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),memberBuy.getProductid()));
+                    }
+                    memberService.update(member);
+                    ajaxResult.setData(member);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            in.close();
+        }
         return ajaxResult;
     }
 

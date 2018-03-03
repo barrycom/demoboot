@@ -1,24 +1,28 @@
 package com.xe.demo.api;
 
 import com.google.gson.Gson;
+import com.xe.demo.api.wxpay.CommonTools;
 import com.xe.demo.api.wxpay.HttpUtil;
 import com.xe.demo.api.wxpay.PayCommonUtil;
 import com.xe.demo.api.wxpay.XMLUtil;
 import com.xe.demo.common.pojo.AjaxResult;
+import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.utils.OpenIdUtil;
 import com.xe.demo.model.Activity;
 import com.xe.demo.model.ActivityOrder;
 import com.xe.demo.service.ActivityOrderService;
 import com.xe.demo.service.ActivityService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,9 +44,9 @@ public class ApiActivtiyOrder {
         /*activityOrder.setBuytime(df.format(new Date()));*/
         String orderNo="wx"+activityOrder.getUserid().substring(0,4)+"_"+System.currentTimeMillis();
         activityOrder.setId(orderNo);
-       // activityOrder.setPaymemo("微信支付");
+        // activityOrder.setPaymemo("微信支付");
         activityOrder.setIszs("0");
-     //应该是未支付目前假装支付了   activityOrder.setStatus("0");
+        //应该是未支付目前假装支付了   activityOrder.setStatus("0");
         activityOrder.setStatus("1");
 
         activityOrder.setPaymoney(activityOrder.getOrdermoney());//此处真实不写
@@ -57,7 +61,9 @@ public class ApiActivtiyOrder {
         int fee = 0;
         //得到小程序传过来的价格，注意这里的价格必须为整数，1代表1分，所以传过来的值必须*100；
         if (null != activityOrder.getPaymoney()) {
-            fee = Integer.parseInt(String.valueOf(activityOrder.getPaymoney()))*100;
+            //fee = Integer.parseInt(String.valueOf(activityOrder.getPaymoney()))*100;
+            DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+            fee = Integer.parseInt(decimalFormat.format(activityOrder.getPaymoney().doubleValue()*100));
         }
         String did = orderNo;
         String title = "活动参加";
@@ -70,7 +76,7 @@ public class ApiActivtiyOrder {
         packageParams.put("out_trade_no", did);//编号
         packageParams.put("total_fee", fee);//价格
         // packageParams.put("spbill_create_ip", getIp2(request));这里之前加了ip，但是总是获取sign失败，原因不明，之后就注释掉了
-        packageParams.put("notify_url", "http://zallhy.mynatapp.cc/notify");//支付返回地址，不用纠结这个东西，我就是随便写了一个接口，内容什么都没有
+        packageParams.put("notify_url", "http://zallhy.mynatapp.cc/api/notify");//支付返回地址，不用纠结这个东西，我就是随便写了一个接口，内容什么都没有
         packageParams.put("trade_type", "JSAPI");//这个api有，固定的
         packageParams.put("openid", openid);//openid
 
@@ -105,19 +111,71 @@ public class ApiActivtiyOrder {
 */
         ajaxResult.setData(packageP);
 
-       String token= OpenIdUtil.getToken().get("access_token").toString();
+        String token= OpenIdUtil.getToken().get("access_token").toString();
         Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
 
 
 
 
-       // OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
+        // OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
 
         //后面调用支付的。（暂时没有）
         return ajaxResult;
 
     }
 
+    @ApiOperation(value="支付回调", notes="支付回调")
+    @RequestMapping(value = "notify", method = RequestMethod.POST)
+    public AjaxResult notify(HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException {
+        ServletInputStream in = null;
+        AjaxResult ajaxResult=new AjaxResult();
+        try {
+            in = request.getInputStream();
+            String xmlMsg = CommonTools.inputStream2String(in);
+            SortedMap<String, Object> map = XMLUtil.doXMLParseTwo(xmlMsg);
+            //安全校验
+            if (!PayCommonUtil.checkIsSignValidFromResponseString(xmlMsg)) {
+                // throw new ResponseException("返回签名错误", HttpStatus.INTERNAL_SERVER_ERROR)
+                ajaxResult.setRetcode(-1);
+                ajaxResult.setRetmsg("返回签名错误");
+            }
+            //系统订单号
+            String out_trade_no=String.valueOf(map.get("out_trade_no"));
+            //微信支付流水号
+            String transaction_id=String.valueOf(map.get("transaction_id"));
+            //修改订单状态
+            ActivityOrder activityOrder= activityOrderService.selectOneById(out_trade_no);
+            if(activityOrder!=null){
+                activityOrder.setStatus("1");
+                activityOrderService.update(activityOrder);
+                in.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            in.close();
+        }
+        return ajaxResult;
+    }
+
+    @ApiOperation(value="获取活动订单", notes="获取活动订单")
+    @RequestMapping(value = "getActivtiyOrder", method = RequestMethod.POST)
+    public PageAjax<Map> getActivtiyOrder(@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
+                                          @ApiParam(value = "用户id", required = true) @RequestParam("status") String status,
+                                          @ApiParam(value = "页数", required = true) @RequestParam("pageNo") int pageNo,
+                                          @ApiParam(value = "显示数量", required = true) @RequestParam("pageSize") int pageSize) throws JDOMException {
+
+        ActivityOrder activity=new ActivityOrder();
+        if(!status.equals("null")){
+            activity.setStatus(status);
+        }
+        PageAjax<ActivityOrder> page=new PageAjax<ActivityOrder>();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+        activity.setUserid(memberid);
+        PageAjax<Map> activityOrder= activityOrderService.selectList(page,activity);
+        return activityOrder;
+    }
 
 
 }
