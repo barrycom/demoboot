@@ -259,6 +259,9 @@ public class ApiMember {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+        String str="mobile="+mobile+"&tpl_id=65434&tpl_value=%23code%23%3d"+code+"key=020930c0b71490ffaf532c559b14a30e";
+        com.xe.demo.common.utils.HttpUtil.get("http://v.juhe.cn/sms/send",str);
         AjaxResult ajaxResult=new AjaxResult();
         ajaxResult.setData(code);
         ajaxResult.setRetmsg("success");
