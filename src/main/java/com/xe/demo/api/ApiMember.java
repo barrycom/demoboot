@@ -6,10 +6,7 @@ import com.qiniu.util.StringUtils;
 import com.xe.demo.common.hx.api.IMUserAPI;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.SzmData;
-import com.xe.demo.common.utils.ChineseCharToEn;
-import com.xe.demo.common.utils.DateUtil;
-import com.xe.demo.common.utils.JavaSmsApi;
-import com.xe.demo.common.utils.UploadUtil;
+import com.xe.demo.common.utils.*;
 import com.xe.demo.mapper.*;
 import com.xe.demo.model.*;
 import com.xe.demo.service.*;
@@ -247,6 +244,9 @@ public class ApiMember {
     {
         //模拟验证码发送
         Integer code=(int)((Math.random()*9+1)*1000);
+
+        String str="mobile="+mobile+"&tpl_id=65434&tpl_value=%23code%23%3d"+code+"key=020930c0b71490ffaf532c559b14a30e";
+        HttpUtil.get("http://v.juhe.cn/sms/send",str);
        /* String  apikey = "9be86b85556252ebdef9363d955656fb";
         String text = String.format("验证码:"+code);
         try {
