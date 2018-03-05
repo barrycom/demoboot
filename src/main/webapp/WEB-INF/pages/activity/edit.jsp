@@ -178,7 +178,7 @@
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red"></font>温馨提示：</label>
         <div class="col-sm-8">
-            <textarea class="form-control" rows="3"  id=activityidmemo name=activityidmemo>${activity.activityidmemo}</textarea>
+            <textarea class="form-control" rows="3"  id="activityidmemo" name="activityidmemo">${activity.activityidmemo}</textarea>
 
         </div>
     </div>
@@ -186,7 +186,7 @@
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red">*</font>活动单价：</label>
         <div class="col-sm-8">
-            <input type="text" value="${activity.activityprice}" id="activityprice" name="activityprice" placeholder="输入金额">
+            <input type="text" class="form-control" value="${activity.activityprice}" id="activityprice" name="activityprice" placeholder="输入金额">
         </div>
     </div>
     <div class="form-group">
@@ -269,14 +269,14 @@ $("#activityprice").keyup(function () {
                     }
                 }
             },
-            /*activityedate: {
+            activityedate: {
                 message: '活动结束日期不能为空',
                 validators: {
                     notEmpty: {
                         message: '活动起始日期不能为空'
                     }
                 }
-            },*/
+            },
 
           /*  activityaddr: {
                 message: '活动地址不能为空',
@@ -294,14 +294,14 @@ $("#activityprice").keyup(function () {
                         }
                     }
             },*/
-            /*activityidcontent: {
-                message: '活动内容必须填写',
+            activityidmemo: {
+                message: '温馨提示',
                 validators: {
                     notEmpty: {
-                        message: '活动内容必须填写'
+                        message: '温馨提示'
                     }
                 }
-            },*/
+            },
             activityprice: {
                 message: '活动价格必须填写',
                 validators: {
@@ -310,18 +310,11 @@ $("#activityprice").keyup(function () {
                     }
                 }
             }
-
-
-
-
-
-
         },
         submitHandler: function(validator, form, submitButton) {
 
         }
     }).on("success.form.bv",function(e){
-/*alert($("activityimg").val());*/
         var data = $("#submitForm").serialize();
        // alert(data)
         $.ajax({
