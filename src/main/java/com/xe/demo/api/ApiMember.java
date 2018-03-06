@@ -462,6 +462,17 @@ public class ApiMember {
         return ajaxResult;
     }
 
+    @ApiOperation(value="修改formId", notes="修改名片")
+    @RequestMapping(value = "updateformId", method = RequestMethod.POST)
+    public AjaxResult updateformId(@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,@ApiParam(value = "formId", required = true) @RequestParam("formId") String formId){
+        Member member=new Member();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        member.setId(memberid);
+        member.setFormId(formId);
+        member.setFormTime(CommonTools.getCurrTimenohh());
+        return memberService.update(member);
+    }
+
     //@Authorization("需token")
     @ApiOperation(value="购买服务", notes="购买服务")
     @ResponseBody

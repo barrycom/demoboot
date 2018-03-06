@@ -29,6 +29,8 @@ public class Member {
     private String openid;
     private String resources;
     private String personalinfo;
+    private String formId;
+    private String formTime;
     @Transient
     private String szm;
 
@@ -266,5 +268,21 @@ public class Member {
 
     public void setTrade(String trade) {
         this.trade = trade;
+    }
+
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
+
+    public String getFormTime() {
+        return formTime;
+    }
+
+    public void setFormTime(String formTime) {
+        this.formTime = formTime;
     }
 }

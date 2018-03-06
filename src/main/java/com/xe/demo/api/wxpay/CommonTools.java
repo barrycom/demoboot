@@ -43,6 +43,12 @@ public final class CommonTools {
         return s;
     }
 
+    public static String getCurrTimenohh() {
+        Date now = new Date();
+        SimpleDateFormat outFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String s = outFormat.format(now);
+        return s;
+    }
     /**
      * 取出一个指定长度大小的随机正整数.
      *

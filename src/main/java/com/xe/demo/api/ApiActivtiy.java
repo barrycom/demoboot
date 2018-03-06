@@ -148,9 +148,7 @@ public class ApiActivtiy {
         aa.setData(jsonObject);
         aa.setRetmsg("succ");
         return aa;
-
     }
-
 
     @RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
     public AjaxResult  getUserInfo(String encryptedData,String sessionKey,String iv){
@@ -160,9 +158,5 @@ public class ApiActivtiy {
         aa.setData(jsonObject);
         aa.setRetmsg("succ");
         return aa;
-
     }
-
-
-
 }

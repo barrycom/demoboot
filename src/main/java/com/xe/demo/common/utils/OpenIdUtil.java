@@ -124,9 +124,6 @@ public class OpenIdUtil {
     }
 
 
-
-
-
     public static JSONObject getToken(){
         //微信端登录code值
         String appid="wxe2cc38ade8981367";

@@ -113,11 +113,7 @@ public class ApiActivtiyOrder {
 
         String token= OpenIdUtil.getToken().get("access_token").toString();
         Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
-
-
-
-
-        // OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
+       //OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
 
         //后面调用支付的。（暂时没有）
         return ajaxResult;
@@ -148,6 +144,9 @@ public class ApiActivtiyOrder {
             if(activityOrder!=null){
                 activityOrder.setStatus("1");
                 activityOrderService.update(activityOrder);
+                String token= OpenIdUtil.getToken().get("access_token").toString();
+                Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
+                OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
                 in.close();
             }
         } catch (IOException e) {

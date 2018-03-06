@@ -12,6 +12,8 @@
     <result column="regtime" property="regtime" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="ishy" property="ishy" jdbcType="VARCHAR" />
+    <result column="formId" property="formId" jdbcType="VARCHAR" />
+    <result column="formTime" property="formTime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, mobile, introduce, email, wxno, headimg,
