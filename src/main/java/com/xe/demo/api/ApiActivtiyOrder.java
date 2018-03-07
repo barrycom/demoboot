@@ -170,7 +170,12 @@ public class ApiActivtiyOrder {
         ActivityOrder activityOrder= activityOrderService.selectOneById(orderNo);
         String token= OpenIdUtil.getToken().get("access_token").toString();
         Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
-        JSONObject jsonObject=OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
+        JSONObject jsonObject=OpenIdUtil.sendMessage(token,activityOrder.getUserid(),formid,activity);
+        if(!jsonObject.get("errmsg").toString().equals("ok")){
+            ajaxResult.setRetcode(-1);
+            ajaxResult.setRetmsg("操作失败！");
+        }
+
         return ajaxResult;
     }
 
