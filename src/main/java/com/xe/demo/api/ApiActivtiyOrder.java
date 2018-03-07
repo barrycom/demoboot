@@ -14,6 +14,7 @@ import com.xe.demo.service.ActivityOrderService;
 import com.xe.demo.service.ActivityService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.sf.json.JSONObject;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -103,6 +104,7 @@ public class ApiActivtiyOrder {
         //得到paySign
         String paySign = PayCommonUtil.createSign("UTF-8", packageP, "IvofeVGC3NpjltvBpQuCu8rAJ8croFTd");
         packageP.put("paySign", paySign);
+        packageP.put("orderNo", orderNo);
 
         ajaxResult.setRetmsg("success");
 
@@ -156,6 +158,21 @@ public class ApiActivtiyOrder {
         }
         return ajaxResult;
     }
+
+    @ApiOperation(value="发送模板消息", notes="获取活动订单")
+    @RequestMapping(value = "sendtemplate", method = RequestMethod.POST)
+    public AjaxResult sendtemplate(@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
+                                          @ApiParam(value = "formid", required = true) @RequestParam("formid") String formid,
+                                          @ApiParam(value = "orderNo", required = true) @RequestParam("orderNo") String orderNo){
+        AjaxResult ajaxResult=new AjaxResult();
+        ActivityOrder activityOrder= activityOrderService.selectOneById(orderNo);
+        String token= OpenIdUtil.getToken().get("access_token").toString();
+        Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
+        JSONObject jsonObject=OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
+        return ajaxResult;
+    }
+
+
 
     @ApiOperation(value="获取活动订单", notes="获取活动订单")
     @RequestMapping(value = "getActivtiyOrder", method = RequestMethod.POST)
