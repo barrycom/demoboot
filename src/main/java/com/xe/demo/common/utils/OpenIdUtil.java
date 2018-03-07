@@ -112,7 +112,7 @@ public class OpenIdUtil {
         NewOrdersTemplate newOrdersTemplate=new NewOrdersTemplate();
         newOrdersTemplate.setTouser(openid);
         newOrdersTemplate.setForm_id(form_id);
-        newOrdersTemplate.setTemplate_id("Jnd99okWzFtuYHKD8GFZFU48KeIu6aD-NfFoUSD2hNk");
+        newOrdersTemplate.setTemplate_id("ZGtn68XFbVSq8Yl2IisrSBxDFBIYhtUDAz1GrA8MHwI");
         newOrdersTemplate.setData(modelMessage);
         String jsonString = JSONObject.fromObject(newOrdersTemplate).toString().replace("day", "Day");
         String data= HttpUtil.sendPostUrl(requestUrl,jsonString,"utf-8");

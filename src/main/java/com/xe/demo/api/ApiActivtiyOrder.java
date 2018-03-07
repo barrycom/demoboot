@@ -101,6 +101,8 @@ public class ApiActivtiyOrder {
         packageP.put("package", "prepay_id=" + prepay_id);//必须把package写成 "prepay_id="+prepay_id这种形式
         packageP.put("signType", "MD5");//paySign加密
         packageP.put("timeStamp", (System.currentTimeMillis() / 1000) + "");
+
+
         //得到paySign
         String paySign = PayCommonUtil.createSign("UTF-8", packageP, "IvofeVGC3NpjltvBpQuCu8rAJ8croFTd");
         packageP.put("paySign", paySign);
