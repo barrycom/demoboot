@@ -665,4 +665,19 @@ public class ApiMember {
     return null;
     }
 
+    /*@ApiOperation(value = "用户发送名片记录", notes = "用户发送名片记录")
+    @RequestMapping(value = "sendcardlog", method = RequestMethod.POST)
+    public AjaxResult sendcardlog(HttpServletRequest request,
+                                  @ApiParam(value = "发送用户ID", required = true) @RequestParam("sendid") String sendid,
+                                  @ApiParam(value = "接收用户ID", required = true) @RequestParam("receiveid") String receiveid) throws IOException {
+        AjaxResult aa = new AjaxResult();
+        Sendcardlog sendcardlog = new Sendcardlog();
+        sendcardlog.setSendid(sendid);
+        sendcardlog.setReceiveid(receiveid);
+        sendcardlog.setCreatetime(DateUtil.getCurDateTime());
+        aa.setRetcode(sendcardlogService.insert(sendcardlog));
+        aa.setRetmsg("succ");
+        return aa;
+    }*/
+
 }

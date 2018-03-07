@@ -48,7 +48,7 @@ public class ApiActivtiyOrder {
         // activityOrder.setPaymemo("微信支付");
         activityOrder.setIszs("0");
         //应该是未支付目前假装支付了   activityOrder.setStatus("0");
-        activityOrder.setStatus("1");
+        activityOrder.setStatus("0");
 
         activityOrder.setPaymoney(activityOrder.getOrdermoney());//此处真实不写
         activityOrder.setBuytime(df.format(new Date()));//此处真实不写
