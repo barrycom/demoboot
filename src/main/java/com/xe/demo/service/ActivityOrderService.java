@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017-10-18.
@@ -33,4 +34,12 @@ public class ActivityOrderService extends AbstratService<ActivityOrder> {
        ActivityOrder activityOrder = activityOrderMapper.selectOneById(id);
         return activityOrder;
     }
+
+    @ServiceLog("根据订单ID获取订单详情")
+    public PageAjax<Map> selectList(PageAjax<ActivityOrder> page,ActivityOrder activity) {
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Map> activityOrder = activityOrderMapper.selectList(activity);
+        return AppUtil.returnPage(activityOrder);
+    }
+
 }

@@ -37,8 +37,21 @@
 
   <select id="selectOneById" resultMap="BaseResultMap">
     select
-    u.*,r.activityname,r.activitysdate,r.activityedate,r.activityaddr from activityorder u, activity r
+    u.*,r.activityname,r.activitysdate,r.activityedate,r.activityaddr,r.activityimg from activityorder u, activity r
     where u.activityid = r.id and u.id=#{id}
+    order by u.createtime desc
+  </select>
+
+  <select id="selectList" resultType="hashmap">
+   select u.*,r.activityname,r.activitysdate,r.activityedate,r.activityaddr,r.activityimg,r.activityprice
+
+    from activityorder u
+
+    LEFT JOIN activity r ON u.activityid=r.activityid
+    WHERE u.userid= #{activity.userid}
+    <if test="null != activity.status"> and u.status = #{activity.status} </if>
+
+
     order by u.createtime desc
   </select>
 </mapper>

@@ -163,8 +163,7 @@
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="content"><font color="red"></font>温馨提示：</label>
         <div class="col-sm-8">
-            <textarea class="form-control" rows="3"  name=activityidmemo></textarea>
-
+            <textarea class="form-control" rows="3" id="activityidmemo" name="activityidmemo"></textarea>
         </div>
     </div>
 
@@ -251,20 +250,28 @@ $("#activityprice").keyup(function () {
                     }
                 }
             },
-           /* activityedate: {
+            activityedate: {
                 message: '活动结束日期不能为空',
                 validators: {
                     notEmpty: {
                         message: '活动起始日期不能为空'
                     }
                 }
-            },*/
+            },
 
             activityaddr: {
                 message: '活动地址不能为空',
                 validators: {
                     notEmpty: {
                         message: '活动地址不能为空'
+                    }
+                }
+            },
+            activityidmemo: {
+                message: '温馨提示',
+                validators: {
+                    notEmpty: {
+                        message: '温馨提示'
                     }
                 }
             },
@@ -292,20 +299,15 @@ $("#activityprice").keyup(function () {
                     }
                 }
             }
-
-
-
-
-
-
         },
         submitHandler: function(validator, form, submitButton) {
 
         }
     }).on("success.form.bv",function(e){
+        debugger
 
         var data = $("#submitForm").serialize();
-     /*   alert(data)*/
+        $("#activityidmemo").val();
         $.ajax({
             url: _urlPath + "admin/activity/add",
             dataType: "json",
