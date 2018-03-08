@@ -662,7 +662,8 @@ public class ApiMember {
     @ResponseBody
     @RequestMapping(value = "sendIm", method = RequestMethod.POST)
     public net.sf.json.JSONObject sendMessage(String openid, String form_id, String nickname, String textType, String message) {
-    return null;
+       int tcount=(int)iMUserAPI.getOfflineMsgCount(openid);
+       return null;
     }
 
     /*@ApiOperation(value = "用户发送名片记录", notes = "用户发送名片记录")
