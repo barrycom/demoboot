@@ -4,6 +4,7 @@
   <resultMap id="ResultMap" type="com.xe.demo.model.Member" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="introduce" property="introduce" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />

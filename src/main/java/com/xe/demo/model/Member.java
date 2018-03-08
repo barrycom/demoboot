@@ -51,7 +51,7 @@ public class Member {
     private MemberInfo memberInfo;
     @Transient
     private String type;
-    @Transient
+    //@Transient
     private String realname;
 
     public String getRealname() {
