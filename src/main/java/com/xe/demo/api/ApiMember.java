@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiParam;
 
 import io.swagger.annotations.Authorization;
 import net.sf.json.JSONObject;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

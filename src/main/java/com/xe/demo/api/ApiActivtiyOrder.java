@@ -161,6 +161,15 @@ public class ApiActivtiyOrder {
         return ajaxResult;
     }
 
+
+    /*@ApiOperation(value="支付回调", notes="支付回调")
+    @RequestMapping(value = "notify", method = RequestMethod.POST)
+    public AjaxResult notify(HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException {
+
+
+    }*/
+
+
     @ApiOperation(value="发送模板消息", notes="获取活动订单")
     @RequestMapping(value = "sendtemplate", method = RequestMethod.POST)
     public AjaxResult sendtemplate(@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid,
@@ -175,7 +184,6 @@ public class ApiActivtiyOrder {
             ajaxResult.setRetcode(-1);
             ajaxResult.setRetmsg("操作失败！");
         }
-
         return ajaxResult;
     }
 
