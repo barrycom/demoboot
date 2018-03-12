@@ -28,8 +28,9 @@ import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -78,7 +79,7 @@ public class ApiMember {
 
     @Autowired
     private IMUserAPI iMUserAPI;
-
+    private static final String STATUC_SUCCESS = "SUCCESS";
 
     //@Authorization("需token")
     @ApiOperation(value = "根据ID获取用户信息", notes = "根据ID获取用户信息")
@@ -113,7 +114,7 @@ public class ApiMember {
     public AjaxResult updateMember(@ApiParam(value = "真实姓名", required = true) @RequestParam("name") String name,
                                    @ApiParam(value = "行业", required = true) @RequestParam("trade") String trade,
                                    @ApiParam(value = "公司名称", required = true) @RequestParam("corporatename") String corporatename,
-                                   @ApiParam(value = "职位", required = true) @RequestParam("personalinfo") String personalinfo,
+                                   @ApiParam(value = "职位", required = true) @RequestParam("profession") String profession,
                                    @ApiParam(value = "工作地区", required = true) @RequestParam("region") String region,
                                    @ApiParam(value = "微信号", required = true) @RequestParam("wxno") String wxno,
                                    @ApiParam(value = "手机号", required = true) @RequestParam("mobile") String mobile,
@@ -123,7 +124,7 @@ public class ApiMember {
         member.setId(id);
         member.setName(name);
         member.setCorporatename(corporatename);
-        member.setPersonalinfo(personalinfo);
+        member.setProfession(profession);
         member.setWxno(wxno);
         member.setMobile(mobile);
         member.setEmail(email);
@@ -218,13 +219,22 @@ public class ApiMember {
     @ApiOperation(value = "注册用户", notes = "注册用户")
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public AjaxResult register(@RequestBody Member member) {
+        AjaxResult ajaxResult = new AjaxResult();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         member.setRegtime(df.format(new Date()));
         member.setIsblock("0");
         member.setOpenid(member.getId().toLowerCase());
         member.setIshy("0");
         member.setState("0");
-        AjaxResult ajaxResult = new AjaxResult();
+        int cout=100;
+        Long l = new Long((long)103);
+        Object  usernames = iMUserAPI.getIMUsersBatch(l,null);
+        JSONObject  json = JSONObject.fromObject(usernames);
+        List li=(List)json.get("entities");
+       if(li.size()>=100){
+           ajaxResult.setRetcode(-1);
+           return ajaxResult;
+       }
         ajaxResult.setData(memberService.save(member));
         ajaxResult.setRetmsg("success");
      /*   Map map=new HashMap();
@@ -554,10 +564,12 @@ public class ApiMember {
 
 
     @ApiOperation(value = "支付回调", notes = "支付回调")
+    @ResponseBody
     @RequestMapping(value = "membernotify", method = RequestMethod.POST)
-    public AjaxResult notify(javax.servlet.http.HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException, ParseException {
+    public String notify(javax.servlet.http.HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException, ParseException {
         ServletInputStream in = null;
         AjaxResult ajaxResult = new AjaxResult();
+        String out_trade_no ="";
         try {
             in = request.getInputStream();
             String xmlMsg = CommonTools.inputStream2String(in);
@@ -568,39 +580,99 @@ public class ApiMember {
                 ajaxResult.setRetcode(-1);
                 ajaxResult.setRetmsg("返回签名错误");
             }
-            //系统订单号
-            String out_trade_no = String.valueOf(map.get("out_trade_no"));
-            //微信支付流水号
-            String transaction_id = String.valueOf(map.get("transaction_id"));
-            //修改订单状态
-            MemberBuy memberBuy = new MemberBuy();
-            memberBuy.setOrderno(out_trade_no);
-            memberBuy = memberBuyService.queryOne(memberBuy);
-            if (memberBuy != null) {
-                memberBuy.setBuystate("1");
-                memberBuyService.update(memberBuy);
-                Member member = new Member();
-                member = memberService.queryByID(memberBuy.getUserid());
-                if (member != null) {
-                    member.setIshy("1");
-                    member.setViptimestart(DateUtil.getCurDate().toString());
-                    //member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),memberBuy.getProductid()));
-                    if (member.getViptimeend() != null || !member.getViptimeend().equals("")) {
-                        member.setViptimeend(compDateMonth(member.getViptimeend(), memberBuy.getProductid()));
-                    } else {
-                        member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(), memberBuy.getProductid()));
+            String resXml = "";
+            String returnCode = (String) map.get("return_code");
+            if("SUCCESS".equals(returnCode)){
+                    //通知微信服务器已经支付成功
+                    resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
+                            + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+                //系统订单号
+                out_trade_no = String.valueOf(map.get("out_trade_no"));
+                //微信支付流水号
+                String transaction_id = String.valueOf(map.get("transaction_id"));
+                //修改订单状态
+                MemberBuy memberBuy = new MemberBuy();
+                memberBuy.setOrderno(out_trade_no);
+                memberBuy = memberBuyService.queryOne(memberBuy);
+                if (memberBuy != null) {
+                    memberBuy.setBuystate("1");
+                    memberBuyService.update(memberBuy);
+                    Member member = new Member();
+                    member = memberService.queryByID(memberBuy.getUserid());
+                    if (member != null) {
+                        member.setIshy("1");
+                        member.setViptimestart(DateUtil.getCurDate().toString());
+                        //member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(),memberBuy.getProductid()));
+                        if (member.getViptimeend() != null || !member.getViptimeend().equals("")) {
+                            member.setViptimeend(compDateMonth(member.getViptimeend(), memberBuy.getProductid()));
+                        } else {
+                            member.setViptimeend(compDateMonth(DateUtil.getCurDate().toString(), memberBuy.getProductid()));
+                        }
+                        memberService.update(member);
+                        ajaxResult.setData(member);
                     }
-                    memberService.update(member);
-                    ajaxResult.setData(member);
                 }
+            }else{
+                resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+                        + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
             }
+            System.out.println(resXml);
+            System.out.println("微信支付回调数据结束"+out_trade_no);
+
+            BufferedOutputStream out = new BufferedOutputStream(
+                    response.getOutputStream());
+            out.write(resXml.getBytes());
+            out.flush();
+            out.close();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             in.close();
         }
-        return ajaxResult;
+       return null;
     }
+
+    /*public String wxNotify(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream()));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while((line = br.readLine()) != null){
+            sb.append(line);
+        }
+        //sb为微信返回的xml
+        String notityXml = sb.toString();
+        String resXml = "";
+        System.out.println("接收到的报文：" + notityXml);
+
+        Map map = XMLUtil.doXMLParseTwo(notityXml);
+        String out_trade_no = String.valueOf(map.get("out_trade_no"));
+        String returnCode = (String) map.get("return_code");
+        if("SUCCESS".equals(returnCode)){
+            //验证签名是否正确
+            if(!PayCommonUtil.checkIsSignValidFromResponseString(notityXml)){
+
+                //通知微信服务器已经支付成功
+                resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
+                        + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+            }
+        }else{
+            resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+                    + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
+        }
+        System.out.println(resXml);
+        System.out.println("微信支付回调数据结束");
+
+        System.out.print("我是你爸爸_________________"+out_trade_no);
+        BufferedOutputStream out = new BufferedOutputStream(
+                response.getOutputStream());
+        out.write(resXml.getBytes());
+        out.flush();
+        out.close();
+        return "SUCCESS";
+    }*/
+
 
     /**
      * //加减月份
@@ -666,19 +738,14 @@ public class ApiMember {
        return null;
     }
 
-    /*@ApiOperation(value = "用户发送名片记录", notes = "用户发送名片记录")
-    @RequestMapping(value = "sendcardlog", method = RequestMethod.POST)
-    public AjaxResult sendcardlog(HttpServletRequest request,
-                                  @ApiParam(value = "发送用户ID", required = true) @RequestParam("sendid") String sendid,
-                                  @ApiParam(value = "接收用户ID", required = true) @RequestParam("receiveid") String receiveid) throws IOException {
+    @ApiOperation(value = "得到离线消息数", notes = "得到离线消息数")
+    @RequestMapping(value = "getOfflineMsgCount", method = RequestMethod.POST)
+    public AjaxResult getOfflineMsgCount(@ApiParam(value = "用户名", required = true) @RequestParam("userName") String userName) throws IOException {
         AjaxResult aa = new AjaxResult();
-        Sendcardlog sendcardlog = new Sendcardlog();
-        sendcardlog.setSendid(sendid);
-        sendcardlog.setReceiveid(receiveid);
-        sendcardlog.setCreatetime(DateUtil.getCurDateTime());
-        aa.setRetcode(sendcardlogService.insert(sendcardlog));
+        Object object=iMUserAPI.getOfflineMsgCount(userName);
+        //aa.setData();
         aa.setRetmsg("succ");
         return aa;
-    }*/
+    }
 
 }

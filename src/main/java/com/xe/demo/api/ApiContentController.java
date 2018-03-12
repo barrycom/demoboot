@@ -79,8 +79,8 @@ public class ApiContentController {
             map.put("userid", userid);
         }
 
-
-        PageAjax<Map> list=memBerDynamicwzService.queryneed(map,page);
+        //corporatename  profession
+            PageAjax<Map> list=memBerDynamicwzService.queryneed(map,page);
         for (Map li:list.getRows()) {
             if(li.get("dynamicwz").toString().length()<=60){
                 li.put("dynamicwzall",li.get("dynamicwz").toString());
@@ -89,7 +89,14 @@ public class ApiContentController {
                 li.put("dynamicwzall",li.get("dynamicwz").toString());
                 li.put("dynamicwz",li.get("dynamicwz").toString().substring(0,59)+"...");
             }
-
+            //公司名裁剪
+            if(li.get("corporatename").toString().length()>7){
+                li.put("corporatename",li.get("corporatename").toString().substring(0,7)+"...");
+            }
+            //职位裁剪
+            if(li.get("profession").toString().length()>=5){
+                li.put("profession",li.get("profession").toString().substring(0,5)+"...");
+            }
             UserCollecTiondy userCollecTiondy=new UserCollecTiondy();
             userCollecTiondy.setUserid(userid);
             userCollecTiondy.setDynamicwzid(Integer.parseInt(li.get("id").toString()));
@@ -278,6 +285,14 @@ public class ApiContentController {
             } else {
                 map1.put("dynamicwzall", map1.get("dynamicwz").toString());
                 map1.put("dynamicwz", map1.get("dynamicwz").toString().substring(0, 59) + "...");
+            }
+            //公司名裁剪
+            if(map1.get("corporatename").toString().length()>7){
+                map1.put("corporatename",map1.get("corporatename").toString().substring(0,7)+"...");
+            }
+            //职位裁剪
+            if(map1.get("profession").toString().length()>=5){
+                map1.put("profession",map1.get("profession").toString().substring(0,5)+"...");
             }
         }
         return list;
