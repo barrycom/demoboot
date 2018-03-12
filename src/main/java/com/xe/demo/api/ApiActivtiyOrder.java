@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -77,7 +78,7 @@ public class ApiActivtiyOrder {
         packageParams.put("out_trade_no", did);//编号
         packageParams.put("total_fee", fee);//价格
         // packageParams.put("spbill_create_ip", getIp2(request));这里之前加了ip，但是总是获取sign失败，原因不明，之后就注释掉了
-        packageParams.put("notify_url", "http://zallhy.mynatapp.cc/api/notify");//支付返回地址，不用纠结这个东西，我就是随便写了一个接口，内容什么都没有
+        packageParams.put("notify_url", "http://iwuhd9.natappfree.cc/api/notify");//支付返回地址，不用纠结这个东西，我就是随便写了一个接口，内容什么都没有
         packageParams.put("trade_type", "JSAPI");//这个api有，固定的
         packageParams.put("openid", openid);//openid
 
@@ -140,19 +141,40 @@ public class ApiActivtiyOrder {
                 ajaxResult.setRetmsg("返回签名错误");
             }
             //系统订单号
-            String out_trade_no=String.valueOf(map.get("out_trade_no"));
-            //微信支付流水号
-            String transaction_id=String.valueOf(map.get("transaction_id"));
-            //修改订单状态
-            ActivityOrder activityOrder= activityOrderService.selectOneById(out_trade_no);
-            if(activityOrder!=null){
-                activityOrder.setStatus("1");
-                activityOrderService.update(activityOrder);
-                String token= OpenIdUtil.getToken().get("access_token").toString();
-                Activity activity=activityService.getActivityByid(activityOrder.getActivityid());
-                OpenIdUtil.sendMessage(token,activityOrder.getUserid(),activityOrder.getForm_id(),activity);
-                in.close();
+            String out_trade_no = String.valueOf(map.get("out_trade_no"));
+            String resXml = "";
+            String returnCode = (String) map.get("return_code");
+            if("SUCCESS".equals(returnCode)) {
+                //通知微信服务器已经支付成功
+                resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
+                        + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+
+                System.out.print("购买的订单号___" + out_trade_no);
+                //微信支付流水号
+                String transaction_id = String.valueOf(map.get("transaction_id"));
+                //修改订单状态
+                ActivityOrder activityOrder = activityOrderService.selectOneById(out_trade_no);
+                if (activityOrder != null) {
+                    activityOrder.setStatus("1");
+                    activityOrderService.update(activityOrder);
+                    String token = OpenIdUtil.getToken().get("access_token").toString();
+                    Activity activity = activityService.getActivityByid(activityOrder.getActivityid());
+                    OpenIdUtil.sendMessage(token, activityOrder.getUserid(), activityOrder.getForm_id(), activity);
+                    in.close();
+                }
+            }else{
+                resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+                        + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
             }
+
+            System.out.println(resXml);
+            System.out.println("微信支付回调数据结束"+out_trade_no);
+
+            BufferedOutputStream out = new BufferedOutputStream(
+                    response.getOutputStream());
+            out.write(resXml.getBytes());
+            out.flush();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -160,15 +182,6 @@ public class ApiActivtiyOrder {
         }
         return ajaxResult;
     }
-
-
-    /*@ApiOperation(value="支付回调", notes="支付回调")
-    @RequestMapping(value = "notify", method = RequestMethod.POST)
-    public AjaxResult notify(HttpServletRequest request, HttpServletResponse response) throws JDOMException, IOException {
-
-
-    }*/
-
 
     @ApiOperation(value="发送模板消息", notes="获取活动订单")
     @RequestMapping(value = "sendtemplate", method = RequestMethod.POST)
@@ -184,6 +197,7 @@ public class ApiActivtiyOrder {
             ajaxResult.setRetcode(-1);
             ajaxResult.setRetmsg("操作失败！");
         }
+        System.out.print(jsonObject.toString());
         return ajaxResult;
     }
 

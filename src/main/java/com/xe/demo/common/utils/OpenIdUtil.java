@@ -120,6 +120,7 @@ public class OpenIdUtil {
 
         JSONObject  json = JSONObject.fromObject(data);
     /*    String session_key =String.valueOf(json.get("session_key"));*/
+        System.out.print(json.toString());
         return json;
     }
 
