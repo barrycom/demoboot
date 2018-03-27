@@ -54,7 +54,9 @@
 					<li opCode="060001">
 						<a tabindex="-1" href="javascript:goPage('admin/activity/mainPage')"><span class="mm-text">活动管理</span></a>
 					</li>
-
+					<li opCode="060001">
+						<a tabindex="-1" href="javascript:goPage('admin/activity/mainadPage')"><span class="mm-text">首页广告位</span></a>
+					</li>
 				</ul>
 			</li>
 

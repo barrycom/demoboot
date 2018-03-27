@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.AdvertMapper" >
+ <resultMap id="BaseResultMap" type="com.xe.demo.model.Advert" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
+    <result column="ad_type" property="adType" jdbcType="VARCHAR" />
+    <result column="ad_index" property="adIndex" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+
+
+ <select id="queryadList" resultMap="BaseResultMap">
+    select *  from advert a
+     <where>
+         <if test="adType != null and adType != ''"> and a.ad_type = #{adType} </if>
+    </where>
+     order by ad_index asc
+ </select>
+ <!-- <resultMap id="ResultMapWithBLOBs" type="com.xe.demo.model.Activity" extends="BaseResultMap" >
+   <result column="activityidcontent" property="activityidcontent" jdbcType="LONGVARCHAR" />
+ </resultMap>
+ <sql id="Base_Column_List" >
+   id, activityid, activityname, activitysdate, activityedate, activityaddr, latitude,
+   longitude, activityimg, createtime, state, activityprice, activityidmemo
+ </sql>
+ <sql id="Blob_Column_List" >
+   activityidcontent
+ </sql>
+
+
+ <select id="queryListOneMonth" resultMap="BaseResultMap">
+   <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= createtime ]]>
+
+   <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+   <if test="activity.state != null" >
+   and  state = #{activity.state}
+   </if>
+   order by createtime desc
+ </select>
+
+ <select id="queryListTwoMonth" resultMap="BaseResultMap" >
+   <![CDATA[   SELECT * FROM activity where DATE_SUB(CURDATE(), INTERVAL 60 DAY) <= createtime ]]>
+   <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+   <if test="activity.state != null" >
+     and  state = #{activity.state}
+   </if>
+   order by createtime desc
+ </select>
+
+ <select id="queryList" resultMap="BaseResultMap">
+   select * from activity where 1=1
+   <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+   <if test="activity.state != null" >
+     and  state = #{activity.state}
+   </if>
+   order by createtime desc
+ </select>
+
+
+ <select id="queryListStarting" resultMap="BaseResultMap">
+   select * from activity where 1=1 and
+   <if test="null != activity.activityname"> and activityname  like CONCAT('%',#{activity.activityname},'%') </if>
+   <if test="activity.state != null" >
+     and  state = #{activity.state}
+   </if>
+   order by createtime desc
+ </select>
+ &lt;!&ndash;SELECT a.*,b.buynum  FROM `activity` a LEFT JOIN activityorder b on a.activityid = b.activityid and b.userid = #{memberId}&ndash;&gt;
+ <select id="getActivtiyByMemberId" parameterType="String" resultType="com.xe.demo.model.Activity">
+     SELECT
+         a.*, b.buynum
+     FROM
+         `activity` a ,activityorder b where a.activityid = b.activityid  and  b.userid = #{memberId}
+ </select>
+
+
+ <select id="getUserByActivtiyId" resultType="com.xe.demo.model.Member">
+select a.* from member a INNER join (
+select userid from memberviewactivity where activityid=#{id}
+) b on a.id=b.userid
+ </select>-->
+
+
+</mapper>

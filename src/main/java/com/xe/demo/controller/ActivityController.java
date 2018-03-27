@@ -1,5 +1,6 @@
 package com.xe.demo.controller;
 
+import com.github.pagehelper.page.PageMethod;
 import com.xe.demo.common.annotation.Authority;
 import com.xe.demo.common.annotation.ControllerLog;
 import com.xe.demo.common.pojo.AjaxResult;
@@ -7,6 +8,7 @@ import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.model.*;
 import com.xe.demo.service.ActivityService;
 import com.xe.demo.service.ActivityTypeService;
+import com.xe.demo.service.AdvertService;
 import com.xe.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +31,74 @@ import java.util.UUID;
 public class ActivityController extends BaseController {
     @Autowired
     private ActivityService activityService;
-
     @Autowired
     private ActivityTypeService activityTypeService;
+    @Autowired
+    private AdvertService advertService;
+
+
+    @Authority(opCode = "06", opName = "广告位列表")
+    @RequestMapping("mainadPage")
+    public String mainadPage(Map<String, Object> map) {
+        return "advert/main";
+    }
+
+    @Authority(opCode = "06", opName = "广告位列表")
+    @ResponseBody
+    @RequestMapping("adList")
+    public PageAjax<Advert> adList(Map<String, Object> map,Advert advert,PageAjax<Advert> page) {
+       map.put("adtype","0");
+        PageMethod.startPage(page.getPageNo(), page.getPageSize());
+        List<Advert> list = advertService.queryadList(map);
+        return new PageAjax<Advert>(list);
+    }
+
+    @Authority(opCode = "06", opName = "添加广告位")
+    @RequestMapping("addadPage")
+    public String addadPage(Map<String, Object> map) {
+        Advert advert=new Advert();
+        List<Advert> activityTypeList=advertService.queryList(advert);
+        map.put("list", activityTypeList);
+        return "advert/add";
+    }
+
+    @ControllerLog("添加广告位")
+    @RequestMapping("addadvert")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "添加广告位")
+    public AjaxResult addadvert(Advert advert) {
+      return advertService.save(advert);
+    }
+
+    @Authority(opCode = "06", opName = "修改广告位")
+    @RequestMapping("updatead")
+    public String updatead(Map<String, Object> map,Integer id) {
+        Advert advert= advertService.queryByID(id);
+        map.put("advert", advert);
+        return "advert/edit";
+    }
+
+
+    @ControllerLog("修改广告位")
+    @RequestMapping("editad")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "修改广告位")
+    public AjaxResult editad(Advert advert) {
+        return advertService.update(advert);
+    }
+
+    @ControllerLog("删除")
+    @RequestMapping("removead")
+    @ResponseBody
+    @Authority(opCode = "06", opName = "删除广告位")
+    public AjaxResult removead(int id) {
+        AjaxResult ajaxResult=new AjaxResult();
+        if(advertService.delById(id)<=0){
+            ajaxResult.setRetcode(-1);
+            ajaxResult.setRetmsg("操作失败");
+        }
+        return ajaxResult;
+    }
 
 
     @Authority(opCode = "06", opName = "查询列表")
@@ -42,6 +109,7 @@ public class ActivityController extends BaseController {
         map.put("list", list);
         return "activity/main";
     }
+
 
     @Authority(opCode = "06", opName = "活动待上架列表")
     @RequestMapping("mainPagedsj")

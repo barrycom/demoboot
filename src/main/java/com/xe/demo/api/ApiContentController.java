@@ -1,5 +1,6 @@
 package com.xe.demo.api;
 
+import com.github.pagehelper.page.PageMethod;
 import com.xe.demo.common.pojo.AjaxResult;
 import com.xe.demo.common.pojo.PageAjax;
 import com.xe.demo.common.support.redis.IRedisService;
@@ -49,6 +50,41 @@ public class ApiContentController {
     private TagService tagService;
     @Autowired
     private UserTagService userTagService;
+    @Autowired
+    private AdvertService advertService;
+    @Autowired
+    private DaysignService daysignService;
+
+    @ApiOperation(value="首页广告", notes="首页广告")
+    @ResponseBody
+    @RequestMapping(value = "indexadvert", method = RequestMethod.POST)
+    public AjaxResult indexadvert(Map<String, Object> map){
+        map.put("adtype","0");
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.setData(advertService.queryadList(map));
+        return ajaxResult;
+    }
+
+
+    @ApiOperation(value="签到", notes="签到")
+    @ResponseBody
+    @RequestMapping(value = "signday", method = RequestMethod.POST)
+    public AjaxResult signday(Map<String, Object> map,String userId){
+        AjaxResult ajaxResult=new AjaxResult();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        map.put("userId",userId);
+        map.put("creatTime",df.format(new Date()));
+        List li=daysignService.queryadList(map);
+        if(li.size()>0){
+            ajaxResult.setRetcode(1);
+        }else{
+            ajaxResult.setRetcode(-1);
+        }
+        return ajaxResult;
+    }
+
+
 
     //@Authorization("需token")
     @ApiOperation(value="获取需求广场数据", notes="获取需求广场数据")

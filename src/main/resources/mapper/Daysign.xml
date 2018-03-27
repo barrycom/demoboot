@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xe.demo.mapper.DaysignMapper" >
+ <resultMap id="BaseResultMap" type="com.xe.demo.model.Daysign" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="sorce" property="sorce" jdbcType="INTEGER" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+
+
+     <select id="queryadList" resultMap="BaseResultMap">
+        select *  from daysign a
+         <where>
+             <if test="userId != null and userId != ''"> and a.user_id = #{userId} </if>
+             <if test="creatTime != null and creatTime != ''"> and a.creat_time = #{creatTime} </if>
+        </where>
+     </select>
+</mapper>

@@ -76,7 +76,8 @@ public class ApiMember {
     private MemberBuyMapper memberBuyMapper;
     @Autowired
     private SendcardlogService sendcardlogService;
-
+    @Autowired
+    private DaysignService daysignService;
     @Autowired
     private IMUserAPI iMUserAPI;
     private static final String STATUC_SUCCESS = "SUCCESS";
@@ -458,11 +459,19 @@ public class ApiMember {
     @ApiOperation(value = "修改formId", notes = "修改名片")
     @RequestMapping(value = "updateformId", method = RequestMethod.POST)
     public AjaxResult updateformId(@ApiParam(value = "用户id", required = true) @RequestParam("memberid") String memberid, @ApiParam(value = "formId", required = true) @RequestParam("formId") String formId) {
+        AjaxResult ajaxResult=new AjaxResult();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        Daysign daysign=new Daysign();
+        daysign.setUserId(memberid);
+        daysign.setCreatTime(df.format(new Date()));
+        daysign.setSorce(1);
+        daysignService.save(daysign);
         Member member = new Member();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         member.setId(memberid);
         member.setFormId(formId);
         member.setFormTime(CommonTools.getCurrTimenohh());
+
         return memberService.update(member);
     }
 
