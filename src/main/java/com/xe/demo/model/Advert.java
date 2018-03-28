@@ -18,6 +18,8 @@ public class Advert {
 
     private String adIndex;
 
+    private String adHref;
+
     public int getId() {
         return id;
     }
@@ -48,5 +50,13 @@ public class Advert {
 
     public void setAdIndex(String adIndex) {
         this.adIndex = adIndex;
+    }
+
+    public String getAdHref() {
+        return adHref;
+    }
+
+    public void setAdHref(String adHref) {
+        this.adHref = adHref;
     }
 }

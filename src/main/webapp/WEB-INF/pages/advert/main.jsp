@@ -18,6 +18,7 @@
             columns:[
                 {field:"id",text:"广告id"},
                 {field:"adUrl",text:"图片链接"},
+                {field:"adHref",text:"广告位链接"},
                 {field:"adType", text:"广告位类型",
                     formatter:function(index, content, data){
                     if(content=='0'){

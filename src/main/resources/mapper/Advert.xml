@@ -6,7 +6,7 @@
     <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
     <result column="ad_type" property="adType" jdbcType="VARCHAR" />
     <result column="ad_index" property="adIndex" jdbcType="VARCHAR" />
-
+     <result column="ad_href" property="adHref" jdbcType="VARCHAR" />
   </resultMap>
 
 

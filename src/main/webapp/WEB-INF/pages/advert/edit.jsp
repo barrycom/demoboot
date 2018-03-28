@@ -18,6 +18,12 @@
         </div>
     </div>
     <div class="form-group" style="padding-left: unset; padding-right: unset;">
+        <label class="col-sm-3 control-label" for="adIndex"><font color="red">*</font>广告位链接：</label>
+        <div class="col-sm-8">
+            <input class="form-control" type="text"  id="adHref" name="adHref" value="${advert.adHref}" placeholder="广告位链接">
+        </div>
+    </div>
+    <div class="form-group" style="padding-left: unset; padding-right: unset;">
         <label class="col-sm-3 control-label" for="adIndex"><font color="red">*</font>广告位排序：</label>
         <div class="col-sm-8">
             <input class="form-control" type="number"  id="adIndex" name="adIndex" value="${advert.adIndex}" placeholder="排序">
@@ -52,6 +58,13 @@ uploadImg("uploadCover", "adUrl", "upload/uploadImg.do","${advert.adUrl}");
                 validators: {
                     notEmpty: {
                         message: '广告位主图不能为空'
+                    }
+                }
+            },adHref: {
+                message: '广告位链接不能为空',
+                validators: {
+                    notEmpty: {
+                        message: '广告位链接不能为空'
                     }
                 }
             },
